@@ -6,7 +6,7 @@
 #    By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/04/26 11:46:03 by fkoehler          #+#    #+#              #
-#    Updated: 2016/06/24 13:59:36 by fkoehler         ###   ########.fr        #
+#    Updated: 2016/06/24 15:12:59 by fkoehler         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,9 @@ vpath %.c ./src
 SRC = environ.c \
 	  error.c \
 	  init.c \
-	  main.c
+	  input.c \
+	  main.c \
+	  prompt.c
 
 NAME = 21sh
 

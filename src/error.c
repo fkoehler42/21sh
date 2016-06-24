@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/24 10:52:39 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/06/24 14:03:41 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/06/24 16:57:14 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ void	exit_error(int errnum)
 		ft_putstr_fd("21sh: Unable to set the terminal parameters\n", 2);
 	else if (errnum == 6)
 		ft_putstr_fd("malloc: Memory allocation has failed\n", 2);
+	else if (errnum == 7)
+		ft_putstr_fd("read: An error occured while reading input\n" , 2);
 	exit(EXIT_FAILURE);
 }
 

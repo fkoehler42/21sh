@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 17:07:09 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/06/24 14:04:59 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/06/24 19:53:42 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,9 @@ typedef struct			s_shell
 	struct termios		term_save;
 }						t_shell;
 
+char					*g_prompt;
+char					*get_prompt(void);
+
 void					exit_error(int errnum);
 int						env_error(int errnum, char *arg);
 
@@ -67,5 +70,7 @@ void					store_environ(t_shell *shell, char **environ);
 int						store_env_var(t_shell *shell, char *var, char *val);
 t_env					*get_env_ptr(t_env *env_lst, char *var);
 int						check_env_var(char *var);
+
+void					read_input(t_shell *shell);
 
 #endif
