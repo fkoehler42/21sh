@@ -6,17 +6,20 @@
 #    By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/04/26 11:46:03 by fkoehler          #+#    #+#              #
-#    Updated: 2016/06/23 17:06:47 by fkoehler         ###   ########.fr        #
+#    Updated: 2016/06/24 13:59:36 by fkoehler         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 vpath %.c ./src
 
-SRC =
+SRC = environ.c \
+	  error.c \
+	  init.c \
+	  main.c
 
-NAME = minishell
+NAME = 21sh
 
-FLAGS = -Wall -Werror -Wextra
+FLAGS = -Wall -Werror -Wextra -g
 
 LIBDIR = ./libft/
 
@@ -29,14 +32,14 @@ OBJ = $(SRC:.c=.o)
 all: $(NAME)
 
 $(NAME): $(LIB) $(OBJ)
-		@gcc -g $(FLAGS) $(OBJ) -L$(LIBDIR) -lft -o $@
+		@gcc $(FLAGS) $(OBJ) -L$(LIBDIR) -lft -ltermcap -o $@
 		@echo "\033[0;32m21sh compilation done !"
 
 $(LIB):
 	@make -C $(LIBDIR)
 
 %.o: %.c
-	@gcc -g $(FLAGS) -c $< -I . -I $(INCLUDES)
+	@gcc $(FLAGS) -c $< -I . -I $(INCLUDES)
 
 clean:
 	@rm -f $(OBJ)
