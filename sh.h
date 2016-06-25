@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 17:07:09 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/06/24 19:53:42 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/06/25 20:15:56 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,30 +47,39 @@ typedef struct			s_tree
 typedef struct			s_shell
 {
 	int					fd;
-	size_t				pos_x;
-	size_t				pos_y;
 	size_t				col;
 	t_env				*env_lst;
 	t_input				*input;
+	t_input				*line_pos;
 	t_tree				*tree;
 	struct termios		termios;
 	struct termios		term_save;
 }						t_shell;
-
-char					*g_prompt;
-char					*get_prompt(void);
 
 void					exit_error(int errnum);
 int						env_error(int errnum, char *arg);
 
 void					init_shell(t_shell *shell);
 void					init_term(t_shell *shell);
+t_shell					*get_struct(t_shell *struc);
+int						putchar(int c);
 
 void					store_environ(t_shell *shell, char **environ);
 int						store_env_var(t_shell *shell, char *var, char *val);
 t_env					*get_env_ptr(t_env *env_lst, char *var);
 int						check_env_var(char *var);
 
+char					*get_prompt(void);
+void					put_prompt(char *prompt, int fd);
+
 void					read_input(t_shell *shell);
+int						parse_input(t_shell *shell, char *buf, size_t len);
+
+int						parse_keys1(t_shell *shell, char *buf);
+
+int						move_left(t_shell *shell);
+int						move_right(t_shell *shell);
+int						line_start(t_shell *shell);
+int						line_end(t_shell *shell);
 
 #endif

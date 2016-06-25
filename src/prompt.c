@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/14 20:01:15 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/06/24 15:26:52 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/06/25 19:30:52 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,21 +31,29 @@ static char	*get_relative_path(char *home, char *pwd)
 
 char		*get_prompt(void)
 {
-	char	*home;
-	char	*pwd;
-	char	*oldpwd;
+	static char	*prompt = NULL;
+	char		*home;
+	char		*pwd;
+	char		*oldpwd;
 
-	if (g_prompt)
-		free(g_prompt);
-	g_prompt = NULL;
+	if (prompt != NULL)
+		free(prompt);
 	home = getenv("HOME");
 	pwd = getenv("PWD");
 	oldpwd = getenv("OLDPWD");
 	if (!pwd)
-		g_prompt = ft_strdup("$");
+		prompt = ft_strdup("$");
 	else if (!home)
-		g_prompt = ft_strdup(pwd);
+		prompt = ft_strdup(pwd);
 	else
-		g_prompt = get_relative_path(home, pwd);
-	return (g_prompt);
+		prompt = get_relative_path(home, pwd);
+	return (prompt);
+}
+
+void	put_prompt(char *prompt, int fd)
+{
+	ft_putstr_fd(CYAN, fd);
+	ft_putstr_fd(prompt, fd);
+	ft_putstr_fd(" -> ", fd);
+	ft_putstr_fd(OFF, fd);
 }

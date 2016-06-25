@@ -6,7 +6,7 @@
 #    By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/04/26 11:46:03 by fkoehler          #+#    #+#              #
-#    Updated: 2016/06/24 15:12:59 by fkoehler         ###   ########.fr        #
+#    Updated: 2016/06/25 18:21:10 by fkoehler         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,8 +16,11 @@ SRC = environ.c \
 	  error.c \
 	  init.c \
 	  input.c \
+	  line_moves.c \
 	  main.c \
-	  prompt.c
+	  parse_keys.c \
+	  prompt.c \
+	  putchar.c
 
 NAME = 21sh
 

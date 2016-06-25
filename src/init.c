@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 18:55:56 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/06/24 19:53:40 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/06/25 19:27:32 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,12 +16,12 @@ void	init_shell(t_shell *shell)
 {
 	if ((shell->fd = open("/dev/tty", O_RDWR)) == -1)
 		exit_error(0);
-	shell->pos_x = 0;
-	shell->pos_y = 0;
 	shell->col = 0;
 	shell->env_lst = NULL;
 	shell->input = NULL;
+	shell->line_pos = NULL;
 	shell->tree = NULL;
+	get_struct(shell);
 }
 
 void	init_term(t_shell *shell)
@@ -37,11 +37,20 @@ void	init_term(t_shell *shell)
 		exit_error(4);
 	if ((tcgetattr(0, &(shell->termios))) == -1)
 		exit_error(4);
-	/* shell->termios.c_lflag &= ~(ICANON); */
-	/* shell->termios.c_lflag &= ~(ECHO); */
-	shell->termios.c_lflag = 0;
+	shell->termios.c_lflag &= ~(ICANON | ECHO);
 	shell->termios.c_cc[VMIN] = 1;
 	shell->termios.c_cc[VTIME] = 0;
 	if ((tcsetattr(0, TCSADRAIN, &(shell->termios))) == -1)
 		exit_error(5);
+}
+
+t_shell	*get_struct(t_shell *struc)
+{
+	static t_shell	*shell = NULL;
+
+	if (struc == 0)
+		return (shell);
+	else
+		shell = struc;
+	return (0);
 }
