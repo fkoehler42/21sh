@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/24 10:52:39 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/06/25 18:26:39 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/06/27 09:46:41 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ void	exit_error(int errnum)
 		ft_putstr_fd("read: An error occured while reading input\n" , 2);
 	else if (errnum == 8)
 		ft_putstr_fd("21sh: Unable to retrieve terminal capabilities\n" , 2);
+	else if (errnum == 9)
+		ft_putstr_fd("21sh: Memory allocation has failed\n" , 2);
 	exit(EXIT_FAILURE);
 }
 

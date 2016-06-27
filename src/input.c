@@ -6,13 +6,34 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/24 15:05:22 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/06/25 20:15:52 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/06/27 12:46:34 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh.h"
 
-void	read_input(t_shell *shell)
+static void	store_input(t_shell *shell, char *buf)
+{
+	t_input	*new;
+
+	if (!(new = (t_input *)malloc(sizeof(*new))))
+		exit_error(9);
+	new->c = buf[0];
+	if (!(shell->line_pos))
+	{
+		new->prev = NULL;
+		new->next = NULL;
+	}
+	else
+	{
+		new->prev = shell->line_pos;
+		new->next = shell->line_pos->next;
+		shell->line_pos->next = new;
+	}
+	shell->line_pos = new;
+}
+
+void		read_input(t_shell *shell)
 {
 	char	buf[7];
 	size_t	buf_len;
@@ -28,11 +49,14 @@ void	read_input(t_shell *shell)
 	}
 }
 
-int		parse_input(t_shell *shell, char *buf, size_t len)
+int			parse_input(t_shell *shell, char *buf, size_t len)
 {
 	if (len == 3 && buf[0] == 27 && buf[1] == 91)
 		parse_keys1(shell, buf);
-	else
-		ft_putstr_fd(buf, shell->fd);
+	else if (len == 1)
+	{
+		store_input(shell, buf);
+		insert_char(shell, shell->line_pos->c);
+	}
 	return (0);
 }

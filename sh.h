@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 17:07:09 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/06/25 20:15:56 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/06/27 12:01:41 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,9 @@ int						env_error(int errnum, char *arg);
 void					init_shell(t_shell *shell);
 void					init_term(t_shell *shell);
 t_shell					*get_struct(t_shell *struc);
+
 int						putchar(int c);
+void					insert_char(t_shell *shell, char c);
 
 void					store_environ(t_shell *shell, char **environ);
 int						store_env_var(t_shell *shell, char *var, char *val);
