@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 18:55:56 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/06/25 19:27:32 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/06/27 18:50:15 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,10 @@ void	init_shell(t_shell *shell)
 	if ((shell->fd = open("/dev/tty", O_RDWR)) == -1)
 		exit_error(0);
 	shell->col = 0;
+	shell->line_len = 0;
 	shell->env_lst = NULL;
 	shell->input = NULL;
-	shell->line_pos = NULL;
+	shell->curs_pos = NULL;
 	shell->tree = NULL;
 	get_struct(shell);
 }

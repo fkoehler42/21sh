@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/25 17:27:02 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/06/27 12:44:44 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/06/27 18:40:31 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,11 +14,11 @@
 
 int		move_left(t_shell *shell)
 {
-	if (!(shell->line_pos))
+	if (!(shell->curs_pos))
 		return (-1);
 	if ((tputs(tgetstr("le", NULL), shell->fd, &putchar)) == -1)
 		exit_error(8);
-	shell->line_pos = shell->line_pos->prev;
+	shell->curs_pos = shell->curs_pos->prev;
 	return (0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 17:07:09 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/06/27 12:01:41 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/06/27 18:49:40 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,9 +48,10 @@ typedef struct			s_shell
 {
 	int					fd;
 	size_t				col;
+	size_t				line_len;
 	t_env				*env_lst;
 	t_input				*input;
-	t_input				*line_pos;
+	t_input				*curs_pos;
 	t_tree				*tree;
 	struct termios		termios;
 	struct termios		term_save;
@@ -64,7 +65,7 @@ void					init_term(t_shell *shell);
 t_shell					*get_struct(t_shell *struc);
 
 int						putchar(int c);
-void					insert_char(t_shell *shell, char c);
+void					print_input(t_shell *shell, t_input *curs_pos);
 
 void					store_environ(t_shell *shell, char **environ);
 int						store_env_var(t_shell *shell, char *var, char *val);
