@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/24 15:05:22 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/06/27 19:18:57 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/06/28 17:19:30 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,26 +46,26 @@ void		read_input(t_shell *shell)
 	char	buf[7];
 	size_t	buf_len;
 
-	put_prompt(get_prompt(), shell->fd);
+	shell->p_len = put_prompt(get_prompt(), shell->fd);
 	while (42)
 	{
 		ft_bzero((void *)buf, 7);
 		if (read(0, buf, 7) == -1)
 			exit_error(7);
 		if ((buf_len = ft_strlen(buf)) > 0)
-			parse_input(shell, buf, buf_len);
+			parse_input(shell, buf, buf_len, shell->p_len);
 	}
 }
 
-int			parse_input(t_shell *shell, char *buf, size_t len)
+int			parse_input(t_shell *shell, char *buf, size_t buf_len, size_t p_len)
 {
-	if (len == 3 && buf[0] == 27 && buf[1] == 91)
+	if (buf_len == 3 && buf[0] == 27 && buf[1] == 91)
 		parse_keys1(shell, buf);
-	else if (len == 1)
+	else if (buf_len == 1)
 	{
 		store_input(shell, buf);
-		shell->line_len++;
-		print_input(shell, shell->curs_pos);
+		shell->input_len++;
+		print_input(shell, shell->curs_pos, p_len);
 	}
 	return (0);
 }

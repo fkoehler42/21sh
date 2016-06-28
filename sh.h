@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 17:07:09 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/06/27 18:49:40 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/06/28 17:58:14 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,8 @@ typedef struct			s_shell
 {
 	int					fd;
 	size_t				col;
-	size_t				line_len;
+	size_t				input_len;
+	size_t				p_len;
 	t_env				*env_lst;
 	t_input				*input;
 	t_input				*curs_pos;
@@ -65,7 +66,8 @@ void					init_term(t_shell *shell);
 t_shell					*get_struct(t_shell *struc);
 
 int						putchar(int c);
-void					print_input(t_shell *shell, t_input *curs_pos);
+void					print_input(t_shell *shell, t_input *curs_pos,
+						size_t p_len);
 
 void					store_environ(t_shell *shell, char **environ);
 int						store_env_var(t_shell *shell, char *var, char *val);
@@ -73,10 +75,11 @@ t_env					*get_env_ptr(t_env *env_lst, char *var);
 int						check_env_var(char *var);
 
 char					*get_prompt(void);
-void					put_prompt(char *prompt, int fd);
+int						put_prompt(char *prompt, int fd);
 
 void					read_input(t_shell *shell);
-int						parse_input(t_shell *shell, char *buf, size_t len);
+int						parse_input(t_shell *shell, char *buf,
+						size_t buf_len, size_t p_len);
 
 int						parse_keys1(t_shell *shell, char *buf);
 
@@ -84,5 +87,9 @@ int						move_left(t_shell *shell);
 int						move_right(t_shell *shell);
 int						line_start(t_shell *shell);
 int						line_end(t_shell *shell);
+
+void					replace_cursor(t_shell *shell);
+size_t					get_cursor_x_pos(t_input *input,
+						t_input *pos, size_t p_len);
 
 #endif

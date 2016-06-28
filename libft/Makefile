@@ -6,7 +6,7 @@
 #    By: fkoehler <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/12/02 18:34:40 by fkoehler          #+#    #+#              #
-#    Updated: 2016/06/18 17:56:06 by fkoehler         ###   ########.fr        #
+#    Updated: 2016/06/28 15:34:57 by fkoehler         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,13 +18,13 @@ ft_lstadd.c ft_lstdel.c ft_lstdelone.c ft_lstiter.c ft_lstmap.c ft_lstnew.c \
 ft_memalloc.c ft_memccpy.c ft_memchr.c ft_memcmp.c ft_memcpy.c ft_memdel.c \
 ft_memmove.c ft_memset.c ft_print_array.c ft_putchar.c ft_putchar_fd.c \
 ft_putnchar.c ft_putendl.c ft_putendl_fd.c ft_putnbr.c ft_putnbr_fd.c \
-ft_putstr.c ft_putnstr.c ft_putstr_fd.c ft_replace_char.c ft_strcat.c \
-ft_strchr.c ft_strchr_index.c ft_strchr_count.c ft_strclr.c ft_strcmp.c \
-ft_strcpy.c ft_strdel.c ft_strdup.c ft_strequ.c ft_striter.c ft_striteri.c \
-ft_strjoin.c ft_strlcat.c ft_strlen.c ft_strmap.c ft_strmapi.c ft_strncat.c \
-ft_strncmp.c ft_strncpy.c ft_strnequ.c ft_strnew.c ft_strnstr.c ft_strrchr.c \
-ft_strsplit.c ft_strstr.c ft_strsub.c ft_strtrim.c ft_tolower.c ft_toupper.c \
-free_tab.c \
+ft_putstr.c ft_putnstr.c ft_putnstr_fd.c ft_putstr_fd.c ft_replace_char.c \
+ft_strcat.c ft_strchr.c ft_strchr_index.c ft_strchr_count.c ft_strclr.c \
+ft_strcmp.c ft_strcpy.c ft_strdel.c ft_strdup.c ft_strequ.c ft_striter.c \
+ft_striteri.c ft_strjoin.c ft_strlcat.c ft_strlen.c ft_strmap.c ft_strmapi.c \
+ft_strncat.c ft_strncmp.c ft_strncpy.c ft_strnequ.c ft_strnew.c ft_strnstr.c \
+ft_strrchr.c ft_strsplit.c ft_strstr.c ft_strsub.c ft_strtrim.c ft_tolower.c \
+ft_toupper.c free_tab.c \
 get_next_line.c \
 ft_printf.c check_flags.c check_modifiers.c conv_wchar.c count_bytes.c \
 count_char_decimal.c ft_put_llong.c ft_put_long.c print.c print_address.c \

@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/14 20:01:15 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/06/25 19:30:52 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/06/28 15:10:36 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,10 +50,11 @@ char		*get_prompt(void)
 	return (prompt);
 }
 
-void	put_prompt(char *prompt, int fd)
+int	put_prompt(char *prompt, int fd)
 {
 	ft_putstr_fd(CYAN, fd);
 	ft_putstr_fd(prompt, fd);
 	ft_putstr_fd(" -> ", fd);
 	ft_putstr_fd(OFF, fd);
+	return (4 + ft_strlen(prompt));
 }

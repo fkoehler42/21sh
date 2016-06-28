@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/24 10:52:39 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/06/27 09:46:41 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/06/28 15:03:03 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ void	exit_error(int errnum)
 	else if (errnum == 4)
 		ft_putstr_fd("21sh: Unable to retrieve the terminal parameters\n", 2);
 	else if (errnum == 5)
-		ft_putstr_fd("21sh: Unable to set the terminal parameters\n", 2);
+		ft_putstr_fd("tcsetattr: Unable to set the terminal parameters\n", 2);
 	else if (errnum == 6)
 		ft_putstr_fd("malloc: Memory allocation has failed\n", 2);
 	else if (errnum == 7)
@@ -34,6 +34,8 @@ void	exit_error(int errnum)
 		ft_putstr_fd("21sh: Unable to retrieve terminal capabilities\n" , 2);
 	else if (errnum == 9)
 		ft_putstr_fd("21sh: Memory allocation has failed\n" , 2);
+	else if (errnum == 10)
+		ft_putstr_fd("ioctl: Unable to get the terminal state infos\n" , 2);
 	exit(EXIT_FAILURE);
 }
 

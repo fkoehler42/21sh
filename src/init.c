@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 18:55:56 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/06/27 18:50:15 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/06/28 15:05:48 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	init_shell(t_shell *shell)
 	if ((shell->fd = open("/dev/tty", O_RDWR)) == -1)
 		exit_error(0);
 	shell->col = 0;
-	shell->line_len = 0;
+	shell->input_len = 0;
 	shell->env_lst = NULL;
 	shell->input = NULL;
 	shell->curs_pos = NULL;
@@ -27,8 +27,9 @@ void	init_shell(t_shell *shell)
 
 void	init_term(t_shell *shell)
 {
-	int		ret;
-	char	*term_name;
+	int				ret;
+	char			*term_name;
+	struct winsize	w;
 
 	if (!(term_name = getenv("TERM")))
 		exit_error(1);
@@ -43,6 +44,9 @@ void	init_term(t_shell *shell)
 	shell->termios.c_cc[VTIME] = 0;
 	if ((tcsetattr(0, TCSADRAIN, &(shell->termios))) == -1)
 		exit_error(5);
+	if ((ioctl(0, TIOCGWINSZ, &w)) < 0)
+		exit_error(10);
+	shell->col = w.ws_col;
 }
 
 t_shell	*get_struct(t_shell *struc)

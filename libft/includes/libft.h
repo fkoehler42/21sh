@@ -6,7 +6,7 @@
 /*   By: fkoehler <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/11/24 19:11:04 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/05/09 12:12:23 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/06/28 15:32:24 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ void				ft_putchar_fd(char c, int fd);
 void				ft_putnchar(char c, size_t n);
 void				ft_putstr(char const *s);
 void				ft_putnstr(char const *s, int n);
+void				ft_putnstr_fd(char const *s, int n, int fd);
 void				ft_putstr_fd(char const *s, int fd);
 void				ft_print_array(char **array);
 void				ft_putendl(char const *s);
