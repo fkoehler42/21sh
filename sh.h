@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 17:07:09 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/06/28 17:58:14 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/06/29 21:56:46 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,7 @@ int						move_right(t_shell *shell);
 int						line_start(t_shell *shell);
 int						line_end(t_shell *shell);
 
-void					replace_cursor(t_shell *shell);
+void					replace_cursor(t_shell *shell, int restore, int back);
 size_t					get_cursor_x_pos(t_input *input,
 						t_input *pos, size_t p_len);
 
