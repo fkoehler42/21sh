@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 17:07:09 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/06/29 21:56:46 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/06/30 17:36:50 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,14 +81,18 @@ void					read_input(t_shell *shell);
 int						parse_input(t_shell *shell, char *buf,
 						size_t buf_len, size_t p_len);
 
-int						parse_keys1(t_shell *shell, char *buf);
+int						parse_keys1(t_shell *shell, char *buf, size_t buf_len);
 
 int						move_left(t_shell *shell);
+int						move_left_word(t_shell *shell);
 int						move_right(t_shell *shell);
-int						line_start(t_shell *shell);
-int						line_end(t_shell *shell);
+int						move_right_word(t_shell *shell);
+int						move_line_start(t_shell *shell);
+int						move_line_end(t_shell *shell);
+int						move_line_up(t_shell *shell);
+int						move_line_down(t_shell *shell);
 
-void					replace_cursor(t_shell *shell, int restore, int back);
+void					replace_cursor(t_shell *shell, int print, int back);
 size_t					get_cursor_x_pos(t_input *input,
 						t_input *pos, size_t p_len);
 

@@ -6,7 +6,7 @@
 #    By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/04/26 11:46:03 by fkoehler          #+#    #+#              #
-#    Updated: 2016/06/28 17:55:26 by fkoehler         ###   ########.fr        #
+#    Updated: 2016/06/30 17:10:29 by fkoehler         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,8 @@ SRC = cursor.c \
 	  error.c \
 	  init.c \
 	  input.c \
-	  line_moves.c \
+	  line_moves_1.c \
+	  line_moves_2.c \
 	  main.c \
 	  parse_keys.c \
 	  print.c \

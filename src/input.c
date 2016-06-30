@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/24 15:05:22 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/06/29 20:30:16 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/06/30 16:57:33 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,8 +58,8 @@ void		read_input(t_shell *shell)
 
 int			parse_input(t_shell *shell, char *buf, size_t buf_len, size_t p_len)
 {
-	if (buf_len == 3 && buf[0] == 27 && buf[1] == 91)
-		parse_keys1(shell, buf);
+	if ((buf_len == 3 || buf_len == 6) && buf[0] == 27 && buf[1] == 91)
+		parse_keys1(shell, buf, buf_len);
 	else if (buf_len == 1)
 	{
 		store_input(shell, buf);

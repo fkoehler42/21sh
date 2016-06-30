@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/28 17:13:14 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/06/29 21:56:44 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/06/30 16:45:36 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,16 +28,14 @@ size_t	get_cursor_x_pos(t_input *input, t_input *pos, size_t p_len)
 	return (i + p_len);
 }
 
-void	replace_cursor(t_shell *shell, int restore, int back)
+void	replace_cursor(t_shell *shell, int print, int back)
 {
 	size_t	x_pos;
 	size_t	col;
 
 	col = shell->col;
 	x_pos = get_cursor_x_pos(shell->input, shell->curs_pos, shell->p_len);
-	if (restore && ((tputs(tgetstr("rc", NULL), shell->fd, &putchar)) == -1))
-		exit_error(8);
-	if (back && ((x_pos % shell->col) == 0))
+	if ((!print && back && ((x_pos % shell->col) == 0)) || (print == 42))
 	{
 		tputs(tgetstr("up", NULL), shell->fd, &putchar);
 		while (col--)

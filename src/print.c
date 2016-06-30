@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/25 18:19:07 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/06/29 21:43:02 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/06/30 16:48:15 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,26 @@ int			putchar(int c)
 
 static void	print_eol(t_shell *shell, char *buf, size_t p_len)
 {
-	if (((shell->input_len + p_len) % shell->col) == 0)
+	t_input *tmp;
+	int		i;
+
+	i = 0;
+	tmp = shell->curs_pos;
+	while (tmp)
+	{
+		i++;
+		tmp = tmp->next;
+	}
+	if (((shell->input_len + p_len) % shell->col) == 0 && i--)
 	{
 		ft_putstr_fd(buf, shell->fd);
 		tputs(tgetstr("do", NULL), shell->fd, &putchar);
+		replace_cursor(shell, 42, 1);
 	}
 	else
 		ft_putstr_fd(buf, shell->fd);
-	replace_cursor(shell, 1, 0);
+	while (--i)
+		replace_cursor(shell, 1, 1);
 }
 
 void		print_input(t_shell *shell, t_input *curs_pos, size_t p_len)
@@ -53,7 +65,6 @@ void		print_input(t_shell *shell, t_input *curs_pos, size_t p_len)
 		tmp = curs_pos;
 		ft_bzero((void *)buf, shell->input_len + 1);
 		tputs(tgetstr("cd", NULL), shell->fd, &putchar);
-		tputs(tgetstr("sc", NULL), shell->fd, &putchar);
 		while (tmp)
 		{
 			buf[i++] = tmp->c;
