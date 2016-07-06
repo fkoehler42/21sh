@@ -6,15 +6,15 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/25 16:59:14 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/06/30 17:09:17 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/07/06 20:28:42 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh.h"
 
-int		parse_keys1(t_shell *shell, char *buf, size_t buf_len)
+void	parse_keys1(t_shell *shell, char *buf)
 {
-	if (buf_len == 3)
+	if (buf[1] == 91)
 	{
 		if (buf[2] == 68)
 			move_left(shell);
@@ -25,7 +25,12 @@ int		parse_keys1(t_shell *shell, char *buf, size_t buf_len)
 		else if (buf[2] == 70)
 			move_line_end(shell);
 	}
-	else if (buf_len == 6 && buf[2] == 49 && buf[3] == 59 && buf[4] == 50)
+}
+
+void	parse_keys2(t_shell *shell, char *buf)
+{
+	if (buf[0] == 27 && buf[1] == 91 &&
+		buf[2] == 49 && buf[3] == 59 && buf[4] == 50)
 	{
 		if (buf[5] == 68)
 			move_left_word(shell);
@@ -36,5 +41,10 @@ int		parse_keys1(t_shell *shell, char *buf, size_t buf_len)
 		else if (buf[5] == 66)
 			move_line_down(shell);
 	}
-	return (0);
+}
+
+void	parse_keys4(t_shell *shell, char *buf, size_t buf_len)
+{
+	if (buf_len == 2 && buf[0] == -61 && buf[1] == -89)
+		copy_eol(shell);
 }

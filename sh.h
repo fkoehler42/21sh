@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 17:07:09 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/06/30 17:36:50 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/07/06 20:52:36 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ typedef struct			s_shell
 	size_t				p_len;
 	t_env				*env_lst;
 	t_input				*input;
+	t_input				*buffer;
 	t_input				*curs_pos;
 	t_tree				*tree;
 	struct termios		termios;
@@ -78,10 +79,12 @@ char					*get_prompt(void);
 int						put_prompt(char *prompt, int fd);
 
 void					read_input(t_shell *shell);
-int						parse_input(t_shell *shell, char *buf,
+void					parse_input(t_shell *shell, char *buf,
 						size_t buf_len, size_t p_len);
 
-int						parse_keys1(t_shell *shell, char *buf, size_t buf_len);
+void					parse_keys1(t_shell *shell, char *buf);
+void					parse_keys2(t_shell *shell, char *buf);
+void					parse_keys4(t_shell *shell, char *buf, size_t buf_len);
 
 int						move_left(t_shell *shell);
 int						move_left_word(t_shell *shell);

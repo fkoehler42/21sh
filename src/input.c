@@ -6,19 +6,19 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/24 15:05:22 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/06/30 16:57:33 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/07/06 21:29:53 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh.h"
 
-static void	store_input(t_shell *shell, char *buf)
+static void	store_input(t_shell *shell, char c)
 {
 	t_input	*new;
 
 	if (!(new = (t_input *)malloc(sizeof(*new))))
 		exit_error(9);
-	new->c = buf[0];
+	new->c = c;
 	new->prev = shell->curs_pos != NULL ? shell->curs_pos : NULL;
 	if (!(shell->input))
 	{
@@ -56,15 +56,18 @@ void		read_input(t_shell *shell)
 	}
 }
 
-int			parse_input(t_shell *shell, char *buf, size_t buf_len, size_t p_len)
+void		parse_input(t_shell *shell, char *buf, size_t buf_len, size_t p_len)
 {
-	if ((buf_len == 3 || buf_len == 6) && buf[0] == 27 && buf[1] == 91)
-		parse_keys1(shell, buf, buf_len);
+	if (buf_len == 3 && buf[0] == 27)
+		parse_keys1(shell, buf);
+	else if (buf_len == 6)
+		parse_keys2(shell, buf);
 	else if (buf_len == 1)
 	{
-		store_input(shell, buf);
+		store_input(shell, buf[0]);
 		shell->input_len++;
 		print_input(shell, shell->curs_pos, p_len);
 	}
-	return (0);
+	else
+		parse_keys4(shell, buf, buf_len);
 }

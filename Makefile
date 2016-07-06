@@ -6,13 +6,15 @@
 #    By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/04/26 11:46:03 by fkoehler          #+#    #+#              #
-#    Updated: 2016/06/30 17:10:29 by fkoehler         ###   ########.fr        #
+#    Updated: 2016/07/06 20:57:10 by fkoehler         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 vpath %.c ./src
 
-SRC = cursor.c \
+SRC = buffer.c \
+	  cursor.c \
+	  cut_copy_paste.c \
 	  environ.c \
 	  error.c \
 	  init.c \
@@ -40,7 +42,7 @@ all: $(NAME)
 
 $(NAME): $(LIB) $(OBJ)
 		@gcc $(FLAGS) $(OBJ) -L$(LIBDIR) -lft -ltermcap -o $@
-		@echo "\033[0;32m21sh compilation done !"
+		@echo "\033[0;32m21sh compilation done !\033[0;m"
 
 $(LIB):
 	@make -C $(LIBDIR)
@@ -50,10 +52,10 @@ $(LIB):
 
 clean:
 	@rm -f $(OBJ)
-	@echo "\033[0;32mObject files deleted !"
+	@echo "\033[0;32mObject files deleted !\033[0;m"
 
 fclean: clean
 	@rm -f $(NAME)
-	@echo "\033[0;32mExecutable deleted !"
+	@echo "\033[0;32mExecutable deleted !\033[0;m"
 
 re: fclean all
