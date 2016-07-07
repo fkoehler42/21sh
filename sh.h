@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 17:07:09 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/07/07 12:43:51 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/07/07 19:08:29 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,8 @@
 # include <term.h>
 # include <fcntl.h>
 # include <sys/ioctl.h>
+
+#define debug ft_printf("file : %s, line : %d", __FILE__, __LINE__);
 
 typedef struct			s_env
 {

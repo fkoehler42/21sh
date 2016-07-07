@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/06 20:57:31 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/07/07 14:18:18 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/07/07 19:14:01 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,24 +38,30 @@ void	store_buffer(t_input **buf, char c)
 
 int		paste_buffer(t_shell *shell)
 {
-	t_input *tmp1;
-	t_input *tmp2;
+	t_input *tmp;
 
 	if (!shell->buffer)
 		return (-1);
 	if (!shell->curs_pos && !shell->input)
-	{
 		shell->input = shell->buffer;
-		shell->input_len = shell->buf_len;
-	}
-	if (!shell->curs_pos)
+	else if (!shell->curs_pos)
 	{
-		tmp1 = shell->input;
-		shell->input = shell->buffer;
-		tmp2 = shell->input;
+		tmp = shell->buffer;
 		while (tmp->next)
 			tmp = tmp->next;
-		tmp->next = shell->buffer;
+		tmp->next = shell->input;
+		shell->input->prev = tmp;
+		shell->input = shell->buffer;
 	}
+	else
+	{
+		shell->buffer->prev = shell->curs_pos;
+		tmp = shell->buffer;
+		while (tmp->next)
+			tmp = tmp->next;
+		tmp->next = shell->curs_pos->next;
+		shell->curs_pos->next = shell->buffer;
+	}
+	shell->input_len += shell->buf_len;
 	return (0);
 }
