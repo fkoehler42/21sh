@@ -6,7 +6,7 @@
 #    By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/04/26 11:46:03 by fkoehler          #+#    #+#              #
-#    Updated: 2016/07/06 20:57:10 by fkoehler         ###   ########.fr        #
+#    Updated: 2016/07/07 12:39:48 by fkoehler         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,7 +14,7 @@ vpath %.c ./src
 
 SRC = buffer.c \
 	  cursor.c \
-	  cut_copy_paste.c \
+	  cut_copy_input.c \
 	  environ.c \
 	  error.c \
 	  init.c \

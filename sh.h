@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 17:07:09 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/07/06 20:52:36 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/07/07 12:43:51 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ typedef struct			s_shell
 	int					fd;
 	size_t				col;
 	size_t				input_len;
+	size_t				buf_len;
 	size_t				p_len;
 	t_env				*env_lst;
 	t_input				*input;
@@ -94,9 +95,14 @@ int						move_line_start(t_shell *shell);
 int						move_line_end(t_shell *shell);
 int						move_line_up(t_shell *shell);
 int						move_line_down(t_shell *shell);
+int						copy_eol(t_shell *shell);
+int						copy_all(t_shell *shell);
+int						paste_buffer(t_shell *shell);
 
 void					replace_cursor(t_shell *shell, int print, int back);
 size_t					get_cursor_x_pos(t_input *input,
 						t_input *pos, size_t p_len);
+
+void					store_buffer(t_input **buf, char c);
 
 #endif
