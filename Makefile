@@ -6,7 +6,7 @@
 #    By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/04/26 11:46:03 by fkoehler          #+#    #+#              #
-#    Updated: 2016/07/07 12:39:48 by fkoehler         ###   ########.fr        #
+#    Updated: 2016/07/09 17:12:10 by fkoehler         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,11 +14,13 @@ vpath %.c ./src
 
 SRC = buffer.c \
 	  cursor.c \
-	  cut_copy_input.c \
 	  environ.c \
 	  error.c \
+	  free.c \
 	  init.c \
-	  input.c \
+	  input_cut_copy.c \
+	  input_delete.c \
+	  input_handling.c \
 	  line_moves_1.c \
 	  line_moves_2.c \
 	  main.c \
@@ -28,7 +30,7 @@ SRC = buffer.c \
 
 NAME = 21sh
 
-FLAGS = -Wall -Werror -Wextra -g
+FLAGS = -Wall -Werror -Wextra -g -fsanitize=address
 
 LIBDIR = ./libft/
 

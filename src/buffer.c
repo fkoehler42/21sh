@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/06 20:57:31 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/07/09 12:55:24 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/07/09 15:42:54 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,27 +42,13 @@ int		paste_buffer(t_shell *shell)
 
 	if (!shell->buffer)
 		return (-1);
-	if (!shell->input)
-		shell->input = shell->buffer;
-	else if (!shell->curs_pos)
+	tmp = shell->buffer;
+	while (tmp)
 	{
-		tmp = shell->buffer;
-		while (tmp->next)
-			tmp = tmp->next;
-		tmp->next = shell->input;
-		shell->input->prev = tmp;
-		shell->input = shell->buffer;
+		store_input(shell, tmp->c);
+		shell->input_len++;
+		print_input(shell, shell->curs_pos, shell->p_len);
+		tmp = tmp->next;
 	}
-	else
-	{
-		shell->buffer->prev = shell->curs_pos;
-		tmp = shell->buffer;
-		while (tmp->next)
-			tmp = tmp->next;
-		tmp->next = shell->curs_pos->next;
-		shell->curs_pos->next = shell->buffer;
-		shell->curs_pos->next->prev = tmp;
-	}
-	shell->input_len += shell->buf_len;
 	return (0);
 }

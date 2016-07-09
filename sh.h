@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 17:07:09 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/07/09 12:55:45 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/07/09 18:16:00 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,10 +84,15 @@ int						put_prompt(char *prompt, int fd);
 void					read_input(t_shell *shell);
 void					parse_input(t_shell *shell, char *buf,
 						size_t buf_len, size_t p_len);
+void					store_input(t_shell *shell, char c);
+void					delete_input(t_shell *shell, t_input *input, int back);
+void					free_input_list(t_input **input, size_t *nb_elem);
 
 void					parse_keys1(t_shell *shell, char *buf);
 void					parse_keys2(t_shell *shell, char *buf);
-void					parse_keys4(t_shell *shell, char *buf, size_t buf_len);
+void					parse_keys3(t_shell *shell, char *buf, size_t buf_len);
+
+int						backspace(t_shell *shell);
 
 int						move_left(t_shell *shell);
 int						move_left_word(t_shell *shell);
@@ -98,6 +103,7 @@ int						move_line_end(t_shell *shell);
 int						move_line_up(t_shell *shell);
 int						move_line_down(t_shell *shell);
 int						copy_eol(t_shell *shell);
+
 int						copy_all(t_shell *shell);
 int						paste_buffer(t_shell *shell);
 
