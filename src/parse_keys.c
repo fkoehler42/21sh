@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/25 16:59:14 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/07/07 19:58:41 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/07/09 13:07:09 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,9 @@ void	parse_keys4(t_shell *shell, char *buf, size_t buf_len)
 	else if (buf_len == 3 && buf[0] == -30 && buf[1] == -120 && buf[2] == -102)
 	{
 		paste_buffer(shell);
-			/* print_input(shell, shell->curs_pos->next, shell->p_len); */
+		if (!shell->curs_pos)
+			print_input(shell, shell->input, shell->p_len);
+		else
+			print_input(shell, shell->curs_pos->next, shell->p_len);
 	}
 }
