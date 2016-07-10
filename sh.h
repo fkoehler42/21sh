@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 17:07:09 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/07/10 01:58:36 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/07/10 15:31:59 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,7 @@ void					parse_keys2(t_shell *shell, char *buf);
 void					parse_keys3(t_shell *shell, char *buf, size_t buf_len);
 
 int						backspace(t_shell *shell);
+int						del(t_shell *shell);
 
 int						move_left(t_shell *shell);
 int						move_left_word(t_shell *shell);
