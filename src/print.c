@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/25 18:19:07 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/07/09 15:08:36 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/07/10 01:57:27 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void		print_input(t_shell *shell, t_input *curs_pos, size_t p_len)
 	t_input	*tmp;
 
 	i = 0;
-	if (!curs_pos->next && (get_cursor_x_pos(shell->input, curs_pos, p_len) == shell->col))
+	if (!curs_pos->next && ((get_cursor_x_pos(shell->input, curs_pos, p_len) % shell->col) == 0))
 	{
 		ft_putchar_fd(curs_pos->c, shell->fd);
 		tputs(tgetstr("do", NULL), shell->fd, &putchar);
