@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 18:55:56 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/07/07 12:44:13 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/07/10 20:44:04 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,9 @@ void	init_shell(t_shell *shell)
 	shell->col = 0;
 	shell->input_len = 0;
 	shell->buf_len = 0;
+	shell->p_len = 0;
 	shell->env_lst = NULL;
+	shell->hist = NULL;
 	shell->input = NULL;
 	shell->buffer = NULL;
 	shell->curs_pos = NULL;

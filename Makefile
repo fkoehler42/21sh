@@ -6,7 +6,7 @@
 #    By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/04/26 11:46:03 by fkoehler          #+#    #+#              #
-#    Updated: 2016/07/09 17:12:10 by fkoehler         ###   ########.fr        #
+#    Updated: 2016/07/10 18:54:35 by fkoehler         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,6 +17,7 @@ SRC = buffer.c \
 	  environ.c \
 	  error.c \
 	  free.c \
+	  history.c \
 	  init.c \
 	  input_cut_copy.c \
 	  input_delete.c \

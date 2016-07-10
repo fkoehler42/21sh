@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 17:07:09 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/07/10 15:31:59 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/07/10 20:43:20 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,14 @@ typedef struct			s_input
 	struct s_input		*next;
 }						t_input;
 
+typedef	struct			s_hist
+{
+	size_t				input_len;
+	struct s_input		*input;
+	struct s_hist		*prev;
+	struct s_hist		*next;
+}
+
 typedef struct			s_tree
 {
 	int					type;
@@ -54,6 +62,7 @@ typedef struct			s_shell
 	size_t				buf_len;
 	size_t				p_len;
 	t_env				*env_lst;
+	t_hist				*hist;
 	t_input				*input;
 	t_input				*buffer;
 	t_input				*curs_pos;
@@ -103,8 +112,10 @@ int						move_line_start(t_shell *shell);
 int						move_line_end(t_shell *shell);
 int						move_line_up(t_shell *shell);
 int						move_line_down(t_shell *shell);
-int						copy_eol(t_shell *shell);
 
+int						cut_eol(t_shell *shell);
+int						cut_all(t_shell *shell);
+int						copy_eol(t_shell *shell);
 int						copy_all(t_shell *shell);
 int						paste_buffer(t_shell *shell);
 
