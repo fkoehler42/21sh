@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 17:07:09 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/07/11 14:00:40 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/07/11 16:15:09 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -127,6 +127,8 @@ void					store_hist(t_shell *shell);
 void					replace_cursor(t_shell *shell, int print, int back);
 size_t					get_cursor_x_pos(t_input *input,
 						t_input *pos, size_t p_len);
+
+int						handle_cmd(t_shell *shell);
 
 int						input_lst_cmp(t_input *lst1, t_input *lst2,
 						size_t len1, size_t len2);

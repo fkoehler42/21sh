@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/25 16:59:14 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/07/11 14:12:49 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/07/11 15:45:12 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,9 @@ void	parse_keys2(t_shell *shell, char *buf)
 
 void	parse_keys3(t_shell *shell, char *buf, size_t buf_len)
 {
-	if (buf_len == 1 && buf[0] == 127)
+	if (buf_len == 1 && buf[0] == 10)
+		handle_cmd(shell);
+	else if (buf_len == 1 && buf[0] == 127)
 		backspace(shell);
 	else if (buf_len == 4 && buf[0] == 27 && buf[1] == 91
 			&& buf[2] == 51 && buf[3] == 126)
