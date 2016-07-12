@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 17:07:09 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/07/12 14:57:28 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/07/12 22:48:15 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ typedef struct			s_input
 
 typedef	struct			s_hist
 {
-	size_t				input_len;
 	struct s_input		*input;
 	struct s_hist		*prev;
 	struct s_hist		*next;
@@ -66,6 +65,7 @@ typedef struct			s_shell
 	t_input				*input;
 	t_input				*buffer;
 	t_input				*curs_pos;
+	char				*input_buf;
 	t_tree				*tree;
 	struct termios		termios;
 	struct termios		term_save;
@@ -122,7 +122,7 @@ int						paste_buffer(t_shell *shell);
 
 int						history_prev(t_shell *shell);
 int						history_next(t_shell *shell);
-t_hist					*store_hist(t_shell *shell, int prev);
+t_hist					*store_hist(t_shell *shell);
 
 void					replace_cursor(t_shell *shell, int print, int back);
 size_t					get_cursor_x_pos(t_input *input,

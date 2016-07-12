@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/25 16:59:14 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/07/11 15:45:12 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/07/12 16:43:31 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,9 +57,9 @@ void	parse_keys3(t_shell *shell, char *buf, size_t buf_len)
 			&& buf[2] == 51 && buf[3] == 126)
 		del(shell);
 	else if (buf_len == 2 && buf[0] == -61 && buf[1] == -89)
-		copy_eol(shell);
-	else if (buf_len == 2 && buf[0] == -61 && buf[1] == -97)
 		cut_all(shell);
+	else if (buf_len == 2 && buf[0] == -61 && buf[1] == -97)
+		copy_eol(shell);
 	else if (buf_len == 3 && buf[0] == -30 && buf[1] == -120 && buf[2] == -126)
 		copy_all(shell);
 	else if (buf_len == 3 && buf[0] == -30 && buf[1] == -119 && buf[2] == -120)
