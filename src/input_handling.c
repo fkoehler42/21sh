@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/24 15:05:22 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/07/11 15:43:13 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/07/12 15:29:27 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ void	store_input(t_shell *shell, char c)
 		new->next != NULL ? new->next->prev = new : (0);
 	}
 	shell->curs_pos = new;
+	shell->input_len++;
 }
 
 void	delete_input(t_shell *shell, t_input *input, int i)
@@ -87,7 +88,6 @@ void	parse_input(t_shell *shell, char *buf, size_t buf_len, size_t p_len)
 	else if (buf_len == 1 && ft_isprint(buf[0]))
 	{
 		store_input(shell, buf[0]);
-		shell->input_len++;
 		print_input(shell, shell->curs_pos, p_len);
 	}
 	else

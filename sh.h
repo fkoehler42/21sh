@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 17:07:09 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/07/11 16:15:09 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/07/12 14:57:28 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,7 +122,7 @@ int						paste_buffer(t_shell *shell);
 
 int						history_prev(t_shell *shell);
 int						history_next(t_shell *shell);
-void					store_hist(t_shell *shell);
+t_hist					*store_hist(t_shell *shell, int prev);
 
 void					replace_cursor(t_shell *shell, int print, int back);
 size_t					get_cursor_x_pos(t_input *input,

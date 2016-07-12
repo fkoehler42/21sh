@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/06 20:57:31 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/07/10 16:34:42 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/07/12 15:29:49 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,6 @@ int		paste_buffer(t_shell *shell)
 	while (tmp)
 	{
 		store_input(shell, tmp->c);
-		shell->input_len++;
 		print_input(shell, shell->curs_pos, shell->p_len);
 		tmp = tmp->next;
 	}
