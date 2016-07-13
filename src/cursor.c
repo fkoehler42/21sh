@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/28 17:13:14 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/07/10 02:15:26 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/07/13 22:10:24 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	replace_cursor(t_shell *shell, int print, int back)
 	}
 	else if (back)
 		tputs(tgetstr("le", NULL), shell->fd, &putchar);
-	else if ((x_pos	% shell->col) == 0)
+	else if ((x_pos % shell->col) == 0)
 		tputs(tgetstr("do", NULL), shell->fd, &putchar);
 	else
 		tputs(tgetstr("nd", NULL), shell->fd, &putchar);

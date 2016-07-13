@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 17:07:09 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/07/12 22:48:15 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/07/13 22:03:10 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,10 +58,10 @@ typedef struct			s_shell
 	int					fd;
 	size_t				col;
 	size_t				input_len;
-	size_t				buf_len;
 	size_t				p_len;
 	t_env				*env_lst;
 	t_hist				*hist;
+	int					hist_end;
 	t_input				*input;
 	t_input				*buffer;
 	t_input				*curs_pos;
@@ -73,6 +73,9 @@ typedef struct			s_shell
 
 void					exit_error(int errnum);
 int						env_error(int errnum, char *arg);
+
+void					free_input_list(t_input **input, size_t *nb_elem);
+void					free_tmp_inputs(t_shell *shell);
 
 void					init_shell(t_shell *shell);
 void					init_term(t_shell *shell);
@@ -95,7 +98,7 @@ void					parse_input(t_shell *shell, char *buf,
 						size_t buf_len, size_t p_len);
 void					store_input(t_shell *shell, char c);
 void					delete_input(t_shell *shell, t_input *input, int back);
-void					free_input_list(t_input **input, size_t *nb_elem);
+void					clear_input(t_shell *shell);
 
 void					parse_keys1(t_shell *shell, char *buf);
 void					parse_keys2(t_shell *shell, char *buf);

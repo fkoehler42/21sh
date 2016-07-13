@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/30 17:07:36 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/07/10 01:55:58 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/07/13 22:22:06 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,8 @@ static int	list_and_cursor_next(t_shell *shell)
 	return (0);
 }
 
-int		move_left_word(t_shell *shell)
+int			move_left_word(t_shell *shell)
 {
-
 	if (!shell->input || !shell->curs_pos)
 		return (-1);
 	while (shell->curs_pos && shell->curs_pos->c == ' ')
@@ -39,7 +38,7 @@ int		move_left_word(t_shell *shell)
 	return (0);
 }
 
-int		move_right_word(t_shell *shell)
+int			move_right_word(t_shell *shell)
 {
 	int	i;
 
@@ -59,15 +58,15 @@ int		move_right_word(t_shell *shell)
 	}
 	if (i == 0 && (list_and_cursor_next(shell) != -1))
 	{
-		while (shell->curs_pos->next &&	shell->curs_pos->c != ' ')
+		while (shell->curs_pos->next && shell->curs_pos->c != ' ')
 			list_and_cursor_next(shell);
-		while (shell->curs_pos->next &&	shell->curs_pos->next->c == ' ')
+		while (shell->curs_pos->next && shell->curs_pos->next->c == ' ')
 			list_and_cursor_next(shell);
 	}
 	return (0);
 }
 
-int		move_line_up(t_shell *shell)
+int			move_line_up(t_shell *shell)
 {
 	size_t	i;
 
@@ -77,7 +76,7 @@ int		move_line_up(t_shell *shell)
 	return (0);
 }
 
-int		move_line_down(t_shell *shell)
+int			move_line_down(t_shell *shell)
 {
 	size_t	i;
 
