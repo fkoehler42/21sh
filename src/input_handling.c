@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/24 15:05:22 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/07/12 23:23:30 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/07/14 12:10:22 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ void	read_input(t_shell *shell)
 			exit_error(7);
 		if ((buf_len = ft_strlen(buf)) > 0)
 			parse_input(shell, buf, buf_len, shell->p_len);
+		shell->p_len = put_prompt(get_prompt(), shell->fd);
 	}
 }
 
