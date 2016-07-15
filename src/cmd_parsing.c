@@ -6,113 +6,68 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/11 14:13:19 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/07/14 19:52:01 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/07/15 13:30:28 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh.h"
 
-static char	is_bracket_closed(t_input *tmp, char c)
+static int	epur_cmd(t_shell *shell)
 {
-	char	d;
-
-	d = (c == '(') ? c + 1 : c + 2;
-	tmp = tmp->next;
-	while (tmp)
-	{
-		if (tmp->c == '\'' || tmp->c == '"' || tmp->c == '`')
-		{
-			if ((d = is_quote_closed(tmp, tmp->c)) != 0)
-				return (d);
-			d = tmp->c;
-			tmp = tmp->next;
-			while (tmp && tmp->c != d)
-				tmp = tmp->next;
-			d = (c == '(') ? c + 1 : c + 2;
-		}
-		else if (tmp->c == c)
-			return (0);
-		tmp = tmp->next;
-	}
-	return (d);
-}
-
-static char	is_quote_closed(t_input *tmp, char c)
-{
-	tmp = tmp->next;
-	while (tmp)
-	{
-		if (tmp->c == c)
-			return (0);
-		tmp = tmp->next;
-	}
-	return (c);
-}
-
-static char	ended_input(t_input *input)
-{
-	char	c;
 	t_input	*tmp;
 
-	if (!(tmp = input))
-		store_input(shell, '\n');
-	while (tmp)
+	if (!(tmp = shell->input))
+		return (-1);
+	while (tmp && (tmp->c == ' ' || tmp->c == ';'))
 	{
-		if (tmp->c == '\'' || tmp->c == '"' || tmp->c == '`')
-		{
-			if ((c = is_quote_closed(tmp, tmp->c)) != 0)
-				return (c);
-			c = tmp->c;
-			tmp = tmp->next;
-			while (tmp && tmp->next != c)
-				tmp = tmp->next;
-		}
-		else if (tmp->c = '[' || tmp->c == '{' || tmp->c == '(')
-		{
-			if ((c = is_bracket_closed(tmp, tmp->c)) != 0)
-				return (c);
-			c = (tmp->c == '(') ? tmp->c + 1 : tmp->c + 2;
-			tmp = tmp->next;
-			while (tmp && tmp->next != c)
-				tmp = tmp->next;
-		}
+		delete_input(shell, tmp, 0);
 		tmp = tmp->next;
 	}
+	if (!tmp)
+		return (-1);
+	while (tmp->next)
+		tmp = tmp->next;
+	while (tmp && (tmp->c == ' ' || tmp->c == ';'))
+	{
+		delete_input(shell, tmp, 0);
+		tmp = tmp->prev;
+	}
+	if (!tmp)
+		return (-1);
 	return (0);
 }
 
-static int	check_empty_input(t_input *input)
+static int	multi_lines_cmd(t_shell *shell)
 {
-	t_input	*tmp;
+	static t_input	*save = NULL;
+	char			c;
 
-	if (!(tmp = input))
-		return (-1);
-	while (tmp)
+	c = 0;
+	while ((c = no_ended_input(shell, c)) != 0)
 	{
-		if ((ft_isprint(tmp->c) && tmp->c != ' ' && tmp->c != ';'))
-			return (0);
+		lst_cpy(shell->input, save);
+		store_buffer(&(save), '\n');
+		free_tmp_inputs(shell);
+		tputs(tgetstr("do", NULL), shell->fd, &putchar);
+		read_multi_lines_input();
 	}
-	return (-1);
-}
-
-static int	check_cmd(t_shell *shell)
-{
-	char	c;
-
-	if (check_empty_input(shell->input) == -1)
-		return (-1);
-	if ((c = ended_input(shell->input) != 0))
-		return (1);
+	if (save)
+	{
+		lst_cpy(shell->input, save);
+		free_tmp_inputs(shell);
+		shell->input = save;
+		shell->input_len = lst_len(shell->input);
+		save = NULL;
+	}
 	return (0);
 }
 
 int			handle_cmd(t_shell *shell)
 {
-	int	test;
-
 	move_line_end(shell);
-	if ((test = check_cmd(shell) == -1))
+	if (epur_cmd(shell) == -1)
 		return (-1);
+	multi_lines_cmd(shell);
 	shell->hist = store_hist(shell);
 	clear_input(shell); //to remove
 	free_tmp_inputs(shell);

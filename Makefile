@@ -6,13 +6,14 @@
 #    By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/04/26 11:46:03 by fkoehler          #+#    #+#              #
-#    Updated: 2016/07/13 21:50:21 by fkoehler         ###   ########.fr        #
+#    Updated: 2016/07/15 12:00:28 by fkoehler         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 vpath %.c ./src
 
 SRC = buffer.c \
+	  cmd_check_quotes.c \
 	  cmd_parsing.c \
 	  cursor.c \
 	  environ.c \

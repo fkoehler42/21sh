@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 17:07:09 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/07/13 22:03:10 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/07/15 13:27:55 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,8 +82,8 @@ void					init_term(t_shell *shell);
 t_shell					*get_struct(t_shell *struc);
 
 int						putchar(int c);
-void					print_input(t_shell *shell, t_input *curs_pos,
-						size_t p_len);
+size_t					lst_len(t_input *lst);
+void					lst_cpy(t_input *src, t_input *dst);
 
 void					store_environ(t_shell *shell, char **environ);
 int						store_env_var(t_shell *shell, char *var, char *val);
@@ -94,6 +94,9 @@ char					*get_prompt(void);
 int						put_prompt(char *prompt, int fd);
 
 void					read_input(t_shell *shell);
+void					read_multi_lines_input(t_shell *shell,char *prompt);
+void					print_input(t_shell *shell, t_input *curs_pos,
+						size_t p_len);
 void					parse_input(t_shell *shell, char *buf,
 						size_t buf_len, size_t p_len);
 void					store_input(t_shell *shell, char c);
@@ -104,9 +107,6 @@ void					parse_keys1(t_shell *shell, char *buf);
 void					parse_keys2(t_shell *shell, char *buf);
 void					parse_keys3(t_shell *shell, char *buf, size_t buf_len);
 
-int						backspace(t_shell *shell);
-int						del(t_shell *shell);
-
 int						move_left(t_shell *shell);
 int						move_left_word(t_shell *shell);
 int						move_right(t_shell *shell);
@@ -116,6 +116,8 @@ int						move_line_end(t_shell *shell);
 int						move_line_up(t_shell *shell);
 int						move_line_down(t_shell *shell);
 
+int						backspace(t_shell *shell);
+int						del(t_shell *shell);
 int						cut_eol(t_shell *shell);
 int						cut_all(t_shell *shell);
 int						copy_eol(t_shell *shell);
@@ -132,6 +134,7 @@ size_t					get_cursor_x_pos(t_input *input,
 						t_input *pos, size_t p_len);
 
 int						handle_cmd(t_shell *shell);
+char					no_ended_input(t_shell *shell, char c);
 
 int						input_lst_cmp(t_input *lst1, t_input *lst2,
 						size_t len1, size_t len2);
