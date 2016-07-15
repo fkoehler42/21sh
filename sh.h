@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 17:07:09 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/07/15 13:27:55 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/07/15 15:28:47 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,7 @@ t_env					*get_env_ptr(t_env *env_lst, char *var);
 int						check_env_var(char *var);
 
 char					*get_prompt(void);
+char					*get_special_prompt(char c);
 int						put_prompt(char *prompt, int fd);
 
 void					read_input(t_shell *shell);
@@ -134,7 +135,7 @@ size_t					get_cursor_x_pos(t_input *input,
 						t_input *pos, size_t p_len);
 
 int						handle_cmd(t_shell *shell);
-char					no_ended_input(t_shell *shell, char c);
+char					not_ended_input(t_shell *shell, t_input *input, char c);
 
 int						input_lst_cmp(t_input *lst1, t_input *lst2,
 						size_t len1, size_t len2);

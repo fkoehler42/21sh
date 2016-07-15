@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/14 20:01:15 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/07/13 22:23:00 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/07/15 15:16:52 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,27 @@ char		*get_prompt(void)
 		prompt = ft_strdup(pwd);
 	else
 		prompt = get_relative_path(home, pwd);
+	return (prompt);
+}
+
+char		*get_special_prompt(char c)
+{
+	static char	*prompt = NULL;
+
+	if (prompt != NULL)
+		free(prompt);
+	if (c == '\'')
+		prompt = ft_strdup("quote> ");
+	else if (c == '"')
+		prompt = ft_strdup("dquote> ");
+	else if (c == '`')
+		prompt = ft_strdup("bquote> ");
+	else if (c == ']')
+		prompt = ft_strdup("hook> ");
+	else if (c == ')')
+		prompt = ft_strdup("parenth> ");
+	else if (c == '}')
+		prompt = ft_strdup("bracket> ");
 	return (prompt);
 }
 

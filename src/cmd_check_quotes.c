@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/11 14:13:19 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/07/15 12:01:13 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/07/15 15:28:34 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,11 +49,11 @@ static char	is_bracket_closed(t_input *tmp, char c)
 	return (d);
 }
 
-char		no_ended_input(t_shell *shell, char c)
+char		not_ended_input(t_shell *shell, t_input *input, char c)
 {
 	t_input	*tmp;
 
-	if (!(tmp = shell->input))
+	if (!(tmp = input))
 		store_input(shell, '\n');
 	while (tmp)
 	{

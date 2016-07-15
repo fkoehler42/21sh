@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/11 14:13:19 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/07/15 13:30:28 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/07/15 16:20:44 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,13 +43,21 @@ static int	multi_lines_cmd(t_shell *shell)
 	char			c;
 
 	c = 0;
-	while ((c = no_ended_input(shell, c)) != 0)
+	if ((c = not_ended_input(shell, shell->input, c)) != 0)
 	{
 		lst_cpy(shell->input, save);
 		store_buffer(&(save), '\n');
-		free_tmp_inputs(shell);
 		tputs(tgetstr("do", NULL), shell->fd, &putchar);
-		read_multi_lines_input();
+		read_multi_lines_input(shell, get_special_prompt(c));
+		lst_cpy(shell->input, save);
+		while ((c = not_ended_input(shell, shell->save, c)) != 0)
+		{
+			store_buffer(&(save), '\n');
+			lst_cpy(shell->input, save);
+			free_tmp_inputs(shell);
+			tputs(tgetstr("do", NULL), shell->fd, &putchar);
+			read_multi_lines_input(shell, get_special_prompt(c));
+		}
 	}
 	if (save)
 	{
