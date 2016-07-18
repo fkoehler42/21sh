@@ -6,7 +6,7 @@
 /*   By: fkoehler <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/11/24 19:11:04 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/06/28 15:32:24 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/07/18 12:01:35 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ char				*ft_strchr(const char *s, int c);
 int					ft_strchr_index(const char *s, int c);
 int					ft_strchr_count(const char *s, int c);
 char				*ft_strrchr(const char *s, int c);
+int					ft_strrchr_index(const char *s, int c);
 char				*ft_strcat(char *s1, const char *s2);
 char				*ft_strncat(char *s1, const char *s2, size_t n);
 size_t				ft_strlcat(char *dst, const char *src, size_t size);

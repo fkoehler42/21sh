@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 17:07:09 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/07/15 15:28:47 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/07/18 15:55:40 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,10 @@
 # include <term.h>
 # include <fcntl.h>
 # include <sys/ioctl.h>
+
+# define CMD 1
+# define SEM 2
+# define PIP 3
 
 #define debug ft_printf("file : %s, line : %d", __FILE__, __LINE__);
 
@@ -45,13 +49,13 @@ typedef	struct			s_hist
 	struct s_hist		*next;
 }						t_hist;
 
-typedef struct			s_tree
+typedef struct			s_btree
 {
 	int					type;
 	char				*cmd;
-	struct s_tree		*left;
-	struct s_tree		*right;
-}						t_tree;
+	struct s_btree		*left;
+	struct s_btree		*right;
+}						t_btree;
 
 typedef struct			s_shell
 {
@@ -66,7 +70,7 @@ typedef struct			s_shell
 	t_input				*buffer;
 	t_input				*curs_pos;
 	char				*input_buf;
-	t_tree				*tree;
+	t_btree				*cmd;
 	struct termios		termios;
 	struct termios		term_save;
 }						t_shell;
@@ -83,7 +87,8 @@ t_shell					*get_struct(t_shell *struc);
 
 int						putchar(int c);
 size_t					lst_len(t_input *lst);
-void					lst_cpy(t_input *src, t_input *dst);
+void					lst_cpy(t_input *src, t_input **dst);
+char					*lst_to_str(t_input *lst);
 
 void					store_environ(t_shell *shell, char **environ);
 int						store_env_var(t_shell *shell, char *var, char *val);
@@ -116,7 +121,6 @@ int						move_line_start(t_shell *shell);
 int						move_line_end(t_shell *shell);
 int						move_line_up(t_shell *shell);
 int						move_line_down(t_shell *shell);
-
 int						backspace(t_shell *shell);
 int						del(t_shell *shell);
 int						cut_eol(t_shell *shell);
@@ -135,7 +139,8 @@ size_t					get_cursor_x_pos(t_input *input,
 						t_input *pos, size_t p_len);
 
 int						handle_cmd(t_shell *shell);
-char					not_ended_input(t_shell *shell, t_input *input, char c);
+char					not_ended_input(t_input *input, char c);
+t_btree					*store_cmd(char *str);
 
 int						input_lst_cmp(t_input *lst1, t_input *lst2,
 						size_t len1, size_t len2);

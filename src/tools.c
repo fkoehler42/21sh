@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/11 12:46:08 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/07/15 12:40:29 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/07/18 12:09:10 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ size_t	lst_len(t_input *lst)
 	return (len);
 }
 
-void	lst_cpy(t_input *src, t_input *dst)
+void	lst_cpy(t_input *src, t_input **dst)
 {
 	t_input	*tmp;
 
@@ -36,9 +36,29 @@ void	lst_cpy(t_input *src, t_input *dst)
 		return ;
 	while (tmp)
 	{
-		store_buffer(&(dst), tmp->c);
+		store_buffer(dst, tmp->c);
 		tmp = tmp->next;
 	}
+}
+
+char	*lst_to_str(t_input *lst)
+{
+	int		i;
+	size_t	len;
+	char	*str;
+
+	i = 0;
+	len = lst_len(lst);
+	if (!(str = (char *)malloc(sizeof(*str) * (len + 1))))
+		exit_error(9);
+	while (len--)
+	{
+		str[i] = lst->c;
+		lst = lst->next;
+		i++;
+	}
+	str[i] = 0;
+	return (str);
 }
 
 int		input_lst_cmp(t_input *lst1, t_input *lst2, size_t len1, size_t len2)

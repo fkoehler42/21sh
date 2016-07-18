@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 18:55:56 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/07/13 18:28:35 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/07/18 11:10:41 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	init_shell(t_shell *shell)
 	shell->buffer = NULL;
 	shell->input_buf = NULL;
 	shell->curs_pos = NULL;
-	shell->tree = NULL;
+	shell->cmd = NULL;
 	get_struct(shell);
 }
 
