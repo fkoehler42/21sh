@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/11 14:13:19 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/07/18 19:45:44 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/07/19 17:47:26 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,30 +65,43 @@ static int	multi_lines_cmd(t_shell *shell)
 	}
 	return (0);
 }
-/*
-static void	test_tree(t_btree *cmd)
-{
-	char	*test;
 
+static void	parse_cmd(char *cmd)
+{
+	int		i;
+	char	**cmd_array;
+
+	i = 0;
+	cmd_array = strsplit_args(cmd);
+	while (cmd_array[i])
+	{
+		ft_putstr(cmd_array[i]);
+		ft_putchar(' ');
+		i++;
+	}
+		ft_putchar('\n');
+	/* cmd = str_replace_var(cmd); */
+
+}
+
+static void	browse_btree(t_btree *cmd)
+{
 	if (!cmd)
 		return ;
 	if (cmd->type == SEM)
 	{
-		test_tree(cmd->left);
-		test = ";";
-		test_tree(cmd->right);
+		browse_btree(cmd->left);
+		browse_btree(cmd->right);
 	}
 	else if (cmd->type == PIP)
 	{
-		test_tree(cmd->left);
-		test = "|";
-		test_tree(cmd->right);
+		browse_btree(cmd->left);
+		browse_btree(cmd->right);
 	}
 	else
-		test = cmd->cmd;
-	ft_putstr(test);
+		parse_cmd(cmd->cmd);
 }
-*/
+
 int			handle_cmd(t_shell *shell)
 {
 	char	*cmd_str;
@@ -102,5 +115,6 @@ int			handle_cmd(t_shell *shell)
 	shell->cmd = store_cmd(cmd_str);
 	tputs(tgetstr("do", NULL), shell->fd, &putchar);
 	free_tmp_inputs(shell);
+	browse_btree(shell->cmd);
 	return (0);
 }

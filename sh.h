@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 17:07:09 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/07/18 15:55:40 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/07/19 17:32:27 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,8 @@ void					init_term(t_shell *shell);
 t_shell					*get_struct(t_shell *struc);
 
 int						putchar(int c);
+char					*str_replace_var(char *s);
+char					**strsplit_args(char const *s);
 size_t					lst_len(t_input *lst);
 void					lst_cpy(t_input *src, t_input **dst);
 char					*lst_to_str(t_input *lst);
@@ -141,8 +143,5 @@ size_t					get_cursor_x_pos(t_input *input,
 int						handle_cmd(t_shell *shell);
 char					not_ended_input(t_input *input, char c);
 t_btree					*store_cmd(char *str);
-
-int						input_lst_cmp(t_input *lst1, t_input *lst2,
-						size_t len1, size_t len2);
 
 #endif

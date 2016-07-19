@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/28 17:13:14 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/07/13 22:10:24 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/07/19 17:46:37 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,4 +47,14 @@ void	replace_cursor(t_shell *shell, int print, int back)
 		tputs(tgetstr("do", NULL), shell->fd, &putchar);
 	else
 		tputs(tgetstr("nd", NULL), shell->fd, &putchar);
+}
+
+void	clear_input(t_shell *shell)
+{
+	if (shell->input)
+	{
+		move_line_start(shell);
+		tputs(tgetstr("cd", NULL), shell->fd, &putchar);
+		free_input_list(&(shell->input), &(shell->input_len));
+	}
 }

@@ -6,16 +6,16 @@
 #    By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/04/26 11:46:03 by fkoehler          #+#    #+#              #
-#    Updated: 2016/07/18 11:30:39 by fkoehler         ###   ########.fr        #
+#    Updated: 2016/07/19 16:42:05 by fkoehler         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 vpath %.c ./src
 
 SRC = buffer.c \
-	  cmd_check_quotes.c \
 	  cmd_parsing.c \
 	  cmd_storage.c \
+	  cmd_quote_closure.c \
 	  cursor.c \
 	  environ.c \
 	  error.c \
@@ -29,10 +29,12 @@ SRC = buffer.c \
 	  keys_parsing.c \
 	  line_moves_1.c \
 	  line_moves_2.c \
+	  lst_tools.c \
 	  main.c \
 	  print.c \
 	  prompt.c \
-	  tools.c
+	  str_tools.c \
+	  strsplit_args.c
 
 NAME = 21sh
 
