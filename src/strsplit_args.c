@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   strsplit_args.c                                 :+:      :+:    :+:   */
+/*   strsplit_args.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkoehler <marvin@42.fr>                    +#+  +:+       +#+        */
+/*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/02 11:44:16 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/07/19 18:04:17 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/07/19 22:53:04 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,19 +22,19 @@ static int	countwords(char const *s, int i, int n)
 		{
 			while (s[i] && s[i] != '"')
 				i++;
-			n++;
+			!s[i] || !s[i + 1] || s[i + 1] == ' ' || s[i + 1] == '\t' ? n++ : 0;
 		}
 		else if (s[i] == '\'' && ++i)
 		{
 			while (s[i] && s[i] != '\'')
 				i++;
-			n++;
+			!s[i] || !s[i + 1] || s[i + 1] == ' ' || s[i + 1] == '\t' ? n++ : 0;
 		}
 		else if (s[i] != ' ' && s[i] != '\t')
 		{
-			while (s[i] && s[i] != ' ' && s[i] != '\t')
+			while (s[i] && s[i] != ' ' && s[i] != '\t' && s[i] != '\'' && s[i] != '"')
 				i++;
-			n++;
+			s[i] && s[i + 1] && s[i + 1] != ' ' && s[i + 1] != '\t' ? n++ : i--;
 		}
 		s[i] != 0 ? ++i : 0;
 	}
@@ -49,18 +49,21 @@ static int	word_len(char const *s, int i)
 	{
 		while (s[i] && s[i] != '\'')
 			i++;
-		s[i] != 0 ? ++i : 0;
+		if (s[i] && s[++i] && s[i] != ' ' && s[i] != '\t')
+			i = word_len(s, i);
 	}
 	else if (s[i] == '"' && ++i)
 	{
 		while (s[i] && s[i] != '"')
 			i++;
-		s[i] != 0 ? ++i : 0;
+		if (s[i] && s[++i] && s[i] != ' ' && s[i] != '\t')
+			i = word_len(s, i);
 	}
 	else
 	{
-		while (s[i] && s[i] != ' ' && s[i] != '\t')
+		while (s[i] && s[i] != ' ' && s[i] != '\t' && s[i] != '\'' && s[i] != '"')
 			i++;
+		i = s[i] && (s[i] == '\'' || s[i] == '"') && s[i + 1] ? word_len(s, i) : i + 1;
 	}
 	return (i);
 }
@@ -75,6 +78,7 @@ char		**strsplit_args(char const *s)
 	i = 0;
 	j = 0;
 	array = (char **)malloc(sizeof(char *) * (countwords(s, 0, 0) + 1));
+	ft_putnbr(countwords(s, 0, 0));
 	if (!s || !array)
 		return (NULL);
 	while (s[i])
@@ -86,10 +90,24 @@ char		**strsplit_args(char const *s)
 		if (start != i)
 			array[j++] = ft_strsub(s, start, (i - start));
 	}
+	ft_putnbr(j);
 	array[j] = NULL;
 	return (array);
 }
 /*
+int		main(int ac, char **av)
+{
+	char	**test;
+
+	test = strsplit_args(av[1]);
+	while (*test != NULL)
+	{
+		ft_putstr(*test);
+		ft_putchar(' ');
+		++test;
+	}
+}
+
 char		*strdup_remove_quotes(char *str)
 {
 	char	*new_str;
