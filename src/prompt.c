@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/14 20:01:15 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/07/15 15:16:52 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/07/21 19:58:22 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,8 @@ char		*get_special_prompt(char c)
 		prompt = ft_strdup("parenth> ");
 	else if (c == '}')
 		prompt = ft_strdup("bracket> ");
+	else if (c == '|')
+		prompt = ft_strdup("pipe> ");
 	return (prompt);
 }
 
