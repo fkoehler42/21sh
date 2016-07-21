@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/11 14:13:19 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/07/21 19:59:05 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/07/21 23:46:56 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,15 +44,15 @@ static int	multi_lines_cmd(t_shell *shell)
 	char			c;
 
 	c = 0;
-	if ((c = valid_input(shell->input, c)) != 0)
+	if ((c = valid_input(shell->input, c)) > 0)
 	{
 		lst_cpy(shell->input, &save);
-		while ((c = valid_input(save, c)) != 0)
+		while ((c = valid_input(save, c)) > 0)
 		{
 			free_tmp_inputs(shell);
 			store_buffer(&save, '\n');
-			tputs(tgetstr("do", NULL), shell->fd, &putchar);
 			read_multi_lines_input(shell, get_special_prompt(c));
+			tputs(tgetstr("do", NULL), shell->fd, &putchar);
 			lst_cpy(shell->input, &save);
 		}
 	}
@@ -108,15 +108,15 @@ int			handle_cmd(t_shell *shell)
 	char	*cmd_str;
 
 	/* move_line_end(shell); */
+	tputs(tgetstr("do", NULL), shell->fd, &putchar);
 	if (epur_cmd(shell) == -1)
 		return (-1);
 	if (parse_pipe_cmd(shell->input, 1) == -1)
-		cmd_error(0);
+		return (cmd_error(0));
 	multi_lines_cmd(shell);
 	shell->hist = store_hist(shell);
 	cmd_str = lst_to_str(shell->input);
 	shell->cmd = store_cmd(cmd_str);
-	tputs(tgetstr("do", NULL), shell->fd, &putchar);
 	free_tmp_inputs(shell);
 	browse_btree(shell->cmd, shell->cmd->type);
 	return (0);

@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 17:07:09 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/07/21 13:10:34 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/07/21 19:56:11 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,7 +142,8 @@ size_t					get_cursor_x_pos(t_input *input,
 						t_input *pos, size_t p_len);
 
 int						handle_cmd(t_shell *shell);
-char					not_ended_input(t_input *input, char c);
+int						parse_pipe_cmd(t_input *cmd, int reverse);
+char					valid_input(t_input *input, char c);
 t_btree					*store_cmd(char *str);
 
 #endif

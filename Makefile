@@ -6,17 +6,17 @@
 #    By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/04/26 11:46:03 by fkoehler          #+#    #+#              #
-#    Updated: 2016/07/21 13:20:14 by fkoehler         ###   ########.fr        #
+#    Updated: 2016/07/21 19:56:44 by fkoehler         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 vpath %.c ./src
 
 SRC = buffer.c \
+	  cmd_check_input.c \
 	  cmd_parsing.c \
 	  cmd_pipe.c \
 	  cmd_storage.c \
-	  cmd_quote_closure.c \
 	  cursor.c \
 	  environ.c \
 	  error.c \
