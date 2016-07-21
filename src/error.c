@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/24 10:52:39 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/07/13 22:09:52 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/07/21 13:13:03 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,13 @@ void	exit_error(int errnum)
 	else if (errnum == 10)
 		ft_putstr_fd("ioctl: Unable to get the terminal state infos\n", 2);
 	exit(EXIT_FAILURE);
+}
+
+int		cmd_error(int errnum)
+{
+	if (errnum == 0)
+		ft_putstr_fd("21sh: Parse error near `|'", 2);
+	return (-1);
 }
 
 int		env_error(int errnum, char *arg)

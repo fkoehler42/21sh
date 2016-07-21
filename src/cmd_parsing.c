@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/11 14:13:19 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/07/19 21:49:37 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/07/21 13:33:40 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static int	epur_cmd(t_shell *shell)
 		delete_input(shell, tmp1, 0);
 		tmp1 = shell->input;
 	}
-	if (!tmp1)
+	if (!tmp1 && (shell->curs_pos = NULL))
 		return (-1);
 	tmp1 = shell->curs_pos;
 	while (tmp1 && (tmp1->c == ' ' || tmp1->c == ';'))
@@ -33,7 +33,7 @@ static int	epur_cmd(t_shell *shell)
 		delete_input(shell, tmp1, 0);
 		tmp1 = tmp2;
 	}
-	if (!tmp1)
+	if (!tmp1 && (shell->curs_pos = NULL))
 		return (-1);
 	return (0);
 }
@@ -66,47 +66,48 @@ static int	multi_lines_cmd(t_shell *shell)
 	return (0);
 }
 
-static void	parse_cmd(char *cmd)
+static int	parse_cmd(char *cmd, int parent)
 {
 	int		i;
 	char	**cmd_array;
 
 	i = 0;
-	cmd_array = strsplit_args(cmd);
+	if (!(cmd_array = strsplit_args(cmd)) && parent == PIP)
+		return (cmd_error(0));
 	while (cmd_array[i])
 	{
 		ft_putstr(cmd_array[i]);
-		ft_putchar(' ');
+		ft_putchar('|');
 		i++;
 	}
 		ft_putnbr(i);
 	/* cmd = str_replace_var(cmd); */
-
+	return (0);
 }
 
-static void	browse_btree(t_btree *cmd)
+static void	browse_btree(t_btree *cmd, int type)
 {
 	if (!cmd)
 		return ;
 	if (cmd->type == SEM)
 	{
-		browse_btree(cmd->left);
-		browse_btree(cmd->right);
+		browse_btree(cmd->left, SEM);
+		browse_btree(cmd->right, SEM);
 	}
 	else if (cmd->type == PIP)
 	{
-		browse_btree(cmd->left);
-		browse_btree(cmd->right);
+		browse_btree(cmd->left, PIP);
+		browse_btree(cmd->right, PIP);
 	}
 	else
-		parse_cmd(cmd->cmd);
+		parse_cmd(cmd->cmd, type);
 }
 
 int			handle_cmd(t_shell *shell)
 {
 	char	*cmd_str;
 
-	move_line_end(shell);
+	/* move_line_end(shell); */
 	if (epur_cmd(shell) == -1)
 		return (-1);
 	multi_lines_cmd(shell);
@@ -115,6 +116,6 @@ int			handle_cmd(t_shell *shell)
 	shell->cmd = store_cmd(cmd_str);
 	tputs(tgetstr("do", NULL), shell->fd, &putchar);
 	free_tmp_inputs(shell);
-	browse_btree(shell->cmd);
+	browse_btree(shell->cmd, shell->cmd->type);
 	return (0);
 }

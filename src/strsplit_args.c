@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/02 11:44:16 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/07/19 22:53:04 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/07/21 12:28:47 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ static int	countwords(char const *s, int i, int n)
 		{
 			while (s[i] && s[i] != ' ' && s[i] != '\t' && s[i] != '\'' && s[i] != '"')
 				i++;
-			s[i] && s[i + 1] && s[i + 1] != ' ' && s[i + 1] != '\t' ? n++ : i--;
+			s[i] && (s[i] == '\'' || s[i] == '"') ? i-- : n++;
 		}
 		s[i] != 0 ? ++i : 0;
 	}
@@ -63,7 +63,7 @@ static int	word_len(char const *s, int i)
 	{
 		while (s[i] && s[i] != ' ' && s[i] != '\t' && s[i] != '\'' && s[i] != '"')
 			i++;
-		i = s[i] && (s[i] == '\'' || s[i] == '"') && s[i + 1] ? word_len(s, i) : i + 1;
+		i = s[i] && (s[i] == '\'' || s[i] == '"') && s[i + 1] ? word_len(s, i) : i ;
 	}
 	return (i);
 }

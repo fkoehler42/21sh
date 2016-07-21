@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 17:07:09 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/07/19 17:32:27 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/07/21 13:10:34 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ typedef struct			s_shell
 
 void					exit_error(int errnum);
 int						env_error(int errnum, char *arg);
+int						cmd_error(int errnum);
 
 void					free_input_list(t_input **input, size_t *nb_elem);
 void					free_tmp_inputs(t_shell *shell);
