@@ -49,30 +49,32 @@ static char	is_bracket_closed(t_input *tmp, char c)
 	return (d);
 }
 
-static char	check_quote_type(t_input **tmp, char c)
+static char	check_quotes(t_input **input, char c)
 {
-	if ((*tmp)->c == '\'' || (*tmp)->c == '"' || (*tmp)->c == '`')
+	t_input	*tmp;
+
+	tmp = *input;
+	if (tmp->c == '\'' || tmp->c == '"' || tmp->c == '`')
 	{
-		if ((c = is_quote_closed(*tmp, (*tmp)->c)) != 0)
+		if ((c = is_quote_closed(tmp, tmp->c)) != 0)
 			return (c);
-		c = (*tmp)->c;
-		*tmp = (*tmp)->next;
-		while (*tmp && (*tmp)->c != c)
-			*tmp = (*tmp)->next;
+		c = tmp->c;
+		tmp = tmp->next;
+		while (tmp && tmp->c != c)
+			tmp = tmp->next;
 	}
-	else if ((*tmp)->c == '[' || (*tmp)->c == '{' || (*tmp)->c == '(')
+	else if (tmp->c == '[' || tmp->c == '{' || tmp->c == '(')
 	{
-		if ((c = is_bracket_closed(*tmp, (*tmp)->c)) != 0)
+		if ((c = is_bracket_closed(tmp, tmp->c)) != 0)
 			return (c);
-		c = ((*tmp)->c == '(') ? (*tmp)->c + 1 : (*tmp)->c + 2;
-		*tmp = (*tmp)->next;
-		while (*tmp && (*tmp)->c != c)
+		c = (tmp->c == '(') ? tmp->c + 1 : tmp->c + 2;
+		while ((tmp = tmp->next) && tmp && tmp->c != c)
 		{
-			if ((*tmp)->c == '\'' || (*tmp)->c == '"' || (*tmp)->c == '`')
-				c = (*tmp)->c;
-			*tmp = (*tmp)->next;
+			if (tmp->c == '\'' || tmp->c == '"' || tmp->c == '`')
+				c = tmp->c;
 		}
 	}
+	*input = tmp;
 	return (0);
 }
 
@@ -82,13 +84,13 @@ char		valid_input(t_input *input, char c)
 	t_input	*tmp;
 
 	tmp = input;
-	if ((pipe_ret = parse_pipe_cmd(input, 0)) == -1)
+	if ((pipe_ret = check_pipes(input, 0)) == -1)
 		return ('|');
 	if (pipe_ret == 1)
 		return (cmd_error(0));
 	while (tmp)
 	{
-		if ((c = check_quote_type(&tmp, tmp->c)) != 0)
+		if ((c = check_quotes(&tmp, tmp->c)) != 0)
 			return (c);
 		tmp = tmp->next;
 	}

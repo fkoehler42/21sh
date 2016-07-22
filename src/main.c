@@ -23,4 +23,5 @@ int		main(int ac, char **av, char **environ)
 	init_term(&shell);
 	store_environ(&shell, environ);
 	read_input(&shell);
+	return (0);
 }

@@ -41,7 +41,7 @@ static int	parse_near_pipe(t_input *cmd, int reverse)
 	return (-1);
 }
 
-int				parse_pipe_cmd(t_input *cmd, int reverse)
+int				check_pipes(t_input *cmd, int reverse)
 {
 	int		ret;
 	t_input	*tmp;

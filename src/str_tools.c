@@ -14,12 +14,12 @@
 
 char	*str_replace_var(char *s)
 {
-	int		i;
+//	int		i;
 	int		start;
 
 	if ((start = ft_strchr_index(s, '$')) == -1)
 		return (s);
-	i = start;
+//	i = start;
 	/* while (s[i] && s[i] != ) */
 	return (s);
 }

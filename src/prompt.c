@@ -34,13 +34,11 @@ char		*get_prompt(void)
 	static char	*prompt = NULL;
 	char		*home;
 	char		*pwd;
-	char		*oldpwd;
 
 	if (prompt != NULL)
 		free(prompt);
 	home = getenv("HOME");
 	pwd = getenv("PWD");
-	oldpwd = getenv("OLDPWD");
 	if (!pwd)
 		prompt = ft_strdup("$");
 	else if (!home)

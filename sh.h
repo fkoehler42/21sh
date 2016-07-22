@@ -13,7 +13,7 @@
 #ifndef SH_H
 # define SH_H
 
-# include <libft.h>
+# include "./libft/includes/libft.h"
 # include <ft_printf.h>
 # include <signal.h>
 # include <sys/wait.h>
@@ -142,7 +142,7 @@ size_t					get_cursor_x_pos(t_input *input,
 						t_input *pos, size_t p_len);
 
 int						handle_cmd(t_shell *shell);
-int						parse_pipe_cmd(t_input *cmd, int reverse);
+int						check_pipes(t_input *cmd, int reverse);
 char					valid_input(t_input *input, char c);
 t_btree					*store_cmd(char *str);
 

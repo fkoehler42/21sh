@@ -111,7 +111,7 @@ int			handle_cmd(t_shell *shell)
 	tputs(tgetstr("do", NULL), shell->fd, &putchar);
 	if (epur_cmd(shell) == -1)
 		return (-1);
-	if (parse_pipe_cmd(shell->input, 1) == -1)
+	if (check_pipes(shell->input, 1) == -1)
 		return (cmd_error(0));
 	multi_lines_cmd(shell);
 	shell->hist = store_hist(shell);
