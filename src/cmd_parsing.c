@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/11 14:13:19 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/07/21 23:46:56 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/07/23 17:20:54 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,19 +21,19 @@ static int	epur_cmd(t_shell *shell)
 		return (-1);
 	while (tmp1 && (tmp1->c == ' ' || tmp1->c == ';'))
 	{
-		delete_input(shell, tmp1, 0);
+		delete_input(shell, tmp1, 1);
 		tmp1 = shell->input;
 	}
-	if (!tmp1 && (shell->curs_pos = NULL))
+	if (!tmp1)
 		return (-1);
 	tmp1 = shell->curs_pos;
 	while (tmp1 && (tmp1->c == ' ' || tmp1->c == ';'))
 	{
 		tmp2 = tmp1->prev;
-		delete_input(shell, tmp1, 0);
+		delete_input(shell, tmp1, 1);
 		tmp1 = tmp2;
 	}
-	if (!tmp1 && (shell->curs_pos = NULL))
+	if (!tmp1)
 		return (-1);
 	return (0);
 }
@@ -65,7 +65,7 @@ static int	multi_lines_cmd(t_shell *shell)
 	}
 	return (0);
 }
-
+/*
 static int	parse_cmd(char *cmd, int parent)
 {
 	int		i;
@@ -80,13 +80,14 @@ static int	parse_cmd(char *cmd, int parent)
 		ft_putchar('|');
 		i++;
 	}
-		ft_putnbr(i);
-	/* cmd = str_replace_var(cmd); */
+	ft_putnbr(i);
+	cmd = str_replace_var(cmd);
 	return (0);
 }
-
+*/
 static void	browse_btree(t_btree *cmd, int type)
 {
+	(void)type;
 	if (!cmd)
 		return ;
 	if (cmd->type == SEM)
@@ -100,14 +101,15 @@ static void	browse_btree(t_btree *cmd, int type)
 		browse_btree(cmd->right, PIP);
 	}
 	else
-		parse_cmd(cmd->cmd, type);
+		ft_putendl(cmd->cmd);
+		/* parse_cmd(cmd->cmd, type); */
 }
 
 int			handle_cmd(t_shell *shell)
 {
 	char	*cmd_str;
 
-	/* move_line_end(shell); */
+	move_line_end(shell);
 	tputs(tgetstr("do", NULL), shell->fd, &putchar);
 	if (epur_cmd(shell) == -1)
 		return (-1);

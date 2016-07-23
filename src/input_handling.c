@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/24 15:05:22 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/07/16 17:39:44 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/07/23 11:34:41 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,8 +57,10 @@ void	delete_input(t_shell *shell, t_input *input, int i)
 		input->prev->next = input->next;
 		input->next->prev = input->prev;
 	}
-	if (i)
+	if (i && input->prev)
 		shell->curs_pos = input->prev;
+	else if (i)
+		shell->curs_pos = shell->input;
 	free(input);
 	shell->input_len--;
 }
