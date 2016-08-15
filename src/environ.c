@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/24 12:20:59 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/07/19 16:40:25 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/08/15 15:50:18 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,36 +65,6 @@ int		store_env_var(t_shell *shell, char *var, char *val)
 		while (tmp->next)
 			tmp = tmp->next;
 		tmp->next = new;
-	}
-	return (0);
-}
-
-t_env	*get_env_ptr(t_env *env_lst, char *var)
-{
-	t_env	*tmp;
-
-	if (!env_lst)
-		return (NULL);
-	tmp = env_lst;
-	while (tmp && (ft_strcmp(tmp->var, var) != 0))
-		tmp = tmp->next;
-	if (!tmp)
-		return (NULL);
-	return (tmp);
-}
-
-int		check_env_var(char *var)
-{
-	int		i;
-
-	i = 0;
-	if (!var[i])
-		return (env_error(0, ""));
-	while (var[i])
-	{
-		if (!ft_isalnum(var[i]) && var[i] != '_')
-			return (env_error(1, var));
-		i++;
 	}
 	return (0);
 }

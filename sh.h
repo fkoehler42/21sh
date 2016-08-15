@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 17:07:09 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/08/15 12:23:29 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/08/15 18:21:51 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,11 +87,11 @@ void					init_term(t_shell *shell);
 t_shell					*get_struct(t_shell *struc);
 
 int						putchar(int c);
+int						is_str_quoted(char *s);
 int						strrchr_outside_quotes(char *s, char c);
 char					*str_replace_var(char *s);
 char					**strsplit_args(char const *s);
 size_t					lst_len(t_input *lst);
-size_t					lst_chr_count(t_input *lst, int c);
 void					lst_cpy(t_input *src, t_input **dst);
 char					*lst_to_str(t_input *lst);
 
@@ -99,6 +99,7 @@ void					store_environ(t_shell *shell, char **environ);
 int						store_env_var(t_shell *shell, char *var, char *val);
 t_env					*get_env_ptr(t_env *env_lst, char *var);
 int						check_env_var(char *var);
+char					*env_var_to_value(char *var);
 
 char					*get_prompt(void);
 char					*get_special_prompt(char c);
@@ -143,9 +144,10 @@ void					replace_cursor(t_shell *shell, int print, int back);
 size_t					get_cursor_x_pos(t_input *input,
 						t_input *pos, size_t p_len);
 
-int						handle_cmd(t_shell *shell);
+int						handle_input(t_shell *shell);
 int						check_pipes(t_input *cmd, int reverse);
 char					valid_input(t_input *input, char c);
 t_btree					*store_cmd(char *str);
+int						parse_cmd(char *str_cmd, int parent);
 
 #endif

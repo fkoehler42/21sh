@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/11 14:13:19 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/08/15 13:03:35 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/08/15 15:05:23 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,29 +65,9 @@ static int	multi_lines_cmd(t_shell *shell)
 	}
 	return (0);
 }
-/*
-static int	parse_cmd(char *cmd, int parent)
-{
-	int		i;
-	char	**cmd_array;
 
-	i = 0;
-	if (!(cmd_array = strsplit_args(cmd)) && parent == PIP)
-		return (cmd_error(0));
-	while (cmd_array[i])
-	{
-		ft_putstr(cmd_array[i]);
-		ft_putchar('|');
-		i++;
-	}
-	ft_putnbr(i);
-	cmd = str_replace_var(cmd);
-	return (0);
-}
-*/
 static void	browse_btree(t_btree *cmd, int type)
 {
-	(void)type;
 	if (!cmd)
 		return ;
 	if (cmd->type == SEM)
@@ -101,11 +81,10 @@ static void	browse_btree(t_btree *cmd, int type)
 		browse_btree(cmd->right, PIP);
 	}
 	else
-		ft_putendl(cmd->cmd);
-		/* parse_cmd(cmd->cmd, type); */
+		parse_cmd(cmd->cmd, type);
 }
 
-int			handle_cmd(t_shell *shell)
+int			handle_input(t_shell *shell)
 {
 	char	*cmd_str;
 

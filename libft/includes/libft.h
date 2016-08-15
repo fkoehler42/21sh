@@ -6,7 +6,7 @@
 /*   By: fkoehler <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/11/24 19:11:04 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/07/23 11:25:16 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/08/15 18:46:39 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,8 @@ void				ft_putendl_fd(char const *s, int fd);
 void				ft_putnbr(int n);
 void				ft_putnbr_fd(int n, int fd);
 void				ft_replace_char(char *s, char to_find, char replace);
+char				*ft_replace_str(const char *s1, unsigned int start,
+					size_t len, const char *s2);
 void				ft_strclr(char *s);
 void				ft_bzero(void *s, size_t n);
 void				*ft_memset(void *b, int c, size_t len);
