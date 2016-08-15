@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/19 16:42:14 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/08/15 18:39:37 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/08/15 19:30:09 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,9 @@ char	*str_replace_var(char *s)
 		{
 			start = i;
 			i++;
-			while (s[i] && !ft_isspace(s[i]) && s[i] != '$')
+			while (s[i] && (ft_isalnum(s[i]) || s[i] == '_'))
 				i++;
-			if ((tmp = env_var_to_value(ft_strsub(s, (start + 1), (i - start)))))
+			if ((tmp = env_var_to_value(ft_strsub(s, (start + 1), (i - start - 1)))))
 			{
 				s1 = ft_replace_str(s, start, (i - start), tmp);
 				free(tmp);
