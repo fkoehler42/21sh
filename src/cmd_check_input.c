@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/11 14:13:19 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/07/23 13:36:22 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/08/15 13:03:37 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,10 @@ static char	is_quote_closed(t_input *tmp, char c)
 
 static char	is_bracket_closed(t_input *tmp, char c)
 {
+	size_t	count;
 	char	d;
 
+	count = 1;
 	d = (c == '(') ? c + 1 : c + 2;
 	tmp = tmp->next;
 	while (tmp)
@@ -42,7 +44,9 @@ static char	is_bracket_closed(t_input *tmp, char c)
 				tmp = tmp->next;
 			d = (c == '(') ? c + 1 : c + 2;
 		}
-		else if (tmp->c == d)
+		else if (tmp->c == c)
+			count++;
+		else if (tmp->c == d && (--count == 0))
 			return (0);
 		tmp = tmp->next;
 	}
@@ -92,7 +96,8 @@ char		valid_input(t_input *input, char c)
 	{
 		if ((c = check_quotes(&tmp, tmp->c)) != 0)
 			return (c);
-		tmp = tmp->next;
+		if (tmp)
+			tmp = tmp->next;
 	}
 	return (0);
 }
