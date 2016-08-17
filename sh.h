@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 17:07:09 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/08/15 18:21:51 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/08/17 15:38:06 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 # include <libft.h>
 # include <ft_printf.h>
 # include <signal.h>
+# include <sys/stat.h>
 # include <sys/wait.h>
 # include <sys/param.h>
 # include <term.h>
@@ -78,6 +79,7 @@ typedef struct			s_shell
 void					exit_error(int errnum);
 int						env_error(int errnum, char *arg);
 int						cmd_error(int errnum);
+int						cd_error(int errnum, char *arg);
 
 void					free_input_list(t_input **input, size_t *nb_elem);
 void					free_tmp_inputs(t_shell *shell);
@@ -100,6 +102,7 @@ int						store_env_var(t_shell *shell, char *var, char *val);
 t_env					*get_env_ptr(t_env *env_lst, char *var);
 int						check_env_var(char *var);
 char					*env_var_to_value(char *var);
+int						set_new_pwd(t_env *env_lst);
 
 char					*get_prompt(void);
 char					*get_special_prompt(char c);
@@ -148,6 +151,9 @@ int						handle_input(t_shell *shell);
 int						check_pipes(t_input *cmd, int reverse);
 char					valid_input(t_input *input, char c);
 t_btree					*store_cmd(char *str);
-int						parse_cmd(char *str_cmd, int parent);
+
+int						builtins_cmd(char **cmd, t_env *env_lst);
+int						ft_cd(char **cmd, t_env *env_lst);
+int						ft_env(char **cmd, t_env *env_lst, int i);
 
 #endif

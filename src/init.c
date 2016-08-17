@@ -6,13 +6,28 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 18:55:56 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/07/18 11:10:41 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/08/17 11:44:53 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh.h"
 
-void	init_shell(t_shell *shell)
+static int	check_termcaps(void)
+{
+	if (!(tgetstr("do", NULL)))
+		return (-1);
+	if (!(tgetstr("up", NULL)))
+		return (-1);
+	if (!(tgetstr("le", NULL)))
+		return (-1);
+	if (!(tgetstr("nd", NULL)))
+		return (-1);
+	if (!(tgetstr("cd", NULL)))
+		return (-1);
+	return (0);
+}
+
+void		init_shell(t_shell *shell)
 {
 	if ((shell->fd = open("/dev/tty", O_RDWR)) == -1)
 		exit_error(0);
@@ -30,7 +45,7 @@ void	init_shell(t_shell *shell)
 	get_struct(shell);
 }
 
-void	init_term(t_shell *shell)
+void		init_term(t_shell *shell)
 {
 	int				ret;
 	char			*term_name;
@@ -52,9 +67,11 @@ void	init_term(t_shell *shell)
 	if ((ioctl(0, TIOCGWINSZ, &w)) < 0)
 		exit_error(10);
 	shell->col = w.ws_col;
+	if (check_termcaps() == -1)
+		exit_error(8);
 }
 
-t_shell	*get_struct(t_shell *struc)
+t_shell		*get_struct(t_shell *struc)
 {
 	static t_shell	*shell = NULL;
 

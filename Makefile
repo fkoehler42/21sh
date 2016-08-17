@@ -6,19 +6,22 @@
 #    By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/04/26 11:46:03 by fkoehler          #+#    #+#              #
-#    Updated: 2016/08/15 15:51:22 by fkoehler         ###   ########.fr        #
+#    Updated: 2016/08/17 15:37:17 by fkoehler         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-vpath %.c ./src
+vpath %.c ./src ./src/builtins
 
 SRC = buffer.c \
+	  builtins_error.c \
+	  cd.c \
 	  cmd_check_input.c \
 	  cmd_handling.c \
 	  cmd_parsing.c \
 	  cmd_pipe.c \
 	  cmd_storage.c \
 	  cursor.c \
+	  env.c \
 	  env_tools.c \
 	  environ.c \
 	  error.c \

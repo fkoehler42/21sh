@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/24 12:20:59 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/08/15 19:29:57 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/08/17 17:16:45 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,4 +52,20 @@ char	*env_var_to_value(char *var)
 		value = ft_strdup(tmp);
 	free(var);
 	return (value);
+}
+
+int		set_new_pwd(t_env *env_lst)
+{
+	char	*current_path;
+	t_env	*pwd;
+
+	current_path = NULL;
+	if (!(current_path = getcwd(current_path, MAXPATHLEN)))
+		return (cd_error(8, ""));
+	if (!(pwd = get_env_ptr(env_lst, "PWD")))
+		store_env_var(get_struct(0), ft_strdup("OLDPWD"), ft_strdup(""));
+	else
+		store_env_var(get_struct(0), ft_strdup("OLDPWD"), ft_strdup(pwd->val));
+	store_env_var(get_struct(0), ft_strdup("PWD"), current_path);
+	return (0);
 }
