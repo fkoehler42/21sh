@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/10 18:54:12 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/07/13 21:49:18 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/08/19 10:14:57 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ static void	store_hist_input(char c, t_hist *hist)
 	t_input *tmp;
 
 	if (!(new = (t_input *)malloc(sizeof(*new))))
-		exit_error(9);
+		quit_error(9);
 	new->c = c;
 	new->prev = NULL;
 	new->next = NULL;
@@ -40,7 +40,7 @@ t_hist		*store_hist(t_shell *shell)
 	t_input	*tmp2;
 
 	if (!(new = (t_hist *)malloc(sizeof(*new))))
-		exit_error(9);
+		quit_error(9);
 	new->prev = NULL;
 	new->next = NULL;
 	new->input = NULL;

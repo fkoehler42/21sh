@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/02 11:44:16 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/08/15 14:56:44 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/08/19 10:22:12 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ char		**strsplit_args(char const *s)
 	i = 0;
 	j = 0;
 	if (!(array = (char **)malloc(sizeof(char *) * (countwords(s, 0, 0) + 1))))
-		exit_error(9);
+		quit_error(9);
 	/* ft_putnbr(countwords(s, 0, 0)); */
 	if (!s)
 		return (NULL);

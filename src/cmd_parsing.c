@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/11 14:13:19 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/08/19 08:16:37 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/08/19 12:16:03 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ static int	parse_cmd(char *str_cmd, int parent)
 	{
 		if ((is_str_quoted(cmd[i]) != 1) && (ft_strchr(cmd[i], '$') != NULL))
 			cmd[i] = str_replace_var(cmd[i]);
-		ft_putendl(cmd[i++]);
+		i++;
 	}
 	if (builtins_cmd(cmd, &(shell->env_lst)) == -1)
 		return (0);

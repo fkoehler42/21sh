@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 17:07:09 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/08/19 08:53:53 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/08/19 10:25:01 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,11 +76,12 @@ typedef struct			s_shell
 	struct termios		term_save;
 }						t_shell;
 
-void					exit_error(int errnum);
+void					quit_error(int errnum);
 int						cmd_error(int errnum);
 int						cd_error(int errnum, char *arg);
-int						env_error(int errnum, char *arg);
+int						env_error(int errnum, int flag);
 void					env_var_error(int errnum, char *cmd, char *arg);
+int						exit_error(int errnum, char *arg);
 
 void					free_input_list(t_input **input, size_t *nb_elem);
 void					free_tmp_inputs(t_shell *shell);
@@ -158,6 +159,7 @@ char					valid_input(t_input *input, char c);
 t_btree					*store_cmd(char *str);
 
 int						builtins_cmd(char **cmd, t_env **env_lst);
+int						ft_exit(char **cmd);
 int						ft_cd(char **cmd, t_env *env_lst);
 int						ft_env(char **cmd, t_env *env_lst, int i);
 int						ft_setenv(char **cmd, t_env **env_lst, int flag);

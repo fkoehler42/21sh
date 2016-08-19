@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/08/17 12:45:24 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/08/19 07:48:01 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/08/19 09:32:47 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,4 +73,23 @@ void	env_var_error(int errnum, char *cmd, char *arg)
 		ft_putstr_fd(": argument is not valid: ", 2);
 		ft_putendl_fd(arg, 2);
 	}
+}
+
+int		exit_error(int errnum, char *arg)
+{
+	if (errnum == 0)
+		ft_putstr_fd("exit: too many arguments\n", 2);
+	else if (errnum == 1)
+	{
+		ft_putstr_fd("exit: argument is not numeric: ", 2);
+		ft_putendl_fd(arg, 2);
+	}
+	else if (errnum == 2)
+	{
+		ft_putstr_fd("exit: number is too long: ", 2);
+		ft_putendl_fd(arg, 2);
+	}
+	if (arg[0])
+		free(arg);
+	return (1);
 }

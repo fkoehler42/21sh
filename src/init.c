@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 18:55:56 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/08/17 11:44:53 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/08/19 10:16:07 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ static int	check_termcaps(void)
 void		init_shell(t_shell *shell)
 {
 	if ((shell->fd = open("/dev/tty", O_RDWR)) == -1)
-		exit_error(0);
+		quit_error(0);
 	shell->col = 0;
 	shell->input_len = 0;
 	shell->p_len = 0;
@@ -52,23 +52,23 @@ void		init_term(t_shell *shell)
 	struct winsize	w;
 
 	if (!(term_name = getenv("TERM")))
-		exit_error(1);
+		quit_error(1);
 	if ((ret = tgetent(NULL, term_name)) <= 0)
-		ret == 0 ? exit_error(2) : exit_error(3);
+		ret == 0 ? quit_error(2) : quit_error(3);
 	if ((tcgetattr(0, &(shell->term_save))) == -1)
-		exit_error(4);
+		quit_error(4);
 	if ((tcgetattr(0, &(shell->termios))) == -1)
-		exit_error(4);
+		quit_error(4);
 	shell->termios.c_lflag &= ~(ICANON | ECHO);
 	shell->termios.c_cc[VMIN] = 1;
 	shell->termios.c_cc[VTIME] = 0;
 	if ((tcsetattr(0, TCSADRAIN, &(shell->termios))) == -1)
-		exit_error(5);
+		quit_error(5);
 	if ((ioctl(0, TIOCGWINSZ, &w)) < 0)
-		exit_error(10);
+		quit_error(10);
 	shell->col = w.ws_col;
 	if (check_termcaps() == -1)
-		exit_error(8);
+		quit_error(8);
 }
 
 t_shell		*get_struct(t_shell *struc)

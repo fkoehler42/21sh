@@ -6,7 +6,7 @@
 #    By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/04/26 11:46:03 by fkoehler          #+#    #+#              #
-#    Updated: 2016/08/19 08:52:00 by fkoehler         ###   ########.fr        #
+#    Updated: 2016/08/19 10:26:45 by fkoehler         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,6 +25,7 @@ SRC = buffer.c \
 	  env_tools.c \
 	  environ.c \
 	  error.c \
+	  exit.c \
 	  free.c \
 	  hist_storage.c \
 	  history.c \

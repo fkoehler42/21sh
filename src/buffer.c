@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/06 20:57:31 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/07/12 15:29:49 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/08/19 10:13:45 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	store_buffer(t_input **buf, char c)
 	t_input	*tmp;
 
 	if (!(new = (t_input *)malloc(sizeof(*new))))
-		exit_error(9);
+		quit_error(9);
 	new->c = c;
 	new->next = NULL;
 	if (!(*buf))

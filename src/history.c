@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/10 18:54:12 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/07/13 22:06:22 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/08/19 10:15:28 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ static void	store_input_buf(t_input *input, size_t len, char **buffer)
 	if (*buffer)
 		free(*buffer);
 	if (!(*buffer = ft_strnew(len)))
-		exit_error(9);
+		quit_error(9);
 	while (tmp)
 	{
 		(*buffer)[i++] = tmp->c;

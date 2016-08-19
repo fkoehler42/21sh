@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/26 20:56:41 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/08/19 09:19:34 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/08/19 12:25:55 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,8 +44,8 @@ static int	dup_env_lst(t_env *env_lst, t_env **env_lst_cpy)
 	tmp = env_lst;
 	while (tmp)
 	{
-		store_env_var(env_lst_cpy, ft_strdup(env_lst->var),
-		ft_strdup(env_lst->val));
+		store_env_var(env_lst_cpy, ft_strdup(tmp->var),
+		ft_strdup(tmp->val));
 		tmp = tmp->next;
 	}
 	return (0);
@@ -84,7 +84,7 @@ int			ft_env(char **cmd, t_env *env_lst, int i)
 	t_env	*env_lst_cpy;
 
 	env_lst_cpy = NULL;
-	dup_env_lst(env_lst, &env_lst_cpy);
+	dup_env_lst(env_lst, &(env_lst_cpy));
 	while (cmd[i])
 	{
 		j = 0;

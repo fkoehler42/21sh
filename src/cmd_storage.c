@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/18 11:04:50 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/07/23 15:45:28 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/08/19 10:14:18 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ t_btree	*store_cmd(char *str)
 	t_btree	*new;
 
 	if (!(new = (t_btree *)malloc(sizeof(*new))))
-		exit_error(9);
+		quit_error(9);
 	new->cmd = NULL;
 	if ((i = strrchr_outside_quotes(ft_strdup(str), ';')) != -1)
 		new->type = SEM;

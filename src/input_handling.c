@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/24 15:05:22 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/07/23 11:34:41 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/08/19 10:16:36 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	store_input(t_shell *shell, char c)
 	t_input	*new;
 
 	if (!(new = (t_input *)malloc(sizeof(*new))))
-		exit_error(9);
+		quit_error(9);
 	new->c = c;
 	new->prev = shell->curs_pos != NULL ? shell->curs_pos : NULL;
 	if (!(shell->input))
@@ -75,7 +75,7 @@ void	read_input(t_shell *shell)
 	{
 		ft_bzero((void *)buf, 7);
 		if (read(0, buf, 7) == -1)
-			exit_error(7);
+			quit_error(7);
 		if ((buf_len = ft_strlen(buf)) > 0)
 			parse_input(shell, buf, buf_len, shell->p_len);
 		/* shell->p_len = put_prompt(get_prompt(), shell->fd); */
@@ -94,7 +94,7 @@ void	read_multi_lines_input(t_shell *shell, char *prompt)
 	{
 		ft_bzero((void *)buf, 7);
 		if (read(0, buf, 7) == -1)
-			exit_error(7);
+			quit_error(7);
 		if (((buf_len = ft_strlen(buf)) > 0) && (buf[0] != 10))
 			parse_input(shell, buf, buf_len, shell->p_len);
 	}

@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/24 12:20:59 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/08/19 08:07:21 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/08/19 10:14:35 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ int		store_env_var(t_env **env_lst, char *var, char *val)
 		return (0);
 	}
 	if (!(new = (t_env *)malloc(sizeof(t_env))))
-		exit_error(6);
+		quit_error(6);
 	new->var = var;
 	new->val = val;
 	new->next = NULL;

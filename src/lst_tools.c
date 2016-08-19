@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/11 12:46:08 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/08/15 14:27:11 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/08/19 10:17:17 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ char	*lst_to_str(t_input *lst)
 	i = 0;
 	len = lst_len(lst);
 	if (!(str = (char *)malloc(sizeof(*str) * (len + 1))))
-		exit_error(9);
+		quit_error(9);
 	while (len--)
 	{
 		str[i] = lst->c;

@@ -6,13 +6,13 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/24 10:52:39 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/08/19 08:27:15 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/08/19 10:12:30 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh.h"
 
-void	exit_error(int errnum)
+void	quit_error(int errnum)
 {
 	if (errnum == 0)
 		ft_putstr_fd("21sh: Unable to open the terminal device file\n", 2);
