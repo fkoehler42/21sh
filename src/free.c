@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/09 15:58:38 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/07/13 20:40:51 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/08/19 07:41:38 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,4 +45,28 @@ void	free_tmp_inputs(t_shell *shell)
 		shell->input_buf = NULL;
 	}
 	shell->curs_pos = NULL;
+}
+
+void	free_env_var(t_env *env_var)
+{
+	free(env_var->var);
+	free(env_var->val);
+	free(env_var);
+}
+
+void	free_env_lst(t_env **env_lst)
+{
+	t_env *tmp1;
+	t_env *tmp2;
+
+	if (!env_lst || !(*env_lst))
+		return ;
+	tmp1 = *env_lst;
+	while (tmp1)
+	{
+		tmp2 = (tmp1)->next;
+		free_env_var(tmp1);
+		tmp1 = tmp2;
+	}
+	*env_lst = NULL;
 }

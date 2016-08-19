@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/26 20:56:41 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/08/17 17:18:10 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/08/19 09:19:34 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static int	put_env(t_env *env_lst)
 		{
 			ft_putstr(tmp->var);
 			ft_putchar('=');
-			ft_putendl(tmp->value);
+			ft_putendl(tmp->val);
 			tmp = tmp->next;
 		}
 	}
@@ -37,21 +37,16 @@ static int	del_env_cpy(t_env **env_lst)
 	return (0);
 }
 
-static int	dup_env_lst(t_env **env_lst, t_env **env_lst_cpy)
+static int	dup_env_lst(t_env *env_lst, t_env **env_lst_cpy)
 {
-	char	*tmp;
-	char	*env_var;
-	t_env	*tmp_env;
+	t_env	*tmp;
 
-	tmp_env = *env_lst;
-	while (tmp_env)
+	tmp = env_lst;
+	while (tmp)
 	{
-		tmp = ft_strjoin(tmp_env->var, "=");
-		env_var = ft_strjoin(tmp, tmp_env->value);
-		free(tmp);
-		/* parse_env_var(env_lst_cpy, env_var); */
-		free(env_var);
-		tmp_env = tmp_env->next;
+		store_env_var(env_lst_cpy, ft_strdup(env_lst->var),
+		ft_strdup(env_lst->val));
+		tmp = tmp->next;
 	}
 	return (0);
 }
@@ -59,11 +54,11 @@ static int	dup_env_lst(t_env **env_lst, t_env **env_lst_cpy)
 static int	parse_env_flags(char **cmd, t_env **env_lst)
 {
 	if (!((*cmd)[1]))
-		return (env_cmd_error(2, '\0'));
+		return (env_error(2, '\0'));
 	if ((*cmd)[1] == 'i')
 	{
 		if ((*cmd)[2])
-			return (env_cmd_error(0, (*cmd)[2]));
+			return (env_error(0, (*cmd)[2]));
 		free_env_lst(env_lst);
 	}
 	else if ((*cmd)[1] == 'u' && (*cmd)[2])
@@ -77,9 +72,9 @@ static int	parse_env_flags(char **cmd, t_env **env_lst)
 		return (2);
 	}
 	else if ((*cmd)[1] == 'u' && !(*(cmd + 1)))
-		return (env_cmd_error(1, 'u'));
+		return (env_error(1, 'u'));
 	else
-		return (env_cmd_error(0, (*cmd)[1]));
+		return (env_error(0, (*cmd)[1]));
 	return (1);
 }
 
@@ -89,7 +84,7 @@ int			ft_env(char **cmd, t_env *env_lst, int i)
 	t_env	*env_lst_cpy;
 
 	env_lst_cpy = NULL;
-	dup_env_lst(&env_lst, &env_lst_cpy);
+	dup_env_lst(env_lst, &env_lst_cpy);
 	while (cmd[i])
 	{
 		j = 0;
@@ -100,11 +95,9 @@ int			ft_env(char **cmd, t_env *env_lst, int i)
 		}
 		else if (ft_strchr(cmd[i], '=') != NULL && ++j)
 			ft_setenv(&cmd[i], &env_lst_cpy, 1);
-		else
-		{
-			j = builtins_cmd(&env_lst_cpy, cmd + i);
+		else if ((builtins_cmd(cmd + i, &env_lst_cpy) == 0) ||
+/*binary_cmd*/	(builtins_cmd(cmd + i, &env_lst_cpy) == -1))
 			return (del_env_cpy(&env_lst_cpy));
-		}
 		i += j;
 	}
 	env_lst_cpy != NULL ? put_env(env_lst_cpy) : (0);

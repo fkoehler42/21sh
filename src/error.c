@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/24 10:52:39 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/08/17 11:35:43 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/08/19 08:27:15 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ int		cmd_error(int errnum)
 		ft_putstr_fd("21sh: Parse error near `|'", 2);
 	return (-1);
 }
-
+/*
 int		env_error(int errnum, char *arg)
 {
 	ft_putstr_fd("21sh: ", 2);
@@ -57,4 +57,4 @@ int		env_error(int errnum, char *arg)
 		ft_putstr_fd(": variable is not valid\n", 2);
 	}
 	return (-1);
-}
+}*/

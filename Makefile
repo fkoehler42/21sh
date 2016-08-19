@@ -6,7 +6,7 @@
 #    By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/04/26 11:46:03 by fkoehler          #+#    #+#              #
-#    Updated: 2016/08/17 15:37:17 by fkoehler         ###   ########.fr        #
+#    Updated: 2016/08/19 08:52:00 by fkoehler         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,8 +39,10 @@ SRC = buffer.c \
 	  main.c \
 	  print.c \
 	  prompt.c \
+	  setenv.c \
 	  str_tools.c \
-	  strsplit_args.c
+	  strsplit_args.c \
+	  unsetenv.c
 
 NAME = 21sh
 

@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/08/17 12:45:24 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/08/17 15:01:46 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/08/19 07:48:01 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,4 +39,38 @@ int		cd_error(int errnum, char *arg)
 		ft_putstr_fd("send an absolute path to cd could fix the problem\n", 2);
 	}
 	return (-1);
+}
+
+int		env_error(int errnum, int flag)
+{
+	if (errnum == 0)
+	{
+		ft_putstr_fd("env: illegal option -- ", 2);
+		ft_putchar_fd(flag, 2);
+	}
+	else if (errnum == 1)
+	{
+		ft_putstr_fd("env: option requires an argument -- ", 2);
+		ft_putchar_fd(flag, 2);
+	}
+	else if (errnum == 2)
+		ft_putstr_fd("env: no option specified", 2);
+	ft_putstr_fd("\nusage: env [-i] [-u name] [name=value] ", 2);
+	ft_putstr_fd("[utility [argument(s)]]\n", 2);
+	return (-1);
+}
+
+void	env_var_error(int errnum, char *cmd, char *arg)
+{
+	if (errnum == 0)
+	{
+		ft_putstr_fd(cmd, 2);
+		ft_putstr_fd(": command requires argument\n", 2);
+	}
+	else if (errnum == 1)
+	{
+		ft_putstr_fd(cmd, 2);
+		ft_putstr_fd(": argument is not valid: ", 2);
+		ft_putendl_fd(arg, 2);
+	}
 }

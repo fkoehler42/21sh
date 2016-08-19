@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   env_tools.c                                          :+:      :+:    :+:   */
+/*   env_tools.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/24 12:20:59 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/08/17 17:16:45 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/08/19 08:20:46 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,17 +26,23 @@ t_env	*get_env_ptr(t_env *env_lst, char *var)
 	return (tmp);
 }
 
-int		check_env_var(char *var)
+int		check_env_var(char *env_var, char *cmd)
 {
 	int		i;
 
 	i = 0;
-	if (!var[i])
-		return (env_error(0, ""));
-	while (var[i])
+	if (!env_var[i] || env_var[i] == '=')
 	{
-		if (!ft_isalnum(var[i]) && var[i] != '_')
-			return (env_error(1, var));
+		env_var_error(1, cmd, env_var);
+		return (-1);
+	}
+	while (env_var[i] && env_var[i] != '=')
+	{
+		if (!ft_isalnum(env_var[i]) && env_var[i] != '_')
+		{
+			env_var_error(1, cmd, env_var);
+			return (-1);
+		}
 		i++;
 	}
 	return (0);
@@ -58,14 +64,45 @@ int		set_new_pwd(t_env *env_lst)
 {
 	char	*current_path;
 	t_env	*pwd;
+	t_shell	*shell;
 
 	current_path = NULL;
+	shell = get_struct(0);
 	if (!(current_path = getcwd(current_path, MAXPATHLEN)))
 		return (cd_error(8, ""));
 	if (!(pwd = get_env_ptr(env_lst, "PWD")))
-		store_env_var(get_struct(0), ft_strdup("OLDPWD"), ft_strdup(""));
+		store_env_var(&(shell->env_lst), ft_strdup("OLDPWD"), ft_strdup(""));
 	else
-		store_env_var(get_struct(0), ft_strdup("OLDPWD"), ft_strdup(pwd->val));
-	store_env_var(get_struct(0), ft_strdup("PWD"), current_path);
+		store_env_var(&(shell->env_lst), ft_strdup("OLDPWD"), ft_strdup(pwd->val));
+	store_env_var(&(shell->env_lst), ft_strdup("PWD"), current_path);
+	return (0);
+}
+
+int		del_env_var(t_env **env_lst, char *var)
+{
+	t_env	*tmp1;
+	t_env	*tmp2;
+
+	if (!(tmp1 = *env_lst))
+	{
+		free(var);
+		return (-1);
+	}
+	if (ft_strcmp(tmp1->var, var) == 0)
+	{
+		*env_lst = tmp1->next;
+		free_env_var(tmp1);
+		free(var);
+		return (0);
+	}
+	while (tmp1->next && ft_strcmp(tmp1->next->var, var) != 0)
+		tmp1 = tmp1->next;
+	if (tmp1->next)
+	{
+		tmp2 = tmp1->next->next;
+		free_env_var(tmp1->next);
+		tmp1->next = tmp2;
+	}
+	free(var);
 	return (0);
 }

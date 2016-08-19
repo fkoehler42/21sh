@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 17:07:09 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/08/17 15:38:06 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/08/19 08:53:53 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,12 +77,15 @@ typedef struct			s_shell
 }						t_shell;
 
 void					exit_error(int errnum);
-int						env_error(int errnum, char *arg);
 int						cmd_error(int errnum);
 int						cd_error(int errnum, char *arg);
+int						env_error(int errnum, char *arg);
+void					env_var_error(int errnum, char *cmd, char *arg);
 
 void					free_input_list(t_input **input, size_t *nb_elem);
 void					free_tmp_inputs(t_shell *shell);
+void					free_env_var(t_env *env_var);
+void					free_env_lst(t_env **env_lst);
 
 void					init_shell(t_shell *shell);
 void					init_term(t_shell *shell);
@@ -93,14 +96,16 @@ int						is_str_quoted(char *s);
 int						strrchr_outside_quotes(char *s, char c);
 char					*str_replace_var(char *s);
 char					**strsplit_args(char const *s);
+char					*strdup_remove_quotes(char *str);
 size_t					lst_len(t_input *lst);
 void					lst_cpy(t_input *src, t_input **dst);
 char					*lst_to_str(t_input *lst);
 
 void					store_environ(t_shell *shell, char **environ);
-int						store_env_var(t_shell *shell, char *var, char *val);
+int						store_env_var(t_env **env_lst, char *var, char *val);
+int						del_env_var(t_env **env_lst, char *var);
 t_env					*get_env_ptr(t_env *env_lst, char *var);
-int						check_env_var(char *var);
+int						check_env_var(char *env_var, char *cmd);
 char					*env_var_to_value(char *var);
 int						set_new_pwd(t_env *env_lst);
 
@@ -152,8 +157,10 @@ int						check_pipes(t_input *cmd, int reverse);
 char					valid_input(t_input *input, char c);
 t_btree					*store_cmd(char *str);
 
-int						builtins_cmd(char **cmd, t_env *env_lst);
+int						builtins_cmd(char **cmd, t_env **env_lst);
 int						ft_cd(char **cmd, t_env *env_lst);
 int						ft_env(char **cmd, t_env *env_lst, int i);
+int						ft_setenv(char **cmd, t_env **env_lst, int flag);
+int						ft_unsetenv(char **cmd, t_env **env_lst);
 
 #endif

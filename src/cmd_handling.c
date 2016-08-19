@@ -6,16 +6,16 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/08/15 14:41:46 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/08/17 15:38:46 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/08/19 07:32:05 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh.h"
 
-int		builtins_cmd(char **cmd, t_env *env_lst)
+int		builtins_cmd(char **cmd, t_env **env_lst)
 {
 	if (ft_strcmp(cmd[0], "cd") == 0)
-		ft_cd(cmd, env_lst);
+		ft_cd(cmd, *env_lst);
 	/* else if (ft_strcmp(cmd[0], "echo") == 0) */
 		/* ft_echo(cmd, *env_lst, 1); */
 	else if (ft_strcmp(cmd[0], "env") == 0)

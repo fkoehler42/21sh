@@ -6,23 +6,11 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/19 16:42:14 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/08/15 19:30:09 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/08/19 09:11:41 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh.h"
-
-int		is_str_quoted(char *s)
-{
-	size_t	len;
-
-	len = ft_strlen(s);
-	if (s[0] == '\'' && s[len - 1] == '\'')
-		return (1);
-	else if (s[0] == '"' && s[len - 1] == '"')
-		return (2);
-	return (0);
-}
 
 char	*str_replace_var(char *s)
 {
@@ -81,4 +69,32 @@ int		strrchr_outside_quotes(char *s, char c)
 	}
 	free(s);
 	return (i);
+}
+
+int		is_str_quoted(char *s)
+{
+	size_t	len;
+
+	len = ft_strlen(s);
+	if (s[0] == '\'' && s[len - 1] == '\'')
+		return (1);
+	else if (s[0] == '"' && s[len - 1] == '"')
+		return (2);
+	return (0);
+}
+
+char		*strdup_remove_quotes(char *str)
+{
+	char	*new_str;
+	size_t	len;
+
+	len = 0;
+	if (is_str_quoted(str))
+	{
+		len = ft_strlen(str);
+		new_str = ft_strsub(str, 1, len - 2);
+	}
+	else
+		new_str = ft_strdup(str);
+	return (new_str);
 }
