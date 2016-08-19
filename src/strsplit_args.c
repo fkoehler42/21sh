@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/02 11:44:16 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/08/19 10:22:12 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/08/19 16:31:40 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,30 +98,3 @@ char		**strsplit_args(char const *s)
 	array[j] = NULL;
 	return (array);
 }
-/*
-int		main(int ac, char **av)
-{
-	char	**test;
-
-	test = strsplit_args(av[1]);
-	while (*test != NULL)
-	{
-		ft_putstr(*test);
-		ft_putchar(' ');
-		++test;
-	}
-}
-
-char		*strdup_remove_quotes(char *str)
-{
-	char	*new_str;
-	size_t	len;
-
-	len = ft_strlen(str);
-	if (((str[0] == '"' && str[len - 1] == '"')
-		|| (str[0] == '\'' && str[len - 1] == '\'')) && ((len - 1) != 0))
-		new_str = ft_strsub(str, 1, len - 2);
-	else
-		new_str = ft_strdup(str);
-	return (new_str);
-}*/
