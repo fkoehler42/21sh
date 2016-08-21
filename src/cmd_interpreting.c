@@ -1,38 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exit.c                                             :+:      :+:    :+:   */
+/*   cmd_interpreting.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/05/21 20:39:30 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/08/21 14:13:25 by fkoehler         ###   ########.fr       */
+/*   Created: 2016/08/21 15:21:55 by fkoehler          #+#    #+#             */
+/*   Updated: 2016/08/21 17:03:34 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh.h"
 
-int			ft_exit(char **cmd)
+char	*interpret_cmd_param(char *param)
 {
-	int		i;
-	int		ret;
+	char	*tmp;
+	int		is_quoted;
 
-	i = 0;
-	ret = 0;
-	if (!cmd[1])
-		exit(0);
-	if (cmd[2])
-		return (exit_error(0, ""));
-	if (cmd[1][i] == '-')
-		i++;
-	while (cmd[1][i])
+	is_quoted = is_str_quoted(param);
+	if ((is_quoted != 1) && (ft_strchr(param, '$') != NULL))
+		param = str_replace_var(param);
+	if (is_quoted > 0)
 	{
-		if (!ft_isdigit(cmd[1][i]))
-			return (exit_error(1, cmd[1]));
-		i++;
+		tmp = param;
+		param = strdup_remove_quotes(param);
+		free(tmp);
 	}
-	if (i > 15)
-		return (exit_error(2, cmd[1]));
-	ret = ft_atoi(cmd[1]);
-	exit(ret);
+	return (param);
 }

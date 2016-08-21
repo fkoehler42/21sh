@@ -6,7 +6,7 @@
 #    By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/04/26 11:46:03 by fkoehler          #+#    #+#              #
-#    Updated: 2016/08/19 10:26:45 by fkoehler         ###   ########.fr        #
+#    Updated: 2016/08/21 15:25:28 by fkoehler         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,10 +17,12 @@ SRC = buffer.c \
 	  cd.c \
 	  cmd_check_input.c \
 	  cmd_handling.c \
+	  cmd_interpreting.c \
 	  cmd_parsing.c \
 	  cmd_pipe.c \
 	  cmd_storage.c \
 	  cursor.c \
+	  echo.c \
 	  env.c \
 	  env_tools.c \
 	  environ.c \

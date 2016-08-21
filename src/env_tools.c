@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/24 12:20:59 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/08/19 09:29:02 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/08/21 19:24:13 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,12 +50,14 @@ int		check_env_var(char *env_var, char *cmd)
 
 char	*env_var_to_value(char *var)
 {
-	char	*tmp;
 	char	*value;
+	t_env	*env_var;
+	t_shell	*shell;
 
+	shell = get_struct(0);
 	value = NULL;
-	if ((tmp = (getenv(var))))
-		value = ft_strdup(tmp);
+	if ((env_var = (get_env_ptr(shell->env_lst, var))))
+		value = ft_strdup(env_var->val);
 	free(var);
 	return (value);
 }

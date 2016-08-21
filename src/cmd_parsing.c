@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/11 14:13:19 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/08/19 16:45:45 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/08/21 19:25:20 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static int	multi_lines_cmd(t_shell *shell)
 		while ((c = valid_input(save, c)) > 0)
 		{
 			free_tmp_inputs(shell);
-			store_buffer(&save, '\n');
+			c != '\\' ? store_buffer(&save, '\n') : (0);
 			read_multi_lines_input(shell, get_special_prompt(c));
 			tputs(tgetstr("do", NULL), shell->fd, &putchar);
 			lst_cpy(shell->input, &save);
@@ -78,8 +78,7 @@ static int	parse_cmd(char *str_cmd, int parent)
 		return (cmd_error(0));
 	while (cmd[i])
 	{
-		if ((is_str_quoted(cmd[i]) != 1) && (ft_strchr(cmd[i], '$') != NULL))
-			cmd[i] = str_replace_var(cmd[i]);
+		cmd[i] = interpret_cmd_param(cmd[i]);
 		i++;
 	}
 	if ((cmd[0]) && (builtins_cmd(cmd, &(shell->env_lst)) == -1))

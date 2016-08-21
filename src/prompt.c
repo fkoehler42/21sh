@@ -6,46 +6,49 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/14 20:01:15 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/07/21 19:58:22 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/08/21 19:11:40 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh.h"
 
-static char	*get_relative_path(char *home, char *pwd)
+static char	*get_relative_path(t_env *home, t_env *pwd)
 {
 	int		i;
 	char	*prompt;
 
 	i = 0;
-	while (home[i] && pwd[i] && home[i] == pwd[i])
+	while (home->val[i] && pwd->val[i]
+			&& home->val[i] == pwd->val[i])
 		i++;
-	if (!home[i])
-		prompt = ft_strjoin("~", (pwd + i));
-	else if (!pwd[i] || access(pwd, F_OK) == 0)
-		prompt = ft_strdup(pwd);
+	if (!home->val[i])
+		prompt = ft_strjoin("~", (pwd->val + i));
+	else if (!pwd->val[i] || access(pwd->val, F_OK) == 0)
+		prompt = ft_strdup(pwd->val);
 	else
 		prompt = ft_strdup("$");
 	return (prompt);
 }
 
-char		*get_prompt(void)
+char		*get_prompt(t_env *env_lst)
 {
-	static char	*prompt = NULL;
-	char		*home;
-	char		*pwd;
+	t_env	*home;
+	t_env	*pwd;
+	t_env	*oldpwd;
 
-	if (prompt != NULL)
-		free(prompt);
-	home = getenv("HOME");
-	pwd = getenv("PWD");
-	if (!pwd)
-		prompt = ft_strdup("$");
-	else if (!home)
-		prompt = ft_strdup(pwd);
+	if (g_prompt)
+		free(g_prompt);
+	g_prompt = NULL;
+	home = get_env_ptr(env_lst, "HOME");
+	pwd = get_env_ptr(env_lst, "PWD");
+	oldpwd = get_env_ptr(env_lst, "OLDPWD");
+	if (!pwd || !pwd->val[0])
+		g_prompt = ft_strdup("$");
+	else if (!home || !home->val[0])
+		g_prompt = ft_strdup(pwd->val);
 	else
-		prompt = get_relative_path(home, pwd);
-	return (prompt);
+		g_prompt = get_relative_path(home, pwd);
+	return (g_prompt);
 }
 
 char		*get_special_prompt(char c)
@@ -68,14 +71,17 @@ char		*get_special_prompt(char c)
 		prompt = ft_strdup("bracket> ");
 	else if (c == '|')
 		prompt = ft_strdup("pipe> ");
+	else if (c == '\\')
+		prompt = ft_strdup("> ");
 	return (prompt);
 }
 
 int			put_prompt(char *prompt, int fd)
 {
 	ft_putstr_fd(CYAN, fd);
+	ft_putchar_fd('[', fd);
 	ft_putstr_fd(prompt, fd);
-	ft_putstr_fd(" -> ", fd);
+	ft_putstr_fd("]-> ", fd);
 	ft_putstr_fd(OFF, fd);
-	return (4 + ft_strlen(prompt));
+	return (5 + ft_strlen(prompt));
 }

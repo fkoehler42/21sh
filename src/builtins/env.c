@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/26 20:56:41 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/08/19 12:25:55 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/08/21 14:10:49 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,12 +63,12 @@ static int	parse_env_flags(char **cmd, t_env **env_lst)
 	}
 	else if ((*cmd)[1] == 'u' && (*cmd)[2])
 	{
-		del_env_var(env_lst, strdup_remove_quotes(*cmd + 2));
+		del_env_var(env_lst, ft_strdup(*cmd + 2));
 		return (1);
 	}
 	else if ((*cmd)[1] == 'u' && *(cmd + 1))
 	{
-		del_env_var(env_lst, strdup_remove_quotes(*(cmd + 1)));
+		del_env_var(env_lst, ft_strdup(*(cmd + 1)));
 		return (2);
 	}
 	else if ((*cmd)[1] == 'u' && !(*(cmd + 1)))

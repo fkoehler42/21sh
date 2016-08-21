@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 17:07:09 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/08/19 10:25:01 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/08/21 19:07:46 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@
 # define PIP 3
 
 #define debug ft_printf("file : %s, line : %d", __FILE__, __LINE__);
+
+char					*g_prompt;
 
 typedef struct			s_env
 {
@@ -101,6 +103,7 @@ char					*strdup_remove_quotes(char *str);
 size_t					lst_len(t_input *lst);
 void					lst_cpy(t_input *src, t_input **dst);
 char					*lst_to_str(t_input *lst);
+t_input					*get_last_elem(t_input *lst);
 
 void					store_environ(t_shell *shell, char **environ);
 int						store_env_var(t_env **env_lst, char *var, char *val);
@@ -110,7 +113,7 @@ int						check_env_var(char *env_var, char *cmd);
 char					*env_var_to_value(char *var);
 int						set_new_pwd(t_env *env_lst);
 
-char					*get_prompt(void);
+char					*get_prompt(t_env *env_lst);
 char					*get_special_prompt(char c);
 int						put_prompt(char *prompt, int fd);
 
@@ -118,15 +121,15 @@ void					read_input(t_shell *shell);
 void					read_multi_lines_input(t_shell *shell,char *prompt);
 void					print_input(t_shell *shell, t_input *curs_pos,
 						size_t p_len);
-void					parse_input(t_shell *shell, char *buf,
+int						parse_input(t_shell *shell, char *buf,
 						size_t buf_len, size_t p_len);
 void					store_input(t_shell *shell, char c);
 void					delete_input(t_shell *shell, t_input *input, int back);
 void					clear_input(t_shell *shell);
 
-void					parse_keys1(t_shell *shell, char *buf);
-void					parse_keys2(t_shell *shell, char *buf);
-void					parse_keys3(t_shell *shell, char *buf, size_t buf_len);
+int						parse_keys1(t_shell *shell, char *buf);
+int						parse_keys2(t_shell *shell, char *buf);
+int						parse_keys3(t_shell *shell, char *buf, size_t buf_len);
 
 int						move_left(t_shell *shell);
 int						move_left_word(t_shell *shell);
@@ -157,10 +160,12 @@ int						handle_input(t_shell *shell);
 int						check_pipes(t_input *cmd, int reverse);
 char					valid_input(t_input *input, char c);
 t_btree					*store_cmd(char *str);
+char					*interpret_cmd_param(char *param);
 
 int						builtins_cmd(char **cmd, t_env **env_lst);
 int						ft_exit(char **cmd);
 int						ft_cd(char **cmd, t_env *env_lst);
+int						ft_echo(char **cmd);
 int						ft_env(char **cmd, t_env *env_lst, int i);
 int						ft_setenv(char **cmd, t_env **env_lst, int flag);
 int						ft_unsetenv(char **cmd, t_env **env_lst);

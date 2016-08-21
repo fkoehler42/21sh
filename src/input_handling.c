@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/24 15:05:22 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/08/19 10:16:36 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/08/21 19:05:37 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,15 +70,18 @@ void	read_input(t_shell *shell)
 	char	buf[7];
 	size_t	buf_len;
 
-	shell->p_len = put_prompt(get_prompt(), shell->fd);
+	shell->p_len = put_prompt(get_prompt(shell->env_lst), shell->fd);
 	while (42)
 	{
 		ft_bzero((void *)buf, 7);
 		if (read(0, buf, 7) == -1)
 			quit_error(7);
 		if ((buf_len = ft_strlen(buf)) > 0)
-			parse_input(shell, buf, buf_len, shell->p_len);
-		/* shell->p_len = put_prompt(get_prompt(), shell->fd); */
+		{
+			if (parse_input(shell, buf, buf_len, shell->p_len))
+				shell->p_len =
+				put_prompt(get_prompt(shell->env_lst), shell->fd);
+		}
 	}
 }
 
@@ -100,7 +103,7 @@ void	read_multi_lines_input(t_shell *shell, char *prompt)
 	}
 }
 
-void	parse_input(t_shell *shell, char *buf, size_t buf_len, size_t p_len)
+int		parse_input(t_shell *shell, char *buf, size_t buf_len, size_t p_len)
 {
 	if (buf_len == 3 && buf[0] == 27)
 		parse_keys1(shell, buf);
@@ -112,5 +115,6 @@ void	parse_input(t_shell *shell, char *buf, size_t buf_len, size_t p_len)
 		print_input(shell, shell->curs_pos, p_len);
 	}
 	else
-		parse_keys3(shell, buf, buf_len);
+		return (parse_keys3(shell, buf, buf_len));
+	return (0);
 }

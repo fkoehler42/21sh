@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/26 20:56:41 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/08/19 10:26:21 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/08/21 14:14:37 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static int	format_env_var(t_env **env_lst, char *env_var)
 	char	*dup_var;
 
 	val = NULL;
-	dup_var = strdup_remove_quotes(env_var);
+	dup_var = ft_strdup(env_var);
 	if (check_env_var(dup_var, "setenv") == -1)
 	{
 		free(dup_var);

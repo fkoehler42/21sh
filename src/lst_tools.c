@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/11 12:46:08 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/08/19 10:17:17 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/08/21 15:42:50 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,4 +59,15 @@ char	*lst_to_str(t_input *lst)
 	}
 	str[i] = 0;
 	return (str);
+}
+
+t_input	*get_last_elem(t_input *lst)
+{
+	t_input	*tmp;
+
+	if (!(tmp = lst))
+		return (NULL);
+	while (tmp->next)
+		tmp = tmp->next;
+	return (tmp);
 }

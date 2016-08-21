@@ -6,13 +6,13 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/25 16:59:14 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/08/15 14:39:52 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/08/21 17:42:43 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh.h"
 
-void	parse_keys1(t_shell *shell, char *buf)
+int		parse_keys1(t_shell *shell, char *buf)
 {
 	if (buf[1] == 91)
 	{
@@ -29,9 +29,10 @@ void	parse_keys1(t_shell *shell, char *buf)
 		else if (buf[2] == 66)
 			history_next(shell);
 	}
+	return (0);
 }
 
-void	parse_keys2(t_shell *shell, char *buf)
+int		parse_keys2(t_shell *shell, char *buf)
 {
 	if (buf[0] == 27 && buf[1] == 91 &&
 		buf[2] == 49 && buf[3] == 59 && buf[4] == 50)
@@ -45,12 +46,16 @@ void	parse_keys2(t_shell *shell, char *buf)
 		else if (buf[5] == 66)
 			move_line_down(shell);
 	}
+	return (0);
 }
 
-void	parse_keys3(t_shell *shell, char *buf, size_t buf_len)
+int		parse_keys3(t_shell *shell, char *buf, size_t buf_len)
 {
 	if (buf_len == 1 && buf[0] == 10)
+	{
 		handle_input(shell);
+		return (1);
+	}
 	else if (buf_len == 1 && buf[0] == 127)
 		backspace(shell);
 	else if (buf_len == 4 && buf[0] == 27 && buf[1] == 91
@@ -66,4 +71,5 @@ void	parse_keys3(t_shell *shell, char *buf, size_t buf_len)
 		cut_eol(shell);
 	else if (buf_len == 3 && buf[0] == -30 && buf[1] == -120 && buf[2] == -102)
 		paste_buffer(shell);
+	return (0);
 }
