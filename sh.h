@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 17:07:09 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/08/21 19:07:46 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/08/22 12:14:50 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,7 @@ char					*strdup_remove_quotes(char *str);
 size_t					lst_len(t_input *lst);
 void					lst_cpy(t_input *src, t_input **dst);
 char					*lst_to_str(t_input *lst);
+t_input					*lst_rchr(t_input *input, char c);
 t_input					*get_last_elem(t_input *lst);
 
 void					store_environ(t_shell *shell, char **environ);
@@ -161,6 +162,7 @@ int						check_pipes(t_input *cmd, int reverse);
 char					valid_input(t_input *input, char c);
 t_btree					*store_cmd(char *str);
 char					*interpret_cmd_param(char *param);
+void					del_escape_char(t_input *input, char c);
 
 int						builtins_cmd(char **cmd, t_env **env_lst);
 int						ft_exit(char **cmd);

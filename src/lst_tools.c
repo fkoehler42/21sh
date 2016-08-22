@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/11 12:46:08 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/08/21 15:42:50 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/08/22 10:58:54 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,5 +69,18 @@ t_input	*get_last_elem(t_input *lst)
 		return (NULL);
 	while (tmp->next)
 		tmp = tmp->next;
+	return (tmp);
+}
+
+t_input	*lst_rchr(t_input *lst, char c)
+{
+	t_input	*tmp;
+
+	if (!(tmp = lst))
+		return (NULL);
+	while (tmp->next)
+		tmp = tmp->next;
+	while (tmp && tmp->c != c)
+		tmp = tmp->prev;
 	return (tmp);
 }

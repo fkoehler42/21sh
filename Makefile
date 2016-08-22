@@ -6,7 +6,7 @@
 #    By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/04/26 11:46:03 by fkoehler          #+#    #+#              #
-#    Updated: 2016/08/21 15:25:28 by fkoehler         ###   ########.fr        #
+#    Updated: 2016/08/22 11:38:15 by fkoehler         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,7 +33,7 @@ SRC = buffer.c \
 	  history.c \
 	  init.c \
 	  input_cut_copy.c \
-	  input_delete.c \
+	  input_delete_keys.c \
 	  input_handling.c \
 	  keys_parsing.c \
 	  line_moves_1.c \

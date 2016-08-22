@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/11 14:13:19 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/08/21 15:51:31 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/08/22 10:41:40 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,9 @@ char		valid_input(t_input *input, char c)
 			tmp = tmp->next;
 	}
 	tmp = get_last_elem(input);
-	if (tmp->c == '\\')
+	if ((tmp->c == '\\' && (!tmp->prev || tmp->prev->c != '\\'))
+		|| ((tmp->c == '"' || tmp->c == '`') && tmp->prev->c == '\\'
+		&& tmp->prev->prev->c != '\\'))
 		return ('\\');
 	return (0);
 }

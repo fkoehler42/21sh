@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/11 14:13:19 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/08/21 19:25:20 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/08/22 12:12:07 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static int	epur_cmd(t_shell *shell)
 	return (0);
 }
 
-static int	multi_lines_cmd(t_shell *shell)
+static void	multi_lines_cmd(t_shell *shell)
 {
 	static t_input	*save = NULL;
 	char			c;
@@ -50,7 +50,8 @@ static int	multi_lines_cmd(t_shell *shell)
 		while ((c = valid_input(save, c)) > 0)
 		{
 			free_tmp_inputs(shell);
-			c != '\\' ? store_buffer(&save, '\n') : (0);
+			c == '\\' ? del_escape_char(lst_rchr(save, '\\'), '\\')
+			: store_buffer(&save, '\n');
 			read_multi_lines_input(shell, get_special_prompt(c));
 			tputs(tgetstr("do", NULL), shell->fd, &putchar);
 			lst_cpy(shell->input, &save);
@@ -63,7 +64,6 @@ static int	multi_lines_cmd(t_shell *shell)
 		shell->input_len = lst_len(save);
 		save = NULL;
 	}
-	return (0);
 }
 
 static int	parse_cmd(char *str_cmd, int parent)
