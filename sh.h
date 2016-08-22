@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 17:07:09 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/08/22 12:14:50 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/08/22 14:18:31 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,8 +28,6 @@
 # define PIP 3
 
 #define debug ft_printf("file : %s, line : %d", __FILE__, __LINE__);
-
-char					*g_prompt;
 
 typedef struct			s_env
 {

@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/14 20:01:15 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/08/21 19:11:40 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/08/22 15:36:43 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,23 +32,21 @@ static char	*get_relative_path(t_env *home, t_env *pwd)
 
 char		*get_prompt(t_env *env_lst)
 {
-	t_env	*home;
-	t_env	*pwd;
-	t_env	*oldpwd;
+	static char	*prompt = NULL;
+	t_env		*home;
+	t_env		*pwd;
 
-	if (g_prompt)
-		free(g_prompt);
-	g_prompt = NULL;
+	if (prompt != NULL)
+		free(prompt);
 	home = get_env_ptr(env_lst, "HOME");
 	pwd = get_env_ptr(env_lst, "PWD");
-	oldpwd = get_env_ptr(env_lst, "OLDPWD");
-	if (!pwd || !pwd->val[0])
-		g_prompt = ft_strdup("$");
-	else if (!home || !home->val[0])
-		g_prompt = ft_strdup(pwd->val);
+	if (!pwd || !pwd->val || !pwd->val[0])
+		prompt = ft_strdup("$");
+	else if (!home || !home->val || !home->val[0])
+		prompt = ft_strdup(pwd->val);
 	else
-		g_prompt = get_relative_path(home, pwd);
-	return (g_prompt);
+		prompt = get_relative_path(home, pwd);
+	return (prompt);
 }
 
 char		*get_special_prompt(char c)
