@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/11 14:13:19 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/08/22 10:41:40 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/08/23 21:17:15 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,21 @@
 
 static char	is_quote_closed(t_input *tmp, char c)
 {
+	char	d;
+
 	tmp = tmp->next;
 	while (tmp)
 	{
-		if (tmp->c == c)
+		if (c == '"' && tmp->c == '`')
+		{
+			if ((d = is_quote_closed(tmp, tmp->c)) != 0)
+				return (d);
+			d = tmp->c;
+			tmp = tmp->next;
+			while (tmp && tmp->c != d)
+				tmp = tmp->next;
+		}
+		else if (tmp->c == c)
 			return (0);
 		tmp = tmp->next;
 	}
@@ -55,19 +66,23 @@ static char	is_bracket_closed(t_input *tmp, char c)
 
 static char	check_quotes(t_input **input, char c)
 {
+	int		bquote;
 	t_input	*tmp;
 
+	bquote = 0;
 	tmp = *input;
-	if (tmp->c == '\'' || tmp->c == '"' || tmp->c == '`')
+	if (c == '\'' || c == '"' || c == '`')
 	{
 		if ((c = is_quote_closed(tmp, tmp->c)) != 0)
 			return (c);
 		c = tmp->c;
-		tmp = tmp->next;
-		while (tmp && tmp->c != c)
-			tmp = tmp->next;
+		while ((tmp = tmp->next) && (tmp->c != c || (bquote % 2 != 0)))
+		{
+			if (tmp->c == '`')
+				bquote++;
+		}
 	}
-	else if (tmp->c == '[' || tmp->c == '{' || tmp->c == '(')
+	else if (c == '[' || c == '{' || c == '(')
 	{
 		if ((c = is_bracket_closed(tmp, tmp->c)) != 0)
 			return (c);
