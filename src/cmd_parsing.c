@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/11 14:13:19 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/08/22 12:12:07 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/08/24 18:56:06 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,42 +66,38 @@ static void	multi_lines_cmd(t_shell *shell)
 	}
 }
 
-static int	parse_cmd(char *str_cmd, int parent)
+static int	parse_cmd(t_btree *cmd)
 {
 	int		i;
-	char	**cmd;
+	char	**cmd_tab;
 	t_shell	*shell;
 
 	i = 0;
 	shell = get_struct(0);
-	if (!(cmd = strsplit_args(str_cmd)) && parent == PIP)
-		return (cmd_error(0));
-	while (cmd[i])
-	{
-		cmd[i] = interpret_cmd_param(cmd[i]);
-		i++;
-	}
-	if ((cmd[0]) && (builtins_cmd(cmd, &(shell->env_lst)) == -1))
+	if (!(cmd_tab = strsplit_args(cmd->str)))
+		return (-1);
+	cmd_tab = interpret_cmd(cmd->token, cmd_tab);
+	if ((cmd_tab[0]) && (builtins_cmd(cmd_tab, &(shell->env_lst)) == -1))
 		return (0);
 	return (0);
 }
 
-static void	browse_btree(t_btree *cmd, int type)
+static void	browse_btree(t_btree *cmd)
 {
 	if (!cmd)
 		return ;
 	if (cmd->type == SEM)
 	{
-		browse_btree(cmd->left, SEM);
-		browse_btree(cmd->right, SEM);
+		browse_btree(cmd->left);
+		browse_btree(cmd->right);
 	}
 	else if (cmd->type == PIP)
 	{
-		browse_btree(cmd->left, PIP);
-		browse_btree(cmd->right, PIP);
+		browse_btree(cmd->left);
+		browse_btree(cmd->right);
 	}
 	else
-		parse_cmd(cmd->cmd, type);
+		parse_cmd(cmd);
 }
 
 int			handle_input(t_shell *shell)
@@ -119,6 +115,6 @@ int			handle_input(t_shell *shell)
 	cmd_str = lst_to_str(shell->input);
 	shell->cmd = store_cmd(cmd_str);
 	free_tmp_inputs(shell);
-	browse_btree(shell->cmd, shell->cmd->type);
+	browse_btree(shell->cmd);
 	return (0);
 }

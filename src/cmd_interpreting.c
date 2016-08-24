@@ -6,44 +6,42 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/08/21 15:21:55 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/08/23 14:10:53 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/08/24 20:35:08 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh.h"
 
-void	del_escape_char(t_input *input, char c)
+void		del_escape_char(t_input *input, char c)
 {
 	(void)input;
 	(void)c;
 }
 
-char	*interpret_cmd_param(char *param)
+static void	check_param_format(t_token *token, char *param)
 {
-/*	int		i;
-	int		start;
-	int		end;
-	char	*tmp;
+	int	i;
 
 	i = 0;
 	while (param[i])
 	{
-		if (param[i] == '\'' || param[i] == '"' || param[i] == '`')
+		if (ft_isquote(param[i]))
 		{
-			start = i;
-			if ((end = ft_strchr_index(&param[i], param[i])) == -1)
-				break;
-			if (param[i] != '\'')
+			if (i > 0)
+			{
+				create_token();
+			}
 		}
 	}
-	is_quoted = is_str_quoted(param);
-	if ((is_quoted != 1) && (ft_strchr(param, '$') != NULL))
-		param = str_replace_var(param);
-	if (is_quoted > 0)
+}
+
+char		**interpret_cmd(t_token *cmd_token, char **cmd_tab)
+{
+	int	i;
+
+	i = 0;
+	while (cmd_tab[i])
 	{
-		tmp = param;
-		param = strdup_remove_quotes(param);
-		free(tmp);
+		check_param_format(cmd_token, cmd_tab[i]);
 	}
-*/	return (param);
 }

@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/07/11 14:13:19 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/08/23 21:17:15 by fkoehler         ###   ########.fr       */
+/*   Created: 2016/08/24 16:11:42 by fkoehler          #+#    #+#             */
+/*   Updated: 2016/08/24 16:13:20 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,21 +14,10 @@
 
 static char	is_quote_closed(t_input *tmp, char c)
 {
-	char	d;
-
 	tmp = tmp->next;
 	while (tmp)
 	{
-		if (c == '"' && tmp->c == '`')
-		{
-			if ((d = is_quote_closed(tmp, tmp->c)) != 0)
-				return (d);
-			d = tmp->c;
-			tmp = tmp->next;
-			while (tmp && tmp->c != d)
-				tmp = tmp->next;
-		}
-		else if (tmp->c == c)
+		if (tmp->c == c)
 			return (0);
 		tmp = tmp->next;
 	}
@@ -45,7 +34,7 @@ static char	is_bracket_closed(t_input *tmp, char c)
 	tmp = tmp->next;
 	while (tmp)
 	{
-		if (tmp->c == '\'' || tmp->c == '"' || tmp->c == '`')
+		if (ft_isquote(tmp->c))
 		{
 			if ((d = is_quote_closed(tmp, tmp->c)) != 0)
 				return (d);
@@ -66,23 +55,19 @@ static char	is_bracket_closed(t_input *tmp, char c)
 
 static char	check_quotes(t_input **input, char c)
 {
-	int		bquote;
 	t_input	*tmp;
 
-	bquote = 0;
 	tmp = *input;
-	if (c == '\'' || c == '"' || c == '`')
+	if (ft_isquote(tmp->c))
 	{
 		if ((c = is_quote_closed(tmp, tmp->c)) != 0)
 			return (c);
 		c = tmp->c;
-		while ((tmp = tmp->next) && (tmp->c != c || (bquote % 2 != 0)))
-		{
-			if (tmp->c == '`')
-				bquote++;
-		}
+		tmp = tmp->next;
+		while (tmp && tmp->c != c)
+			tmp = tmp->next;
 	}
-	else if (c == '[' || c == '{' || c == '(')
+	else if (tmp->c == '[' || tmp->c == '{' || tmp->c == '(')
 	{
 		if ((c = is_bracket_closed(tmp, tmp->c)) != 0)
 			return (c);
@@ -96,7 +81,6 @@ static char	check_quotes(t_input **input, char c)
 	*input = tmp;
 	return (0);
 }
-
 char		valid_input(t_input *input, char c)
 {
 	int		pipe_ret;
@@ -116,8 +100,8 @@ char		valid_input(t_input *input, char c)
 	}
 	tmp = get_last_elem(input);
 	if ((tmp->c == '\\' && (!tmp->prev || tmp->prev->c != '\\'))
-		|| ((tmp->c == '"' || tmp->c == '`') && tmp->prev->c == '\\'
-		&& tmp->prev->prev->c != '\\'))
+			|| ((tmp->c == '"' || tmp->c == '`') && tmp->prev->c == '\\'
+				&& tmp->prev->prev->c != '\\'))
 		return ('\\');
 	return (0);
 }

@@ -6,7 +6,7 @@
 #    By: fkoehler <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/12/02 18:34:40 by fkoehler          #+#    #+#              #
-#    Updated: 2016/08/15 17:48:19 by fkoehler         ###   ########.fr        #
+#    Updated: 2016/08/24 15:41:23 by fkoehler         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,6 +22,7 @@ SRC = ft_atoi.c \
 	  ft_isspace.c \
 	  ft_isdigit.c \
 	  ft_isprint.c \
+	  ft_isquote.c \
 	  ft_itoa.c \
 	  ft_ltoa_base.c \
 	  ft_lstadd.c \
