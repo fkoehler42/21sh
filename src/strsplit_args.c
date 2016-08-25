@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/02 11:44:16 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/08/24 16:22:43 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/08/25 13:10:19 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,16 +21,17 @@ static int	countwords(char const *s, int i, int n)
 		return (0);
 	while (s[i])
 	{
-		if (ft_isquote(s[i]))
+		if (ft_isquote(s[i]) && (i == 0 || s[i - 1] != '\\'))
 		{
 			c = s[i++];
-			while (s[i] && s[i] != c)
+			while (s[i] && (s[i] != c || (s[i] == c && s[i - 1] == '\\')))
 				i++;
 			!s[i] || !s[i + 1] || s[i + 1] == ' ' || s[i + 1] == '\t' ? n++ : 0;
 		}
 		else if (s[i] != ' ' && s[i] != '\t')
 		{
-			while (s[i] && s[i] != ' ' && s[i] != '\t' && s[i] != '\'' && s[i] != '"')
+			while (s[i] && s[i] != ' ' && s[i] != '\t' &&
+				(!ft_isquote(s[i]) || (ft_isquote(s[i]) && s[i - 1] == '\\')))
 				i++;
 			s[i] && ft_isquote(s[i]) ? i-- : n++;
 		}
@@ -46,17 +47,18 @@ static int	word_len(char const *s, int i)
 	c = 0;
 	if (!s[i])
 		return (i);
-	if (ft_isquote(s[i]))
+	if (ft_isquote(s[i]) && (i == 0 || s[i - 1] != '\\'))
 	{
 		c = s[i++];
-		while (s[i] && s[i] != c)
+		while (s[i] && (s[i] != c || (s[i] == c && s[i - 1] == '\\')))
 			i++;
 		if (s[i] && s[++i] && s[i] != ' ' && s[i] != '\t')
 			i = word_len(s, i);
 	}
 	else
 	{
-		while (s[i] && s[i] != ' ' && s[i] != '\t' && !ft_isquote(s[i]))
+		while (s[i] && s[i] != ' ' && s[i] != '\t' &&
+			(!ft_isquote(s[i]) || (ft_isquote(s[i]) && s[i - 1] == '\\')))
 			i++;
 		if (s[i] && ft_isquote(s[i]) && s[i + 1])
 			i = word_len(s, i);
@@ -88,6 +90,8 @@ char		**strsplit_args(char const *s)
 		i = word_len(s, start);
 		if (start != i)
 			array[j++] = ft_strsub(s, start, (i - start));
+		/* ft_putnbr(j); */
+		/* ft_printf("e arg : %s\n", array[j - 1]); */
 	}
 	/* ft_putnbr(j); */
 	array[j] = NULL;

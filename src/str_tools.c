@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/19 16:42:14 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/08/24 18:50:24 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/08/25 10:30:41 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int		strrchr_outside_quotes(char *s, char c)
 	{
 		if (s[j] == quote)
 			quote = 0;
-		else if ((s[j] == '\'' || s[j] == '"') && !quote)
+		else if (ft_isquote(s[j]) && !quote)
 			quote = s[j];
 	}
 	if (quote && --j)

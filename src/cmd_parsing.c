@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/11 14:13:19 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/08/24 18:56:06 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/08/25 12:00:03 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,12 @@ static int	parse_cmd(t_btree *cmd)
 	shell = get_struct(0);
 	if (!(cmd_tab = strsplit_args(cmd->str)))
 		return (-1);
-	cmd_tab = interpret_cmd(cmd->token, cmd_tab);
+	while (cmd_tab[i])
+	{
+		ft_printf("\narg %d : %s\n", i, cmd_tab[i]);
+		cmd_tab[i] = interpret_cmd_arg(cmd_tab[i]);
+		i++;
+	}
 	if ((cmd_tab[0]) && (builtins_cmd(cmd_tab, &(shell->env_lst)) == -1))
 		return (0);
 	return (0);

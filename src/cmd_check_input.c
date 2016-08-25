@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/08/24 16:11:42 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/08/24 16:13:20 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/08/25 12:22:21 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static char	is_quote_closed(t_input *tmp, char c)
 	tmp = tmp->next;
 	while (tmp)
 	{
-		if (tmp->c == c)
+		if (tmp->c == c && tmp->prev->c != '\\')
 			return (0);
 		tmp = tmp->next;
 	}
@@ -34,19 +34,19 @@ static char	is_bracket_closed(t_input *tmp, char c)
 	tmp = tmp->next;
 	while (tmp)
 	{
-		if (ft_isquote(tmp->c))
+		if (ft_isquote(tmp->c) && tmp->prev->c != '\\')
 		{
 			if ((d = is_quote_closed(tmp, tmp->c)) != 0)
 				return (d);
 			d = tmp->c;
 			tmp = tmp->next;
-			while (tmp && tmp->c != d)
+			while (tmp && (tmp->c != d || (tmp->c == d && tmp->prev->c == '\\')))
 				tmp = tmp->next;
 			d = (c == '(') ? c + 1 : c + 2;
 		}
-		else if (tmp->c == c)
+		else if (tmp->c == c && tmp->prev->c != '\\')
 			count++;
-		else if (tmp->c == d && (--count == 0))
+		else if (tmp->c == d && tmp->prev->c != '\\' &&  (--count == 0))
 			return (0);
 		tmp = tmp->next;
 	}
@@ -58,23 +58,25 @@ static char	check_quotes(t_input **input, char c)
 	t_input	*tmp;
 
 	tmp = *input;
-	if (ft_isquote(tmp->c))
+	if (ft_isquote(tmp->c) && (!tmp->prev || tmp->prev->c != '\\'))
 	{
 		if ((c = is_quote_closed(tmp, tmp->c)) != 0)
 			return (c);
 		c = tmp->c;
 		tmp = tmp->next;
-		while (tmp && tmp->c != c)
+		while (tmp && (tmp->c != c || (tmp->c == c && tmp->prev->c == '\\')))
 			tmp = tmp->next;
 	}
-	else if (tmp->c == '[' || tmp->c == '{' || tmp->c == '(')
+	else if ((tmp->c == '[' || tmp->c == '{' || tmp->c == '(')
+			&& (!tmp->prev || tmp->prev->c == '\\'))
 	{
 		if ((c = is_bracket_closed(tmp, tmp->c)) != 0)
 			return (c);
 		c = (tmp->c == '(') ? tmp->c + 1 : tmp->c + 2;
-		while ((tmp = tmp->next) && tmp && tmp->c != c)
+		while ((tmp = tmp->next) &&
+				(tmp->c != c || (tmp->c == c && tmp->prev->c == '\\')))
 		{
-			if (tmp->c == '\'' || tmp->c == '"' || tmp->c == '`')
+			if (ft_isquote(tmp->c) && tmp->prev->c != '\\')
 				c = tmp->c;
 		}
 	}

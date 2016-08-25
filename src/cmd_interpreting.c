@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/08/21 15:21:55 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/08/24 20:35:08 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/08/25 12:00:17 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,30 +18,17 @@ void		del_escape_char(t_input *input, char c)
 	(void)c;
 }
 
-static void	check_param_format(t_token *token, char *param)
-{
+char		*interpret_cmd_arg(char *cmd_arg)
+{/*
 	int	i;
+	int	chr;
 
 	i = 0;
-	while (param[i])
+	if ((chr = (ft_strchr_index(cmd_arg, '$') != -1)))
+	while (cmd_arg[i] && i < chr)
 	{
-		if (ft_isquote(param[i]))
-		{
-			if (i > 0)
-			{
-				create_token();
-			}
-		}
-	}
-}
+		if (cmd_arg[i] == '"' || cmd_arg[i] == '`' || i == (chr - 1))
 
-char		**interpret_cmd(t_token *cmd_token, char **cmd_tab)
-{
-	int	i;
-
-	i = 0;
-	while (cmd_tab[i])
-	{
-		check_param_format(cmd_token, cmd_tab[i]);
-	}
+	}*/
+	return (cmd_arg);
 }

@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 17:07:09 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/08/24 20:35:13 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/08/25 10:16:16 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,22 +26,8 @@
 # define CMD 1
 # define SEM 2
 # define PIP 3
-# define QUOTE 4
-# define DQUOTE 5
-# define BQUOTE 6
-# define WORD 7
-# define REDIR 8
-# define DREDIR 9
-# define RREDIR 10
-# define RDREDIR 11
 
 #define debug ft_printf("file : %s, line : %d", __FILE__, __LINE__);
-
-typedef struct			s_token
-{
-	int					type;
-	char				*content;
-}						t_token;
 
 typedef struct			s_env
 {
@@ -68,7 +54,6 @@ typedef struct			s_btree
 {
 	int					type;
 	char				*str;
-	struct s_token		*token;
 	struct s_btree		*left;
 	struct s_btree		*right;
 }						t_btree;
@@ -172,7 +157,7 @@ int						handle_input(t_shell *shell);
 int						check_pipes(t_input *cmd, int reverse);
 char					valid_input(t_input *input, char c);
 t_btree					*store_cmd(char *str);
-char					**interpret_cmd(t_token *cmd_token, char **cmd_tab);
+char					*interpret_cmd_arg(char *cmd_arg);
 void					del_escape_char(t_input *input, char c);
 
 int						builtins_cmd(char **cmd, t_env **env_lst);
