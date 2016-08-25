@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/24 15:05:22 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/08/22 16:03:06 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/08/25 18:04:48 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,14 +41,14 @@ void	store_input(t_shell *shell, char c)
 	shell->input_len++;
 }
 
-void	delete_input(t_shell *shell, t_input *input, int back)
+void	delete_input(t_input **lst, t_input *input, t_shell *shell, int back)
 {
 	if (!input->prev && !input->next)
-		shell->input = NULL;
+		*lst = NULL;
 	else if (!input->prev)
 	{
-		shell->input = input->next;
-		shell->input->prev = NULL;
+		*lst = input->next;
+		(*lst)->prev = NULL;
 	}
 	else if (!input->next)
 		input->prev->next = NULL;
@@ -57,10 +57,11 @@ void	delete_input(t_shell *shell, t_input *input, int back)
 		input->prev->next = input->next;
 		input->next->prev = input->prev;
 	}
-	if (back)
+	if (shell)
+		shell->input_len--;
+	if (shell && back)
 		shell->curs_pos = input->prev;
 	free(input);
-	shell->input_len--;
 }
 
 void	read_input(t_shell *shell)

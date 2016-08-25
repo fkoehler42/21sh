@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 17:07:09 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/08/25 10:16:16 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/08/25 19:55:19 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,9 @@
 # define CMD 1
 # define SEM 2
 # define PIP 3
+# define QUOTE 1
+# define DQUOTE 2
+# define BQUOTE 3
 
 #define debug ft_printf("file : %s, line : %d", __FILE__, __LINE__);
 
@@ -94,8 +97,11 @@ t_shell					*get_struct(t_shell *struc);
 
 int						putchar(int c);
 int						strrchr_outside_quotes(char *s, char c);
-char					*str_replace_var(char *s);
+int						is_str_quoted(char *s);
+char					*strdup_remove_quotes(char *s);
+char					*str_replace_var(char *s, int start);
 char					**strsplit_args(char const *s);
+char					**str_subsplit_arg(char const *s);
 size_t					lst_len(t_input *lst);
 void					lst_cpy(t_input *src, t_input **dst);
 char					*lst_to_str(t_input *lst);
@@ -121,7 +127,8 @@ void					print_input(t_shell *shell, t_input *curs_pos,
 int						parse_input(t_shell *shell, char *buf,
 						size_t buf_len, size_t p_len);
 void					store_input(t_shell *shell, char c);
-void					delete_input(t_shell *shell, t_input *input, int back);
+void					delete_input(t_input **lst, t_input *input,
+						t_shell *shell, int back);
 void					clear_input(t_shell *shell);
 
 int						parse_keys1(t_shell *shell, char *buf);
@@ -158,7 +165,6 @@ int						check_pipes(t_input *cmd, int reverse);
 char					valid_input(t_input *input, char c);
 t_btree					*store_cmd(char *str);
 char					*interpret_cmd_arg(char *cmd_arg);
-void					del_escape_char(t_input *input, char c);
 
 int						builtins_cmd(char **cmd, t_env **env_lst);
 int						ft_exit(char **cmd);

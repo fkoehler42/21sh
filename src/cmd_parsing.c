@@ -6,37 +6,11 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/11 14:13:19 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/08/25 12:00:03 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/08/25 19:45:12 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh.h"
-
-static int	epur_cmd(t_shell *shell)
-{
-	t_input	*tmp1;
-	t_input	*tmp2;
-
-	if (!(tmp1 = shell->input))
-		return (-1);
-	while (tmp1 && (tmp1->c == ' ' || tmp1->c == ';'))
-	{
-		delete_input(shell, tmp1, 1);
-		tmp1 = shell->input;
-	}
-	if (!tmp1)
-		return (-1);
-	tmp1 = shell->curs_pos;
-	while (tmp1 && (tmp1->c == ' ' || tmp1->c == ';'))
-	{
-		tmp2 = tmp1->prev;
-		delete_input(shell, tmp1, 1);
-		tmp1 = tmp2;
-	}
-	if (!tmp1)
-		return (-1);
-	return (0);
-}
 
 static void	multi_lines_cmd(t_shell *shell)
 {
@@ -50,7 +24,7 @@ static void	multi_lines_cmd(t_shell *shell)
 		while ((c = valid_input(save, c)) > 0)
 		{
 			free_tmp_inputs(shell);
-			c == '\\' ? del_escape_char(lst_rchr(save, '\\'), '\\')
+			c == '\\' ? delete_input(&save, lst_rchr(save, '\\'), NULL, 0)
 			: store_buffer(&save, '\n');
 			read_multi_lines_input(shell, get_special_prompt(c));
 			tputs(tgetstr("do", NULL), shell->fd, &putchar);
@@ -78,7 +52,7 @@ static int	parse_cmd(t_btree *cmd)
 		return (-1);
 	while (cmd_tab[i])
 	{
-		ft_printf("\narg %d : %s\n", i, cmd_tab[i]);
+		ft_printf("\narg %d : %s\n", i + 1, cmd_tab[i]);
 		cmd_tab[i] = interpret_cmd_arg(cmd_tab[i]);
 		i++;
 	}
@@ -111,8 +85,8 @@ int			handle_input(t_shell *shell)
 
 	move_line_end(shell);
 	tputs(tgetstr("do", NULL), shell->fd, &putchar);
-	if (epur_cmd(shell) == -1)
-		return (-1);
+	/* if (epur_cmd(shell) == -1) */
+		/* return (-1); */
 	if (check_pipes(shell->input, 1) == -1)
 		return (cmd_error(0));
 	multi_lines_cmd(shell);

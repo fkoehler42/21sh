@@ -6,37 +6,30 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/19 16:42:14 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/08/25 10:30:41 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/08/25 20:00:59 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh.h"
 
-char	*str_replace_var(char *s)
+char	*str_replace_var(char *s, int start)
 {
 	int		i;
-	int		start;
 	char	*tmp;
-	char	*s1;
+	char	*ret;
 
-	i = 0;
-	while (s[i])
+	i = start;
+	if (s[i + 1] && !ft_isspace(s[i + 1]) && s[i + 1] != '$')
 	{
-		if (s[i] == '$' && s[i + 1] && !ft_isspace(s[i + 1]) && s[i + 1] != '$')
-		{
-			start = i;
+		i++;
+		while (s[i] && (ft_isalnum(s[i]) || s[i] == '_'))
 			i++;
-			while (s[i] && (ft_isalnum(s[i]) || s[i] == '_'))
-				i++;
-			if ((tmp = env_var_to_value(ft_strsub(s, (start + 1), (i - start - 1)))))
-			{
-				s1 = ft_replace_str(s, start, (i - start), tmp);
-				free(tmp);
-				free(s);
-				return (str_replace_var(s1));
-			}
+		if ((tmp = env_var_to_value(ft_strsub(s, (start + 1), (i - start - 1)))))
+		{
+			ret = ft_replace_str(s, start, (i - start), tmp);
+			free(tmp);
+			free(s);
 		}
-		s[i] ? i++ : (0);
 	}
 	return (s);
 }
@@ -69,4 +62,34 @@ int		strrchr_outside_quotes(char *s, char c)
 	}
 	free(s);
 	return (i);
+}
+
+int		is_str_quoted(char *s)
+{
+	size_t	len;
+
+	len = ft_strlen(s);
+	if (s[0] == '\'' && s[len - 1] == '\'')
+		return (1);
+	else if (s[0] == '"' && s[len - 1] == '"')
+		return (2);
+	else if (s[0] == '`' && s[len - 1] == '`')
+		return (3);
+	return (0);
+}
+
+char		*strdup_remove_quotes(char *s)
+{
+	char	*tmp;
+	size_t	len;
+
+	len = 0;
+	if (is_str_quoted(s))
+	{
+		len = ft_strlen(s);
+		tmp = ft_strsub(s, 1, len - 2);
+		free(s);
+		s = tmp;
+	}
+	return (s);
 }
