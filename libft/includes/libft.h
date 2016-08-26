@@ -6,7 +6,7 @@
 /*   By: fkoehler <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/11/24 19:11:04 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/08/24 15:41:44 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/08/26 22:35:31 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,7 @@ int					ft_toupper(int c);
 int					ft_tolower(int c);
 
 size_t				ft_strlen(const char *s);
+size_t				ft_multi_strlen(char **array);
 char				*ft_strcpy(char *dst, const char *src);
 char				*ft_strncpy(char *dst, const char *src, size_t len);
 char				*ft_strchr(const char *s, int c);
@@ -91,6 +92,7 @@ char				*ft_strmap(char const *s, char (*f)(char));
 char				*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 char				*ft_strsub(char const *s, unsigned int start, size_t len);
 char				*ft_strjoin(char const *s1, char const *s2);
+char				*ft_multi_strjoin(char **array, char *delimiter);
 char				*ft_strtrim(char const *s);
 char				**ft_strsplit(char const *s, char c);
 int					free_tab(char **tab);

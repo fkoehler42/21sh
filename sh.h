@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 17:07:09 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/08/26 05:47:00 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/08/27 00:36:53 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,10 @@
 # define CMD 1
 # define SEM 2
 # define PIP 3
-# define QUOTE 1
+/*# define QUOTE 1
 # define DQUOTE 2
 # define BQUOTE 3
-
+*/
 #define debug ft_printf("file : %s, line : %d", __FILE__, __LINE__);
 
 typedef struct			s_env
@@ -57,6 +57,7 @@ typedef struct			s_btree
 {
 	int					type;
 	char				*str;
+	char				**array;
 	struct s_btree		*left;
 	struct s_btree		*right;
 }						t_btree;
@@ -166,8 +167,10 @@ int						check_pipes(t_input *cmd, int reverse);
 char					valid_input(t_input *input, char c);
 t_btree					*store_cmd(char *str);
 char					*interpret_cmd_arg(char *cmd_arg);
+void					handle_cmd(t_shell *shell);
+void					handle_cmd_btree(t_btree *cmd, t_env *env);
 
-int						builtins_cmd(char **cmd, t_env **env_lst);
+int						builtins_cmd(char **cmd, t_env *env_lst);
 int						ft_exit(char **cmd);
 int						ft_cd(char **cmd, t_env *env_lst);
 int						ft_echo(char **cmd);

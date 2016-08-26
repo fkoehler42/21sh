@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/11 14:13:19 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/08/25 19:45:12 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/08/27 00:45:17 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,36 +44,34 @@ static int	parse_cmd(t_btree *cmd)
 {
 	int		i;
 	char	**cmd_tab;
-	t_shell	*shell;
 
 	i = 0;
-	shell = get_struct(0);
 	if (!(cmd_tab = strsplit_args(cmd->str)))
 		return (-1);
 	while (cmd_tab[i])
 	{
-		ft_printf("\narg %d : %s\n", i + 1, cmd_tab[i]);
+		/* ft_printf("\narg %d : %s\n", i + 1, cmd_tab[i]); */
 		cmd_tab[i] = interpret_cmd_arg(cmd_tab[i]);
 		i++;
 	}
-	if ((cmd_tab[0]) && (builtins_cmd(cmd_tab, &(shell->env_lst)) == -1))
-		return (0);
+	/* ft_print_array(cmd_tab); */
+	cmd->array = cmd_tab;
 	return (0);
 }
 
-static void	browse_btree(t_btree *cmd)
+static void	parse_cmd_btree(t_btree *cmd)
 {
 	if (!cmd)
 		return ;
 	if (cmd->type == SEM)
 	{
-		browse_btree(cmd->left);
-		browse_btree(cmd->right);
+		parse_cmd_btree(cmd->left);
+		parse_cmd_btree(cmd->right);
 	}
 	else if (cmd->type == PIP)
 	{
-		browse_btree(cmd->left);
-		browse_btree(cmd->right);
+		parse_cmd_btree(cmd->left);
+		parse_cmd_btree(cmd->right);
 	}
 	else
 		parse_cmd(cmd);
@@ -87,6 +85,8 @@ int			handle_input(t_shell *shell)
 	tputs(tgetstr("do", NULL), shell->fd, &putchar);
 	/* if (epur_cmd(shell) == -1) */
 		/* return (-1); */
+	if (!shell->input)
+		return (0);
 	if (check_pipes(shell->input, 1) == -1)
 		return (cmd_error(0));
 	multi_lines_cmd(shell);
@@ -94,6 +94,7 @@ int			handle_input(t_shell *shell)
 	cmd_str = lst_to_str(shell->input);
 	shell->cmd = store_cmd(cmd_str);
 	free_tmp_inputs(shell);
-	browse_btree(shell->cmd);
+	parse_cmd_btree(shell->cmd);
+	handle_cmd(shell);
 	return (0);
 }

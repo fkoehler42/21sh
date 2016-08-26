@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/08/21 15:21:55 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/08/26 03:34:01 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/08/26 23:48:38 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,15 +76,15 @@ char		**str_subsplit_arg(char const *s)
 	j = 0;
 	if (!(ret = (char **)malloc(sizeof(char *) * (count_arg_part(s, 0, 0) + 1))))
 		quit_error(9);
-	ft_printf("%d subarg(s)", count_arg_part(s, 0, 0));
+	/* ft_printf("%d subarg(s)", count_arg_part(s, 0, 0)); */
 	while (s[i])
 	{
 		start = i;
 		i = arg_part_len(s, start);
 		if (start != i)
 			ret[j++] = ft_strsub(s, start, (i - start));
-		ft_printf("\nsubarg %d : %s", j, ret[j - 1]);
-		ft_putchar('\n');
+		/* ft_printf("\nsubarg %d : %s", j, ret[j - 1]); */
+		/* ft_putchar('\n'); */
 	}
 	ret[j] = NULL;
 	return (ret);

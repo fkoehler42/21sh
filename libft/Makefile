@@ -6,7 +6,7 @@
 #    By: fkoehler <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/12/02 18:34:40 by fkoehler          #+#    #+#              #
-#    Updated: 2016/08/24 15:41:23 by fkoehler         ###   ########.fr        #
+#    Updated: 2016/08/26 22:33:32 by fkoehler         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,6 +39,8 @@ SRC = ft_atoi.c \
 	  ft_memdel.c \
 	  ft_memmove.c \
 	  ft_memset.c \
+	  ft_multi_strlen.c \
+	  ft_multi_strjoin.c \
 	  ft_print_array.c \
 	  ft_putchar.c \
 	  ft_putchar_fd.c \

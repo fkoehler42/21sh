@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/08/21 15:21:55 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/08/26 06:05:48 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/08/26 23:44:09 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,17 +53,20 @@ static char	*interpret_special_char(char *sub_arg)
 char		*interpret_cmd_arg(char *cmd_arg)
 {
 	int		i;
-	char	*tmp;
+	char	*ret;
 	char	**arg_tab;
 
 	i = 0;
-	tmp = NULL;
+	ret = NULL;
 	arg_tab = str_subsplit_arg(cmd_arg);
 	while (arg_tab[i])
 	{
 		arg_tab[i] = interpret_special_char(arg_tab[i]);
-		ft_printf("\narg_modified : %s\n", arg_tab[i]);
+		/* ft_printf("\narg_modified : %s\n", arg_tab[i]); */
 		i++;
 	}
-	return (cmd_arg);
+	ret = ft_multi_strjoin(arg_tab, "");
+	free_tab(arg_tab);
+	free(cmd_arg);
+	return (ret);
 }

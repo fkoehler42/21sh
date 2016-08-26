@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/26 20:56:41 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/08/21 14:10:49 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/08/27 00:39:58 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,8 +95,8 @@ int			ft_env(char **cmd, t_env *env_lst, int i)
 		}
 		else if (ft_strchr(cmd[i], '=') != NULL && ++j)
 			ft_setenv(&cmd[i], &env_lst_cpy, 1);
-		else if ((builtins_cmd(cmd + i, &env_lst_cpy) == 0) ||
-/*binary_cmd*/	(builtins_cmd(cmd + i, &env_lst_cpy) == -1))
+		else if ((builtins_cmd(cmd + i, env_lst_cpy) == 0) ||
+/*binary_cmd*/	(builtins_cmd(cmd + i, env_lst_cpy) == -1))
 			return (del_env_cpy(&env_lst_cpy));
 		i += j;
 	}

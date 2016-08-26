@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/21 13:19:51 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/07/21 23:46:58 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/08/27 00:43:55 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,7 @@ int				check_pipes(t_input *cmd, int reverse)
 	int		ret;
 	t_input	*tmp;
 
-	if (!(tmp = cmd))
-		return (-1);
+	tmp = cmd;
 	while (tmp)
 	{
 		if (tmp->c == '|' && ((ret = parse_near_pipe(tmp, reverse)) != 0))
