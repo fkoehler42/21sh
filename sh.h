@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 17:07:09 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/08/25 19:55:19 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/08/26 05:47:00 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,6 +112,7 @@ void					store_environ(t_shell *shell, char **environ);
 int						store_env_var(t_env **env_lst, char *var, char *val);
 int						del_env_var(t_env **env_lst, char *var);
 t_env					*get_env_ptr(t_env *env_lst, char *var);
+
 int						check_env_var(char *env_var, char *cmd);
 char					*env_var_to_value(char *var);
 int						set_new_pwd(t_env *env_lst);

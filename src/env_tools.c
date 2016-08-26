@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/24 12:20:59 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/08/21 19:24:13 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/08/26 05:31:32 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,34 +77,5 @@ int		set_new_pwd(t_env *env_lst)
 	else
 		store_env_var(&(shell->env_lst), ft_strdup("OLDPWD"), ft_strdup(pwd->val));
 	store_env_var(&(shell->env_lst), ft_strdup("PWD"), current_path);
-	return (0);
-}
-
-int		del_env_var(t_env **env_lst, char *var)
-{
-	t_env	*tmp1;
-	t_env	*tmp2;
-
-	if (!(tmp1 = *env_lst))
-	{
-		free(var);
-		return (-1);
-	}
-	if (ft_strcmp(tmp1->var, var) == 0)
-	{
-		*env_lst = tmp1->next;
-		free_env_var(tmp1);
-		free(var);
-		return (0);
-	}
-	while (tmp1->next && ft_strcmp(tmp1->next->var, var) != 0)
-		tmp1 = tmp1->next;
-	if (tmp1->next)
-	{
-		tmp2 = tmp1->next->next;
-		free_env_var(tmp1->next);
-		tmp1->next = tmp2;
-	}
-	free(var);
 	return (0);
 }

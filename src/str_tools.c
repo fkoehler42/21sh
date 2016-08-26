@@ -6,16 +6,15 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/19 16:42:14 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/08/25 20:00:59 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/08/26 06:11:02 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh.h"
 
-char	*str_replace_var(char *s, int start)
+char	*strsub_env_var(char *s, int start)
 {
 	int		i;
-	char	*tmp;
 	char	*ret;
 
 	i = start;
@@ -24,14 +23,32 @@ char	*str_replace_var(char *s, int start)
 		i++;
 		while (s[i] && (ft_isalnum(s[i]) || s[i] == '_'))
 			i++;
-		if ((tmp = env_var_to_value(ft_strsub(s, (start + 1), (i - start - 1)))))
+		ret = ft_strsub(s, (start + 1), (i - start - 1));
+		return (ret);
+	}
+	return (NULL);
+}
+
+char	*str_replace_var(char *s, int start)
+{
+	size_t	len;
+	char	*tmp;
+	char	*ret;
+
+	ret = s;
+	if ((tmp = strsub_env_var(s, start)))
+	{
+		len = ft_strlen(tmp);
+		if ((tmp = env_var_to_value(tmp)))
 		{
-			ret = ft_replace_str(s, start, (i - start), tmp);
+			ret = ft_replace_str(s, start, (len + 1), tmp);
 			free(tmp);
 			free(s);
 		}
+		else
+			free(tmp);
 	}
-	return (s);
+	return (ret);
 }
 
 int		strrchr_outside_quotes(char *s, char c)
@@ -83,13 +100,9 @@ char		*strdup_remove_quotes(char *s)
 	char	*tmp;
 	size_t	len;
 
-	len = 0;
-	if (is_str_quoted(s))
-	{
-		len = ft_strlen(s);
-		tmp = ft_strsub(s, 1, len - 2);
-		free(s);
-		s = tmp;
-	}
+	len = ft_strlen(s);
+	tmp = ft_strsub(s, 1, len - 2);
+	free(s);
+	s = tmp;
 	return (s);
 }
