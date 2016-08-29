@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/11 14:13:19 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/08/27 00:45:17 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/08/29 11:56:11 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,27 +54,9 @@ static int	parse_cmd(t_btree *cmd)
 		cmd_tab[i] = interpret_cmd_arg(cmd_tab[i]);
 		i++;
 	}
-	/* ft_print_array(cmd_tab); */
+	ft_print_array(cmd_tab);
 	cmd->array = cmd_tab;
 	return (0);
-}
-
-static void	parse_cmd_btree(t_btree *cmd)
-{
-	if (!cmd)
-		return ;
-	if (cmd->type == SEM)
-	{
-		parse_cmd_btree(cmd->left);
-		parse_cmd_btree(cmd->right);
-	}
-	else if (cmd->type == PIP)
-	{
-		parse_cmd_btree(cmd->left);
-		parse_cmd_btree(cmd->right);
-	}
-	else
-		parse_cmd(cmd);
 }
 
 int			handle_input(t_shell *shell)
@@ -83,8 +65,6 @@ int			handle_input(t_shell *shell)
 
 	move_line_end(shell);
 	tputs(tgetstr("do", NULL), shell->fd, &putchar);
-	/* if (epur_cmd(shell) == -1) */
-		/* return (-1); */
 	if (!shell->input)
 		return (0);
 	if (check_pipes(shell->input, 1) == -1)
@@ -94,7 +74,6 @@ int			handle_input(t_shell *shell)
 	cmd_str = lst_to_str(shell->input);
 	shell->cmd = store_cmd(cmd_str);
 	free_tmp_inputs(shell);
-	parse_cmd_btree(shell->cmd);
-	handle_cmd(shell);
+	handle_btree(shell, shell->cmd);
 	return (0);
 }

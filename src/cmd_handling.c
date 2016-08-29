@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/08/15 14:41:46 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/08/27 00:37:47 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/08/29 13:05:15 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,27 +31,28 @@ int		builtins_cmd(char **cmd, t_env *env)
 	return (0);
 }
 
-void	handle_cmd_btree(t_btree *cmd, t_env *env)
+int		handle_cmd(t_shell *shell, char *cmd)
 {
-	if (cmd->type == SEM)
-	{
-		handle_cmd_btree(cmd->left, env);
-		handle_cmd_btree(cmd->right, env);
-	}
-	else if (cmd->type == PIP)
-	{
-		//create_cmd_pipe
-		handle_cmd_btree(cmd->left, env);
-		handle_cmd_btree(cmd->right, env);
-	}
-	else if (cmd->array[0])
-	{
-		if (builtins_cmd(cmd->array, env) == -1)
-			return ;
-	}
+
 }
 
-void	handle_cmd(t_shell *shell)
+void	handle_btree(t_shell *shell, t_btree *tree)
 {
-	handle_cmd_btree(shell->cmd, shell->env_lst);
+	if (tree->type == SEM)
+	{
+		handle_cmd_btree(shell, tree->left);
+		handle_cmd_btree(shell, tree->right);
+	}
+	else if (tree->type == PIP)
+	{
+		if (!tree->left || !tree->right)
+			return (cmd_error(0));
+		if (tree->left->type == PIP || tree->right->type == PIP)
+			handle_btree(shell, tree->left);
+		else
+			handle_cmd(shell, tree->str);
+	}
+	else if (tree->str && tree->str[0])
+		handle_cmd(shell, tree->str);
+	return (0);
 }

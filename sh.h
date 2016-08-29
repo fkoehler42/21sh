@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 17:07:09 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/08/27 00:36:53 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/08/29 12:23:48 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,8 +167,10 @@ int						check_pipes(t_input *cmd, int reverse);
 char					valid_input(t_input *input, char c);
 t_btree					*store_cmd(char *str);
 char					*interpret_cmd_arg(char *cmd_arg);
-void					handle_cmd(t_shell *shell);
-void					handle_cmd_btree(t_btree *cmd, t_env *env);
+void					handle_btree(t_shell *shell, t_btree *tree);
+int						handle_cmd(t_shell *shell, char *cmd);
+//void					handle_cmd(t_shell *shell);
+//void					handle_cmd_btree(t_btree *cmd, t_env *env);
 
 int						builtins_cmd(char **cmd, t_env *env_lst);
 int						ft_exit(char **cmd);
