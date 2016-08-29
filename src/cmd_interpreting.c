@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/08/21 15:21:55 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/08/29 13:05:19 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/08/29 15:50:48 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,22 +73,32 @@ char		*interpret_cmd_arg(char *cmd_arg)
 
 static char	*check_redir(char *s, int i)
 {
-	if (!s[i - 1])
-		return (NULL);
-	if (s[i - 1] == 0 || s[i - 1] == 1 || s[i -1] == 2)
+	int	start;
 
+	if (i == 0)
+		return (NULL);
+	if ((s[i - 1] == '0' || s[i - 1] == '1' || s[i - 1] == '2') &&
+		(i == 1 || s[i - 2] == ' '))
+		start = (i > 1) ? i - 2 : i - 1 ;
+	else
+		start = i;
+	while (s[i] && (s[i] == '<' || s[i] == '>' || s[i] == '&' ||
+			s[i] == '-' || s[i] == '0' || s[i] == '1' || s[i] == '2'))
+		i++;
+	handle_redirect(s, start, i);
 }
 
 int			strchr_redir(char *s)
 {
-	int	i;
+	int		i;
+	char	c;
 
 	i = 0;
 	while (s[i])
 	{
-		if (s[i] == '\'')
+		if (ft_isquote(s[i]) && (c = s[i]))
 		{
-			while (s[i] && s[i] != '\'')
+			while (s[i] && s[i] != c)
 				i++;
 		}
 		else if (s[i] == '>' || s[i] == '<')

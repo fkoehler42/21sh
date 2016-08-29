@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/24 15:05:22 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/08/25 18:04:48 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/08/29 15:48:20 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void	read_input(t_shell *shell)
 	char	buf[7];
 	size_t	buf_len;
 
-	shell->p_len = put_prompt(get_prompt(shell->env_lst), shell->fd);
+	shell->p_len = put_prompt(get_prompt(shell->env_lst), shell->fd[3]);
 	while (42)
 	{
 		ft_bzero((void *)buf, 7);
@@ -79,7 +79,7 @@ void	read_input(t_shell *shell)
 		{
 			if (parse_input(shell, buf, buf_len, shell->p_len))
 				shell->p_len =
-				put_prompt(get_prompt(shell->env_lst), shell->fd);
+				put_prompt(get_prompt(shell->env_lst), shell->fd[3]);
 		}
 	}
 }
@@ -90,7 +90,7 @@ void	read_multi_lines_input(t_shell *shell, char *prompt)
 	size_t	buf_len;
 
 	shell->p_len = ft_strlen(prompt);
-	ft_putstr_fd(prompt, shell->fd);
+	ft_putstr_fd(prompt, shell->fd[3]);
 	buf[0] = 0;
 	while (buf[0] != 10)
 	{

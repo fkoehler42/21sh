@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/08/21 14:16:01 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/08/21 17:33:13 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/08/29 15:43:59 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,10 @@ int			ft_echo(char **cmd)
 		ft_putchar('\n');
 	else if (cmd[2] && (cmd[2][0] || cmd[3]))
 	{
-		tputs(tgetstr("mr", NULL), shell->fd, &putchar);
+		tputs(tgetstr("mr", NULL), shell->fd[3], &putchar);
 		ft_putchar('%');
-		tputs(tgetstr("me", NULL), shell->fd, &putchar);
-		tputs(tgetstr("do", NULL), shell->fd, &putchar);
+		tputs(tgetstr("me", NULL), shell->fd[3], &putchar);
+		tputs(tgetstr("do", NULL), shell->fd[3], &putchar);
 	}
 	return (0);
 }

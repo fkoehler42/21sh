@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/08/15 14:41:46 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/08/29 13:05:15 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/08/29 17:24:31 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	handle_btree(t_shell *shell, t_btree *tree)
 	else if (tree->type == PIP)
 	{
 		if (!tree->left || !tree->right)
-			return (cmd_error(0));
+			return (cmd_error(0), '|');
 		if (tree->left->type == PIP || tree->right->type == PIP)
 			handle_btree(shell, tree->left);
 		else

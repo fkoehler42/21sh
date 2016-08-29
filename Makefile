@@ -6,7 +6,7 @@
 #    By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/04/26 11:46:03 by fkoehler          #+#    #+#              #
-#    Updated: 2016/08/25 17:34:30 by fkoehler         ###   ########.fr        #
+#    Updated: 2016/08/29 17:17:31 by fkoehler         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,6 +20,7 @@ SRC = buffer.c \
 	  cmd_interpreting.c \
 	  cmd_parsing.c \
 	  cmd_pipe.c \
+	  cmd_redir.c \
 	  cmd_storage.c \
 	  cursor.c \
 	  echo.c \

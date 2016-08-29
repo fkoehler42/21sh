@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/09 17:10:07 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/08/25 18:06:50 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/08/29 15:47:40 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int		backspace(t_shell *shell)
 		return (-1);
 	replace_cursor(shell, 0, 1);
 	delete_input(&(shell->input), shell->curs_pos, shell, 1);
-	tputs(tgetstr("cd", NULL), shell->fd, &putchar);
+	tputs(tgetstr("cd", NULL), shell->fd[3], &putchar);
 	if (!(shell->curs_pos) && shell->input)
 	{
 		shell->curs_pos = shell->input;
@@ -42,7 +42,7 @@ int		del(t_shell *shell)
 		delete_input(&(shell->input), shell->input, shell, 0);
 	else
 		delete_input(&(shell->input), shell->curs_pos->next, shell, 0);
-	tputs(tgetstr("cd", NULL), shell->fd, &putchar);
+	tputs(tgetstr("cd", NULL), shell->fd[3], &putchar);
 	if (!(shell->curs_pos) && shell->input)
 	{
 		shell->curs_pos = shell->input;

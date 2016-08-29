@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/08/24 16:11:42 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/08/26 03:05:59 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/08/29 17:24:11 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,7 +92,7 @@ char		valid_input(t_input *input, char c)
 	if ((pipe_ret = check_pipes(input, 0)) == -1)
 		return ('|');
 	if (pipe_ret == 1)
-		return (cmd_error(0));
+		return (cmd_error(0), '|');
 	while (tmp)
 	{
 		if ((c = check_quotes(&tmp, tmp->c)) != 0)

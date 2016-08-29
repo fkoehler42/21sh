@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 18:55:56 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/08/21 17:34:43 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/08/29 15:37:01 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,10 @@ static int	check_termcaps(void)
 
 void		init_shell(t_shell *shell)
 {
-	if ((shell->fd = open("/dev/tty", O_RDWR)) == -1)
+	shell->fd[0] = 0;
+	shell->fd[1] = 1;
+	shell->fd[2] = 2;
+	if ((shell->fd[3] = open("/dev/tty", O_RDWR)) == -1)
 		quit_error(0);
 	shell->col = 0;
 	shell->input_len = 0;

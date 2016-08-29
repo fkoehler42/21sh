@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/28 17:13:14 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/07/19 17:46:37 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/08/29 15:43:20 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,16 +37,16 @@ void	replace_cursor(t_shell *shell, int print, int back)
 	x_pos = get_cursor_x_pos(shell->input, shell->curs_pos, shell->p_len);
 	if ((!print && back && ((x_pos % col) == 0)) || (print == 42))
 	{
-		tputs(tgetstr("up", NULL), shell->fd, &putchar);
+		tputs(tgetstr("up", NULL), shell->fd[3], &putchar);
 		while (col--)
-			tputs(tgetstr("nd", NULL), shell->fd, &putchar);
+			tputs(tgetstr("nd", NULL), shell->fd[3], &putchar);
 	}
 	else if (back)
-		tputs(tgetstr("le", NULL), shell->fd, &putchar);
+		tputs(tgetstr("le", NULL), shell->fd[3], &putchar);
 	else if ((x_pos % shell->col) == 0)
-		tputs(tgetstr("do", NULL), shell->fd, &putchar);
+		tputs(tgetstr("do", NULL), shell->fd[3], &putchar);
 	else
-		tputs(tgetstr("nd", NULL), shell->fd, &putchar);
+		tputs(tgetstr("nd", NULL), shell->fd[3], &putchar);
 }
 
 void	clear_input(t_shell *shell)
@@ -54,7 +54,7 @@ void	clear_input(t_shell *shell)
 	if (shell->input)
 	{
 		move_line_start(shell);
-		tputs(tgetstr("cd", NULL), shell->fd, &putchar);
+		tputs(tgetstr("cd", NULL), shell->fd[3], &putchar);
 		free_input_list(&(shell->input), &(shell->input_len));
 	}
 }

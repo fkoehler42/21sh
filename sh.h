@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 17:07:09 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/08/29 12:23:48 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/08/29 20:04:30 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,11 @@
 # define CMD 1
 # define SEM 2
 # define PIP 3
-/*# define QUOTE 1
-# define DQUOTE 2
-# define BQUOTE 3
-*/
+# define REDIR 1
+# define DREDIR 2
+# define BREDIR 3
+# define DBREDIR 4
+
 #define debug ft_printf("file : %s, line : %d", __FILE__, __LINE__);
 
 typedef struct			s_env
@@ -57,14 +58,13 @@ typedef struct			s_btree
 {
 	int					type;
 	char				*str;
-	char				**array;
 	struct s_btree		*left;
 	struct s_btree		*right;
 }						t_btree;
 
 typedef struct			s_shell
 {
-	int					fd;
+	char				fd[4];
 	size_t				col;
 	size_t				input_len;
 	size_t				p_len;

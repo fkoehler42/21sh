@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/06 20:29:43 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/07/13 18:12:00 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/08/29 15:47:19 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int		cut_eol(t_shell *shell)
 {
 	if (copy_eol(shell) == -1)
 		return (-1);
-	tputs(tgetstr("cd", NULL), shell->fd, &putchar);
+	tputs(tgetstr("cd", NULL), shell->fd[3], &putchar);
 	if (!shell->curs_pos)
 		free_input_list(&(shell->input), &(shell->input_len));
 	else
@@ -67,7 +67,7 @@ int		cut_all(t_shell *shell)
 	if (copy_all(shell) == -1)
 		return (-1);
 	move_line_start(shell);
-	tputs(tgetstr("cd", NULL), shell->fd, &putchar);
+	tputs(tgetstr("cd", NULL), shell->fd[3], &putchar);
 	free_input_list(&(shell->input), &(shell->input_len));
 	return (0);
 }
