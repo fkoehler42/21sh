@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 17:07:09 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/08/30 11:00:24 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/08/30 20:56:32 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ t_shell					*get_struct(t_shell *struc);
 
 int						putchar(int c);
 int						strrchr_outside_quotes(char *s, char c);
-int						strchr_redir(char *s);
+int						strchr_redir(t_btree *link);
 int						is_str_quoted(char *s);
 char					*strdup_remove_quotes(char *s);
 char					*str_replace_var(char *s, int start);
