@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/24 10:52:39 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/08/29 17:28:05 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/08/30 10:40:48 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	quit_error(int errnum)
 	exit(EXIT_FAILURE);
 }
 
-int		cmd_error(int errnum, char c)
+int		cmd_error(int errnum, char *s)
 {
 	t_shell *shell;
 	int		fd;
@@ -54,8 +54,16 @@ int		cmd_error(int errnum, char c)
 	if (errnum == 0)
 	{
 		ft_putstr_fd("21sh: Parse error near '", fd);
-		ft_putchar_fd(c, fd);
+		ft_putstr_fd(s, fd);
 		ft_putstr_fd("'\n", fd);
+	}
+	else if (errnum == 1)
+		ft_putstr_fd("21sh: bad file descriptor\n", fd);
+	else if (errnum == 2)
+	{
+		ft_putstr_fd("21sh: ", fd);
+		ft_putstr_fd(s, fd);
+		ft_putstr_fd(": ambigous redirect\n", fd);
 	}
 	return (-1);
 }

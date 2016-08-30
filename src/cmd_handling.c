@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/08/15 14:41:46 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/08/29 17:24:31 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/08/30 10:56:34 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,28 +31,31 @@ int		builtins_cmd(char **cmd, t_env *env)
 	return (0);
 }
 
-int		handle_cmd(t_shell *shell, char *cmd)
+int		handle_cmd(t_shell *shell, t_btree *tree)
 {
-
+	if (parse_cmd(tree) == -1)
+		return (-1);
+	(void)shell;
+	return (0);
 }
 
-void	handle_btree(t_shell *shell, t_btree *tree)
+int		handle_btree(t_shell *shell, t_btree *tree)
 {
 	if (tree->type == SEM)
 	{
-		handle_cmd_btree(shell, tree->left);
-		handle_cmd_btree(shell, tree->right);
+		handle_btree(shell, tree->left);
+		handle_btree(shell, tree->right);
 	}
 	else if (tree->type == PIP)
 	{
 		if (!tree->left || !tree->right)
-			return (cmd_error(0), '|');
+			return (cmd_error(0, "|"));
 		if (tree->left->type == PIP || tree->right->type == PIP)
 			handle_btree(shell, tree->left);
 		else
-			handle_cmd(shell, tree->str);
+			handle_cmd(shell, tree);
 	}
 	else if (tree->str && tree->str[0])
-		handle_cmd(shell, tree->str);
+		handle_cmd(shell, tree);
 	return (0);
 }

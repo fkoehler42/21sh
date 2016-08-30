@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/25 18:19:07 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/08/29 15:49:58 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/08/30 12:44:15 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ static void	print_eol(t_shell *shell, char *buf, size_t p_len)
 	}
 	if (((shell->input_len + p_len) % shell->col) == 0 && i--)
 	{
-		ft_putstr_fd(buf, shell->[1]);
+		ft_putstr_fd(buf, shell->fd[1]);
 		tputs(tgetstr("do", NULL), shell->fd[3], &putchar);
 		replace_cursor(shell, 42, 1);
 	}

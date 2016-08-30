@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 17:07:09 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/08/29 20:04:30 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/08/30 11:00:24 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,7 +81,7 @@ typedef struct			s_shell
 }						t_shell;
 
 void					quit_error(int errnum);
-int						cmd_error(int errnum);
+int						cmd_error(int errnum, char *s);
 int						cd_error(int errnum, char *arg);
 int						env_error(int errnum, int flag);
 void					env_var_error(int errnum, char *cmd, char *arg);
@@ -98,6 +98,7 @@ t_shell					*get_struct(t_shell *struc);
 
 int						putchar(int c);
 int						strrchr_outside_quotes(char *s, char c);
+int						strchr_redir(char *s);
 int						is_str_quoted(char *s);
 char					*strdup_remove_quotes(char *s);
 char					*str_replace_var(char *s, int start);
@@ -165,10 +166,11 @@ size_t					get_cursor_x_pos(t_input *input,
 int						handle_input(t_shell *shell);
 int						check_pipes(t_input *cmd, int reverse);
 char					valid_input(t_input *input, char c);
+int						parse_cmd(t_btree *cmd);
 t_btree					*store_cmd(char *str);
 char					*interpret_cmd_arg(char *cmd_arg);
-void					handle_btree(t_shell *shell, t_btree *tree);
-int						handle_cmd(t_shell *shell, char *cmd);
+int						handle_btree(t_shell *shell, t_btree *tree);
+int						handle_cmd(t_shell *shell, t_btree *tree);
 //void					handle_cmd(t_shell *shell);
 //void					handle_cmd_btree(t_btree *cmd, t_env *env);
 

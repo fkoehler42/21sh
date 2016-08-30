@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/11 14:13:19 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/08/29 20:49:19 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/08/30 12:45:27 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static void	multi_lines_cmd(t_shell *shell)
 	}
 }
 
-static int	parse_cmd(t_btree *cmd)
+int			parse_cmd(t_btree *cmd)
 {
 	int		i;
 	char	**cmd_tab;
@@ -50,7 +50,7 @@ static int	parse_cmd(t_btree *cmd)
 		return (-1);
 	while (cmd_tab[i])
 	{
-		/* ft_printf("\narg %d : %s\n", i + 1, cmd_tab[i]); */
+		ft_printf("\narg %d : %s\n", i + 1, cmd_tab[i]);
 		if ((strchr_redir(cmd_tab[i])) == -1)
 			return (-1);
 		cmd_tab[i] = interpret_cmd_arg(cmd_tab[i]);
@@ -68,7 +68,7 @@ int			handle_input(t_shell *shell)
 	if (!shell->input)
 		return (0);
 	if (check_pipes(shell->input, 1) == -1)
-		return (cmd_error(0), '|');
+		return (cmd_error(0, "|"));
 	multi_lines_cmd(shell);
 	shell->hist = store_hist(shell);
 	cmd_str = lst_to_str(shell->input);
