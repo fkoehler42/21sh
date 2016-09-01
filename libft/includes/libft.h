@@ -6,7 +6,7 @@
 /*   By: fkoehler <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/11/24 19:11:04 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/08/26 22:35:31 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/09/01 18:46:48 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ int					ft_tolower(int c);
 
 size_t				ft_strlen(const char *s);
 size_t				ft_multi_strlen(char **array);
+int					ft_str_isempty(char *s);
 char				*ft_strcpy(char *dst, const char *src);
 char				*ft_strncpy(char *dst, const char *src, size_t len);
 char				*ft_strchr(const char *s, int c);

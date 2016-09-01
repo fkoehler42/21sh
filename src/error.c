@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/24 10:52:39 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/08/30 10:40:48 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/09/01 19:10:09 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	quit_error(int errnum)
 	exit(EXIT_FAILURE);
 }
 
-int		cmd_error(int errnum, char *s)
+int		cmd_error(int errnum, char c, char *s)
 {
 	t_shell *shell;
 	int		fd;
@@ -54,7 +54,7 @@ int		cmd_error(int errnum, char *s)
 	if (errnum == 0)
 	{
 		ft_putstr_fd("21sh: Parse error near '", fd);
-		ft_putstr_fd(s, fd);
+		ft_putchar_fd(c, fd);
 		ft_putstr_fd("'\n", fd);
 	}
 	else if (errnum == 1)

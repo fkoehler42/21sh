@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 17:07:09 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/08/30 20:56:32 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/09/01 19:10:22 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@
 # define REDIR 1
 # define DREDIR 2
 # define BREDIR 3
-# define DBREDIR 4
+# define HEREDOC 4
 
 #define debug ft_printf("file : %s, line : %d", __FILE__, __LINE__);
 
@@ -81,7 +81,7 @@ typedef struct			s_shell
 }						t_shell;
 
 void					quit_error(int errnum);
-int						cmd_error(int errnum, char *s);
+int						cmd_error(int errnum, char c, char *s);
 int						cd_error(int errnum, char *arg);
 int						env_error(int errnum, int flag);
 void					env_var_error(int errnum, char *cmd, char *arg);

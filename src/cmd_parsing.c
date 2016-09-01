@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/11 14:13:19 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/08/30 21:45:40 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/09/01 21:13:26 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int			handle_input(t_shell *shell)
 	if (!shell->input)
 		return (0);
 	if (check_pipes(shell->input, 1) == -1)
-		return (cmd_error(0, "|"));
+		return (cmd_error(0, '|', NULL));
 	multi_lines_cmd(shell);
 	shell->hist = store_hist(shell);
 	cmd_str = lst_to_str(shell->input);
