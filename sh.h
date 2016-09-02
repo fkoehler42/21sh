@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 17:07:09 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/09/01 19:10:22 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/09/02 16:16:57 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,13 @@
 
 #define debug ft_printf("file : %s, line : %d", __FILE__, __LINE__);
 
+typedef struct			s_redir
+{
+	int					type;
+	char				*s;
+	struct s_redir		*next;
+}						t_redir;
+
 typedef struct			s_env
 {
 	char				*var;
@@ -58,6 +65,7 @@ typedef struct			s_btree
 {
 	int					type;
 	char				*str;
+	struct s_redir		*redir;
 	struct s_btree		*left;
 	struct s_btree		*right;
 }						t_btree;
@@ -169,6 +177,7 @@ char					valid_input(t_input *input, char c);
 int						parse_cmd(t_btree *cmd);
 t_btree					*store_cmd(char *str);
 char					*interpret_cmd_arg(char *cmd_arg);
+char					*remove_cmd_redir(char *cmd, t_redir *redir);
 int						handle_btree(t_shell *shell, t_btree *tree);
 int						handle_cmd(t_shell *shell, t_btree *tree);
 //void					handle_cmd(t_shell *shell);

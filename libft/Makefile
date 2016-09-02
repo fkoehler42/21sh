@@ -6,7 +6,7 @@
 #    By: fkoehler <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2015/12/02 18:34:40 by fkoehler          #+#    #+#              #
-#    Updated: 2016/09/01 18:45:26 by fkoehler         ###   ########.fr        #
+#    Updated: 2016/09/02 15:54:42 by fkoehler         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -83,6 +83,7 @@ SRC = ft_atoi.c \
 	  ft_strrchr.c \
 	  ft_strsplit.c \
 	  ft_strstr.c \
+	  ft_strstr_index.c \
 	  ft_strsub.c \
 	  ft_strtrim.c \
 	  ft_tolower.c \

@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/08/21 15:21:55 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/08/30 10:46:09 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/09/02 16:21:16 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,4 +69,23 @@ char		*interpret_cmd_arg(char *cmd_arg)
 	free_tab(arg_tab);
 	free(cmd_arg);
 	return (ret);
+}
+
+char		*remove_cmd_redir(char *cmd, t_redir *redir)
+{
+	int		start;
+	char	*tmp_cmd;
+	t_redir	*tmp;
+
+	if (!(tmp = redir))
+		return (cmd);
+	while (tmp)
+	{
+		start = ft_strstr_index(cmd, tmp->s);
+		tmp_cmd = ft_replace_str(cmd, start, ft_strlen(redir->s), "");
+		free(cmd);
+		cmd = tmp_cmd;
+		tmp = tmp->next;
+	}
+	return (cmd);
 }

@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/11 14:13:19 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/09/01 21:13:26 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/09/02 16:10:30 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,7 @@ int			parse_cmd(t_btree *link)
 	i = 0;
 	if ((strchr_redir(link)) == -1)
 		return (-1);
+	link->str = remove_cmd_redir(link->str, link->redir);
 	cmd_tab = strsplit_args(link->str);
 	if (!cmd_tab[0])
 	{
