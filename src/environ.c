@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/24 12:20:59 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/08/19 10:14:35 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/09/04 22:45:55 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,4 +61,33 @@ int		store_env_var(t_env **env_lst, char *var, char *val)
 		tmp->next = new;
 	}
 	return (0);
+}
+
+char	**env_lst_to_array(t_env *env_lst)
+{
+	int		i;
+	char	*tmp;
+	t_env	*tmp_env;
+	char	**array;
+
+	i = 0;
+	if (!env_lst)
+		return (NULL);
+	tmp_env = env_lst;
+	while (tmp_env && ++i)
+		tmp_env = tmp_env->next;
+	if (!(array = (char **)malloc(sizeof(char *) * (i + 1))))
+		quit_error(9);
+	tmp_env = env_lst;
+	i = 0;
+	while (tmp_env)
+	{
+		tmp = ft_strjoin(tmp_env->var, "=");
+		array[i] = ft_strjoin(tmp, tmp_env->val);
+		free(tmp);
+		tmp_env = tmp_env->next;
+		i++;
+	}
+	array[i] = NULL;
+	return (array);
 }

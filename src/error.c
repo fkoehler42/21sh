@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/24 10:52:39 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/09/01 19:10:09 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/09/04 22:47:02 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,23 @@ void	quit_error(int errnum)
 	else if (errnum == 10)
 		ft_putstr_fd("ioctl: Unable to get the terminal state infos\n", fd);
 	exit(EXIT_FAILURE);
+}
+
+int		exec_error(int errnum, char *arg)
+{
+	ft_putstr_fd("21sh: ", 2);
+	ft_putstr_fd(arg, 2);
+	if (errnum == 0)
+		ft_putstr_fd(": error on child process creation\n", 2);
+	else if (errnum == 1)
+		ft_putstr_fd(": no such file or directory\n", 2);
+	else if (errnum == 2)
+		ft_putstr_fd("environment variable PATH is not set or is empty\n", 2);
+	else if (errnum == 3)
+		ft_putstr_fd(": permission denied\n", 2);
+	else if (errnum == 4)
+		ft_putstr_fd(": error on child process execution\n", 2);
+	return (-1);
 }
 
 int		cmd_error(int errnum, char c, char *s)

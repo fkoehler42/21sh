@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/11 14:13:19 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/09/02 16:10:30 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/09/04 23:05:34 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,28 +40,28 @@ static void	multi_lines_cmd(t_shell *shell)
 	}
 }
 
-int			parse_cmd(t_btree *link)
+char		**parse_cmd(t_btree *link)
 {
 	int		i;
 	char	**cmd_tab;
 
 	i = 0;
 	if ((strchr_redir(link)) == -1)
-		return (-1);
+		return (NULL);
 	link->str = remove_cmd_redir(link->str, link->redir);
 	cmd_tab = strsplit_args(link->str);
 	if (!cmd_tab[0])
 	{
 		free_tab(cmd_tab);
-		return (-1);
+		return (NULL);
 	}
 	while (cmd_tab[i])
 	{
-		ft_printf("\narg %d : %s\n", i + 1, cmd_tab[i]);
+		/* ft_printf("\narg %d : %s\n", i + 1, cmd_tab[i]); */
 		cmd_tab[i] = interpret_cmd_arg(cmd_tab[i]);
 		i++;
 	}
-	return (0);
+	return (cmd_tab);
 }
 
 int			handle_input(t_shell *shell)

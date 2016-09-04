@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 17:07:09 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/09/02 16:16:57 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/09/04 23:02:55 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,6 +89,7 @@ typedef struct			s_shell
 }						t_shell;
 
 void					quit_error(int errnum);
+int						exec_error(int errnum, char *arg);
 int						cmd_error(int errnum, char c, char *s);
 int						cd_error(int errnum, char *arg);
 int						env_error(int errnum, int flag);
@@ -117,11 +118,13 @@ void					lst_cpy(t_input *src, t_input **dst);
 char					*lst_to_str(t_input *lst);
 t_input					*lst_rchr(t_input *input, char c);
 t_input					*get_last_elem(t_input *lst);
+int						is_builtin(char *cmd);
 
 void					store_environ(t_shell *shell, char **environ);
 int						store_env_var(t_env **env_lst, char *var, char *val);
 int						del_env_var(t_env **env_lst, char *var);
 t_env					*get_env_ptr(t_env *env_lst, char *var);
+char					**env_lst_to_array(t_env *env_lst);
 
 int						check_env_var(char *env_var, char *cmd);
 char					*env_var_to_value(char *var);
@@ -174,13 +177,13 @@ size_t					get_cursor_x_pos(t_input *input,
 int						handle_input(t_shell *shell);
 int						check_pipes(t_input *cmd, int reverse);
 char					valid_input(t_input *input, char c);
-int						parse_cmd(t_btree *cmd);
+char					**parse_cmd(t_btree *cmd);
 t_btree					*store_cmd(char *str);
 char					*interpret_cmd_arg(char *cmd_arg);
 char					*remove_cmd_redir(char *cmd, t_redir *redir);
 int						handle_btree(t_shell *shell, t_btree *tree);
 int						handle_cmd(t_shell *shell, t_btree *tree);
-//void					handle_cmd(t_shell *shell);
+int						fork_process(char **cmd, t_btree *link, t_env *env_lst);
 //void					handle_cmd_btree(t_btree *cmd, t_env *env);
 
 int						builtins_cmd(char **cmd, t_env *env_lst);
@@ -190,5 +193,11 @@ int						ft_echo(char **cmd);
 int						ft_env(char **cmd, t_env *env_lst, int i);
 int						ft_setenv(char **cmd, t_env **env_lst, int flag);
 int						ft_unsetenv(char **cmd, t_env **env_lst);
+
+int						binary_cmd(char **cmd, char **env_array,
+						t_env *env_lst);
+char					*get_bin_path(char *cmd, t_env *env_lst);
+int						check_bin_path(char *bin_path, char *cmd);
+int						exec_bin(char *bin_path, char **argv, char **env);
 
 #endif

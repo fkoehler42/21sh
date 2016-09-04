@@ -6,7 +6,7 @@
 #    By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/04/26 11:46:03 by fkoehler          #+#    #+#              #
-#    Updated: 2016/08/29 17:17:31 by fkoehler         ###   ########.fr        #
+#    Updated: 2016/09/04 19:24:08 by fkoehler         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,6 +14,7 @@ vpath %.c ./src ./src/builtins
 
 SRC = buffer.c \
 	  builtins_error.c \
+	  builtins_check.c \
 	  cd.c \
 	  cmd_check_input.c \
 	  cmd_handling.c \
@@ -28,7 +29,9 @@ SRC = buffer.c \
 	  env_tools.c \
 	  environ.c \
 	  error.c \
+	  exec_bin.c \
 	  exit.c \
+	  forking.c \
 	  free.c \
 	  hist_storage.c \
 	  history.c \
