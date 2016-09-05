@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/11 14:13:19 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/09/04 23:05:34 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/09/05 20:03:45 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,8 @@ int			handle_input(t_shell *shell)
 	cmd_str = lst_to_str(shell->input);
 	shell->cmd = store_cmd(cmd_str);
 	free_tmp_inputs(shell);
+	restore_term(shell);
 	handle_btree(shell, shell->cmd);
+	reload_term(shell);
 	return (0);
 }

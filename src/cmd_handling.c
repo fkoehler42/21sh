@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/08/15 14:41:46 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/09/04 23:03:06 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/09/05 21:00:06 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,21 +57,32 @@ int		builtins_cmd(char **cmd, t_env *env_lst)
 	return (0);
 }
 
-int		handle_cmd(t_shell *shell, t_btree *link)
+int		handle_cmd(t_shell *shell, t_btree *link, int already_forked)
 {
 	char	**cmd;
+	char	**env_array;
 
+	env_array = NULL;
 	if (!(cmd = parse_cmd(link)))
 		return (-1);
 	if (!link->redir && is_builtin(cmd[0]))
 		builtins_cmd(cmd, shell->env_lst);
 	else
-		fork_process(cmd, link, shell->env_lst);
+	{
+		env_array = env_lst_to_array(shell->env_lst);
+		if (already_forked)
+			binary_cmd(cmd, env_array, shell->env_lst);
+		else
+			exec_fork(cmd, link, env_array, shell->env_lst);
+		free_tab(env_array);
+	}
 	return (0);
 }
 
 int		handle_btree(t_shell *shell, t_btree *link)
 {
+	int		fd[2];
+
 	if (link->type == SEM)
 	{
 		handle_btree(shell, link->left);
@@ -79,17 +90,17 @@ int		handle_btree(t_shell *shell, t_btree *link)
 	}
 	else if (link->type == PIP)
 	{
-		if (!link->left || !link->right)
+		if (!link->left || !link->right ||
+				link->left->type == PIP || link->right->type == PIP)
 			return (cmd_error(0, '|', NULL));
-		if (link->left->type == PIP || link->right->type == PIP)
-			handle_btree(shell, link->left);
 		else
 		{
-			handle_btree(shell, link->left);
-			handle_btree(shell, link->right);
+			if (pipe(fd) == -1)
+				return (exec_error(5, ""));
+			pipe_fork(shell, link, fd);
 		}
 	}
 	else if (link->str && link->str[0])
-		handle_cmd(shell, link);
+		handle_cmd(shell, link, 0);
 	return (0);
 }

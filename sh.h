@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 17:07:09 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/09/04 23:02:55 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/09/05 20:30:34 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,8 @@ void					free_env_lst(t_env **env_lst);
 
 void					init_shell(t_shell *shell);
 void					init_term(t_shell *shell);
+void					restore_term(t_shell *shell);
+void					reload_term(t_shell *shell);
 t_shell					*get_struct(t_shell *struc);
 
 int						putchar(int c);
@@ -182,9 +184,11 @@ t_btree					*store_cmd(char *str);
 char					*interpret_cmd_arg(char *cmd_arg);
 char					*remove_cmd_redir(char *cmd, t_redir *redir);
 int						handle_btree(t_shell *shell, t_btree *tree);
-int						handle_cmd(t_shell *shell, t_btree *tree);
-int						fork_process(char **cmd, t_btree *link, t_env *env_lst);
-//void					handle_cmd_btree(t_btree *cmd, t_env *env);
+int						handle_cmd(t_shell *shell, t_btree *link,
+						int already_forked);
+int						exec_fork(char **cmd, t_btree *link,
+						char **env_array, t_env *env_lst);
+int						pipe_fork(t_shell *shell, t_btree *link, int *fd);
 
 int						builtins_cmd(char **cmd, t_env *env_lst);
 int						ft_exit(char **cmd);

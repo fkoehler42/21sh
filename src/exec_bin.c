@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/09/04 21:42:37 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/09/04 23:02:43 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/09/05 13:22:42 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,8 +43,8 @@ char		*get_bin_path(char *cmd, t_env *env_lst)
 
 	i = 0;
 	bin_path = NULL;
-	if (!(paths = get_paths(env_lst)))
-		exec_error(2, "");
+	if (!(paths = get_paths(env_lst)) && exec_error(2, ""))
+		return (NULL);
 	while (paths[i])
 	{
 		bin_path = ft_strjoin(paths[i], cmd);

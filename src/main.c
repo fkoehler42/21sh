@@ -6,12 +6,43 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 18:43:55 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/06/24 15:13:03 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/09/05 19:03:58 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh.h"
-#include <stdio.h>
+
+t_shell		*get_struct(t_shell *struc)
+{
+	static t_shell	*shell = NULL;
+
+	if (struc == 0)
+		return (shell);
+	else
+		shell = struc;
+	return (0);
+}
+
+void		init_shell(t_shell *shell)
+{
+	shell->fd[0] = 0;
+	shell->fd[1] = 1;
+	shell->fd[2] = 2;
+	if ((shell->fd[3] = open("/dev/tty", O_RDWR)) == -1)
+		quit_error(0);
+	shell->col = 0;
+	shell->input_len = 0;
+	shell->p_len = 0;
+	shell->env_lst = NULL;
+	shell->hist = NULL;
+	shell->hist_end = 1;
+	shell->input = NULL;
+	shell->buffer = NULL;
+	shell->input_buf = NULL;
+	shell->curs_pos = NULL;
+	shell->cmd = NULL;
+	get_struct(shell);
+}
 
 int		main(int ac, char **av, char **environ)
 {

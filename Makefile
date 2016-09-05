@@ -6,7 +6,7 @@
 #    By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/04/26 11:46:03 by fkoehler          #+#    #+#              #
-#    Updated: 2016/09/04 19:24:08 by fkoehler         ###   ########.fr        #
+#    Updated: 2016/09/05 19:04:39 by fkoehler         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,7 +35,6 @@ SRC = buffer.c \
 	  free.c \
 	  hist_storage.c \
 	  history.c \
-	  init.c \
 	  input_cut_copy.c \
 	  input_delete_keys.c \
 	  input_handling.c \
@@ -50,6 +49,7 @@ SRC = buffer.c \
 	  str_tools.c \
 	  strsplit_args.c \
 	  str_subsplit_arg.c \
+	  term_parameters.c \
 	  unsetenv.c
 
 NAME = 21sh
