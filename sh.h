@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 17:07:09 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/09/07 00:04:18 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/09/07 20:02:49 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,7 +83,7 @@ typedef struct			s_shell
 	t_input				*buffer;
 	t_input				*curs_pos;
 	char				*input_buf;
-	t_btree				*cmd;
+	t_btree				*tree;
 	struct termios		termios;
 	struct termios		term_save;
 }						t_shell;
@@ -189,8 +189,8 @@ int						handle_cmd(t_shell *shell, t_btree *link,
 int						exec_fork(char **cmd, t_btree *link,
 						char **env_array, t_env *env_lst);
 pid_t					pipe_fork_father(t_shell *shell,
-						t_btree *link, int *fd);
-pid_t					pipe_fork_child(t_shell *shell, t_btree *link, int *fd);
+						t_btree *link);
+pid_t					pipe_fork_child(t_shell *shell, t_btree *link);
 
 int						builtins_cmd(char **cmd, t_env *env_lst);
 int						ft_exit(char **cmd);

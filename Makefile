@@ -6,7 +6,7 @@
 #    By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/04/26 11:46:03 by fkoehler          #+#    #+#              #
-#    Updated: 2016/09/05 19:04:39 by fkoehler         ###   ########.fr        #
+#    Updated: 2016/09/07 20:10:12 by fkoehler         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,11 +16,11 @@ SRC = buffer.c \
 	  builtins_error.c \
 	  builtins_check.c \
 	  cd.c \
+	  check_pipes.c \
 	  cmd_check_input.c \
 	  cmd_handling.c \
 	  cmd_interpreting.c \
 	  cmd_parsing.c \
-	  cmd_pipe.c \
 	  cmd_redir.c \
 	  cmd_storage.c \
 	  cursor.c \
