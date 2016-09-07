@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 17:07:09 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/09/05 20:30:34 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/09/07 00:04:18 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@
 # define BREDIR 3
 # define HEREDOC 4
 
-#define debug ft_printf("file : %s, line : %d", __FILE__, __LINE__);
+#define debug ft_printf("file : %s, line : %d\n", __FILE__, __LINE__);
 
 typedef struct			s_redir
 {
@@ -188,7 +188,9 @@ int						handle_cmd(t_shell *shell, t_btree *link,
 						int already_forked);
 int						exec_fork(char **cmd, t_btree *link,
 						char **env_array, t_env *env_lst);
-int						pipe_fork(t_shell *shell, t_btree *link, int *fd);
+pid_t					pipe_fork_father(t_shell *shell,
+						t_btree *link, int *fd);
+pid_t					pipe_fork_child(t_shell *shell, t_btree *link, int *fd);
 
 int						builtins_cmd(char **cmd, t_env *env_lst);
 int						ft_exit(char **cmd);

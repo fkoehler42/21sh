@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/24 10:52:39 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/09/05 15:18:22 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/09/06 21:06:16 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,9 @@ int		exec_error(int errnum, char *arg)
 	else if (errnum == 5)
 		ft_putstr_fd("error on pipe creation\n", 2);
 	else if (errnum == 6)
-		ft_putstr_fd(": an error occured during the fd duplication\n", 2);
+		ft_putstr_fd(": error on file descriptor duplication\n", 2);
+	else if (errnum == 7)
+		ft_putstr_fd(": error on file descriptor closing\n", 2);
 	return (-1);
 }
 

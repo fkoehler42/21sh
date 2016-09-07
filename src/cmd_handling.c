@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/08/15 14:41:46 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/09/05 21:00:06 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/09/07 01:09:13 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,14 +90,13 @@ int		handle_btree(t_shell *shell, t_btree *link)
 	}
 	else if (link->type == PIP)
 	{
-		if (!link->left || !link->right ||
-				link->left->type == PIP || link->right->type == PIP)
+		if (!link->left || !link->right)
 			return (cmd_error(0, '|', NULL));
 		else
 		{
 			if (pipe(fd) == -1)
 				return (exec_error(5, ""));
-			pipe_fork(shell, link, fd);
+			pipe_fork_father(shell, link, fd);
 		}
 	}
 	else if (link->str && link->str[0])
