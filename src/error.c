@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/24 10:52:39 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/09/06 21:06:16 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/09/08 20:13:11 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	quit_error(int errnum)
 	else if (errnum == 6)
 		ft_putstr_fd("malloc: memory allocation has failed\n", fd);
 	else if (errnum == 7)
-		ft_putstr_fd("read: an error occured while reading input\n", fd);
+		ft_putstr_fd("read: an error occured while reading the input\n", fd);
 	else if (errnum == 8)
 		ft_putstr_fd("21sh: required terminal capabilities not supported\n", fd);
 	else if (errnum == 9)
@@ -64,6 +64,8 @@ int		exec_error(int errnum, char *arg)
 		ft_putstr_fd(": error on file descriptor duplication\n", 2);
 	else if (errnum == 7)
 		ft_putstr_fd(": error on file descriptor closing\n", 2);
+	else if (errnum == 8)
+		ft_putstr_fd(": error on file opening\n", 2);
 	return (-1);
 }
 

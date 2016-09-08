@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 17:07:09 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/09/07 20:02:49 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/09/08 18:25:09 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ typedef struct			s_btree
 
 typedef struct			s_shell
 {
-	char				fd[4];
+	int					fd[4];
 	size_t				col;
 	size_t				input_len;
 	size_t				p_len;
@@ -186,11 +186,12 @@ char					*remove_cmd_redir(char *cmd, t_redir *redir);
 int						handle_btree(t_shell *shell, t_btree *tree);
 int						handle_cmd(t_shell *shell, t_btree *link,
 						int already_forked);
-int						exec_fork(char **cmd, t_btree *link,
-						char **env_array, t_env *env_lst);
+pid_t					simple_fork(t_btree *link);
+pid_t					exec_fork(char **cmd, char **env_array, t_env *env_lst);
 pid_t					pipe_fork_father(t_shell *shell,
 						t_btree *link);
 pid_t					pipe_fork_child(t_shell *shell, t_btree *link);
+int						handle_redir(t_btree *link, int *fd);
 
 int						builtins_cmd(char **cmd, t_env *env_lst);
 int						ft_exit(char **cmd);

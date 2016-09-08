@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   cmd_redir.c                                        :+:      :+:    :+:   */
+/*   check_redir.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/08/21 15:21:55 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/09/04 17:22:24 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/09/08 22:04:25 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static int	check_valid_redir_param(char *s, int i)
 {
 	if (ft_str_isempty(s + i))
 		return (cmd_error(0, s[i - 1], NULL));
-	if (s[i] == ' ')
+	while  (s[i] == ' ')
 		i++;
 	while (s[i] && !ft_isspace(s[i]) && s[i] != '>' && s[i] != '<')
 		i++;
@@ -57,16 +57,13 @@ static int	check_valid_redir(char *s, int start, int i, t_btree *link)
 		return (cmd_error(0, s[i - 1], NULL));
 	if (s[i] == '&' && ++i)
 	{
-		if ((type != REDIR) || (!s[i]) || (s[i + 1] && s[i + 1] != ' '))
+		if (!s[i] || type == HEREDOC || (type == DREDIR && s[i] == '-'))
 			return (cmd_error(0, s[i - 1], NULL));
-		if ((!ft_isdigit(s[i])) && (s[i] != '-'))
-			return (cmd_error(2, 0, s + i));
-		if (s[i] > '2')
+		if (ft_isdigit(s[i]) && s[i] > '2'
+			&& (!s[i + 1] || (s[i + 1] && ft_isspace(s[i + 1]))))
 			return (cmd_error(1, 0, s + i));
-		i++;
 	}
-	else
-		i = (check_valid_redir_param(s, i)) - 1;
+	i = (check_valid_redir_param(s, i)) - 1;
 	if (i > 0)
 		add_redir(ft_strsub(s, start, (i - start + 1)), type, link);
 	return (0);
@@ -79,6 +76,8 @@ static int	check_redir_start(t_btree *link, int i)
 	j = i;
 	while (j > 0 && ft_isdigit(link->str[j - 1]))
 		j--;
+	if (ft_atoi(link->str + j) > 2)
+		return (cmd_error(1, 0, NULL));
 	return (check_valid_redir(link->str, j, i, link));
 }
 
