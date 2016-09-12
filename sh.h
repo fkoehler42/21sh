@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 17:07:09 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/09/08 18:25:09 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/09/12 22:14:07 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -192,6 +192,7 @@ pid_t					pipe_fork_father(t_shell *shell,
 						t_btree *link);
 pid_t					pipe_fork_child(t_shell *shell, t_btree *link);
 int						handle_redir(t_btree *link, int *fd);
+int						handle_heredoc(char *delimiter);
 
 int						builtins_cmd(char **cmd, t_env *env_lst);
 int						ft_exit(char **cmd);

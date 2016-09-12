@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/08/21 15:21:55 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/09/08 22:04:25 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/09/12 20:15:18 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,12 +35,23 @@ static void	add_redir(char *redir, int type, t_btree *link)
 
 static int	check_valid_redir_param(char *s, int i)
 {
+	char	c;
+
+	c = 0;
 	if (ft_str_isempty(s + i))
 		return (cmd_error(0, s[i - 1], NULL));
-	while  (s[i] == ' ')
+	while (s[i] == ' ')
 		i++;
 	while (s[i] && !ft_isspace(s[i]) && s[i] != '>' && s[i] != '<')
+	{
+		if (ft_isquote(s[i]) && (c = s[i]))
+		{
+			i++;
+			while (s[i] && s[i] != c)
+				i++;
+		}
 		i++;
+	}
 	return (i);
 }
 

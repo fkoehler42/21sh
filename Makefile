@@ -6,7 +6,7 @@
 #    By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/04/26 11:46:03 by fkoehler          #+#    #+#              #
-#    Updated: 2016/09/08 15:15:04 by fkoehler         ###   ########.fr        #
+#    Updated: 2016/09/12 22:13:44 by fkoehler         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -33,6 +33,7 @@ SRC = buffer.c \
 	  exit.c \
 	  forking.c \
 	  free.c \
+	  heredoc.c \
 	  hist_storage.c \
 	  history.c \
 	  input_cut_copy.c \

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins_error.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkoehler <fkoehler@student.4fd.fr>          +#+  +:+       +#+        */
+/*   By: fkoehler <fkoehler@student.4fd.fr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: fd016/08/17 1fd:45:fd4 by fkoehler          #+#    #+#             */
-/*   Updated: fd016/08/19 09:3fd:47 by fkoehler         ###   ########.fr       */
+/*   Created: 16/08/17 10:45:40 by fkoehler            #+#    #+#             */
+/*   Updated: 2016/09/12 16:34:40 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,7 @@ int		cd_error(int errnum, char *arg)
 	else if (errnum == 6)
 		ft_putstr_fd("switching the actual directory with 'chdir'\n", fd);
 	else if (errnum == 8)
-	{
 		ft_putstr_fd("checking the actual directory with 'getcwd'\n", fd);
-		ft_putstr_fd("send an absolute path to cd could fix the problem\n", fd);
-	}
 	return (-1);
 }
 
