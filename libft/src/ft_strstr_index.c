@@ -6,7 +6,7 @@
 /*   By: fkoehler <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/11/26 11:46:49 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/09/02 15:54:06 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/09/13 18:09:30 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ int		ft_strstr_index(const char *big, const char *little)
 	j = 0;
 	while (big[i])
 	{
-		while (big[i] == little[j] && little[j])
+		while (little[j] && (big[i] == little[j]))
 		{
 			i++;
 			j++;

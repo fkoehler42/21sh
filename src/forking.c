@@ -6,24 +6,54 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/09/04 18:47:45 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/09/08 17:53:24 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/09/13 21:26:24 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh.h"
 
-pid_t	simple_fork(t_btree *link)
+static void	close_and_reset_fd(int *fd)
 {
+	int	i;
+
+	i = 0;
+	while (i < 3)
+	{
+		if ((fd[i]) != -1 && (fd)[i] != i)
+			close((fd)[i]);
+		(fd)[i] = i;
+		i++;
+	}
+}
+
+pid_t	redir_fork(t_shell *shell, t_btree *link)
+{
+	int		i;
 	pid_t	pid;
 
+	(void)link;
+	i = 0;
 	if ((pid = fork()) < 0)
 		return ((pid_t)exec_error(0, "fork"));
 	if (pid == 0)
 	{
-		(void)link;
+		while (i < 3)
+		{
+			if (shell->fd[i] == -1)
+				close(i);
+			else if (shell->fd[i] != i)
+			{
+				if (dup2(shell->fd[i], i) == -1)
+					return ((pid_t)exec_error(6, "dup2"));
+			}
+			i++;
+		}
 	}
 	else if (pid > 0)
+	{
 		waitpid(pid, NULL, 0);
+		close_and_reset_fd(shell->fd);
+	}
 	return (pid);
 }
 

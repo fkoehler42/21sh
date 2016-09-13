@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 17:07:09 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/09/12 22:14:07 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/09/13 21:48:07 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,6 +100,7 @@ void					free_input_list(t_input **input, size_t *nb_elem);
 void					free_tmp_inputs(t_shell *shell);
 void					free_env_var(t_env *env_var);
 void					free_env_lst(t_env **env_lst);
+void					free_redirs(t_redir **redirs);
 
 void					init_shell(t_shell *shell);
 void					init_term(t_shell *shell);
@@ -186,13 +187,13 @@ char					*remove_cmd_redir(char *cmd, t_redir *redir);
 int						handle_btree(t_shell *shell, t_btree *tree);
 int						handle_cmd(t_shell *shell, t_btree *link,
 						int already_forked);
-pid_t					simple_fork(t_btree *link);
+pid_t					redir_fork(t_shell *shell, t_btree *link);
 pid_t					exec_fork(char **cmd, char **env_array, t_env *env_lst);
 pid_t					pipe_fork_father(t_shell *shell,
 						t_btree *link);
 pid_t					pipe_fork_child(t_shell *shell, t_btree *link);
-int						handle_redir(t_btree *link, int *fd);
-int						handle_heredoc(char *delimiter);
+int						handle_redirs(t_shell *shell, t_btree *link);
+int						fill_heredoc(char *delimiter, int *fd);
 
 int						builtins_cmd(char **cmd, t_env *env_lst);
 int						ft_exit(char **cmd);

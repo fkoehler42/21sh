@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/08/15 14:41:46 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/09/08 20:46:08 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/09/13 21:36:10 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,8 +65,8 @@ int		handle_cmd(t_shell *shell, t_btree *link, int already_forked)
 	env_array = NULL;
 	if (!(cmd = parse_cmd(link)))
 		return (-1);
-	if (link->redir) //will fork after all redir
-		handle_redir(link, shell->fd);
+	if (link->redir && ++already_forked && (handle_redirs(shell, link) != 0))
+			return (0);
 	if (is_builtin(cmd[0]))
 		builtins_cmd(cmd, shell->env_lst);
 	else

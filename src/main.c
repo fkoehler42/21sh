@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 18:43:55 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/09/08 15:14:47 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/09/13 16:44:58 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,9 +25,9 @@ t_shell		*get_struct(t_shell *struc)
 
 void		init_shell(t_shell *shell)
 {
-	shell->fd[0] = 0;
-	shell->fd[1] = 1;
-	shell->fd[2] = 2;
+	shell->fd[0] = STDIN_FILENO;
+	shell->fd[1] = STDOUT_FILENO;
+	shell->fd[2] = STDERR_FILENO;
 	if ((shell->fd[3] = open("/dev/tty", O_RDWR)) == -1)
 		quit_error(0);
 	shell->col = 0;

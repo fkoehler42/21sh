@@ -6,13 +6,14 @@
 /*   By: fkoehler <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/11/24 19:11:04 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/09/02 15:55:36 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/09/13 17:53:16 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef LIBFT_H
 # define LIBFT_H
 
+# include <get_next_line.h>
 # include <stdlib.h>
 # include <string.h>
 # include <unistd.h>

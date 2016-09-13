@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/24 10:52:39 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/09/12 17:45:06 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/09/13 22:03:43 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,9 +63,9 @@ int		exec_error(int errnum, char *arg)
 	else if (errnum == 6)
 		ft_putstr_fd(": error on file descriptor duplication\n", 2);
 	else if (errnum == 7)
-		ft_putstr_fd(": error on file descriptor closing\n", 2);
+		ft_putstr_fd(": error on file descriptor closure\n", 2);
 	else if (errnum == 8)
-		ft_putstr_fd(": error on file opening\n", 2);
+		ft_putstr_fd("error on file creation/opening\n", 2);
 	return (-1);
 }
 
