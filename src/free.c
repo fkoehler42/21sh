@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/09 15:58:38 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/09/13 15:14:15 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/09/14 18:54:29 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ void	free_redirs(t_redir **redirs)
 		free(tmp1);
 		tmp1 = tmp2;
 	}
+	*redirs = NULL;
 }
 
 void	free_input_list(t_input **input, size_t *nb_elem)

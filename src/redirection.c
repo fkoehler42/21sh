@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/09/08 14:46:45 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/09/13 22:11:48 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/09/15 01:16:25 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@ static int	open_file(char *file, int redir_type, int *fd)
 
 	file_fd = -1;
 	if (redir_type == REDIR)
-		file_fd = open(file, O_WRONLY | O_CREAT, 0644);
+		file_fd = open(file, O_RDWR | O_CREAT | O_TRUNC, 0644);
 	else if (redir_type == DREDIR)
-		file_fd = open(file, O_WRONLY | O_CREAT | O_APPEND, 0644);
+		file_fd = open(file, O_RDWR | O_CREAT | O_APPEND, 0644);
 	else if (redir_type == BREDIR)
 		file_fd = open(file, O_RDONLY);
 	else if (redir_type == HEREDOC)
@@ -73,7 +73,22 @@ int			handle_redirs(t_shell *shell, t_btree *link)
 			return (-1);
 		redir = redir->next;
 	}
-	free_redirs(&(link->redir));
-	ret = redir_fork(shell, link);
+	ret = redir_fork(shell);
 	return (ret);
 }
+/*
+int		exec_redir_cmd(t_shell *shell, char **cmd)
+{
+	char	**env_array;
+
+	if (is_builtin(cmd[0]))
+		builtins_cmd(cmd, shell->env_lst);
+	else
+	{
+		env_array = env_lst_to_array(shell->env_lst);
+		binary_cmd(cmd, env_array, shell->env_lst);
+		free(env_array);
+	}
+	free(cmd);
+	return (0);
+}*/

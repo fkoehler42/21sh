@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/09/04 21:42:37 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/09/06 23:31:16 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/09/15 00:34:48 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,5 @@ int		exec_bin(char *bin_path, char **argv, char **env)
 
 	ret = execve(bin_path, argv, env);
 	free(bin_path);
-	exit(ret);
 	return (ret == -1) ? exec_error(4, "") : ret ;
 }

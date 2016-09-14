@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/09/04 18:47:45 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/09/13 21:26:24 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/09/15 01:27:13 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,11 @@ static void	close_and_reset_fd(int *fd)
 	}
 }
 
-pid_t	redir_fork(t_shell *shell, t_btree *link)
+pid_t	redir_fork(t_shell *shell)
 {
 	int		i;
 	pid_t	pid;
 
-	(void)link;
 	i = 0;
 	if ((pid = fork()) < 0)
 		return ((pid_t)exec_error(0, "fork"));
@@ -81,10 +80,10 @@ pid_t	pipe_fork_father(t_shell *shell, t_btree *link)
 
 	if ((pid = fork()) < 0)
 		return ((pid_t)exec_error(0, "fork"));
-	if (pid > 0)
-			waitpid(pid, NULL, 0);
-	else if (pid == 0)
+	if (pid == 0)
 		pipe_fork_child(shell, link);
+	else if (pid > 0)
+		waitpid(pid, NULL, 0);
 	return (pid);
 }
 
@@ -101,10 +100,10 @@ pid_t	pipe_fork_child(t_shell *shell, t_btree *link)
 		if (dup2(fd[1], STDOUT_FILENO) == -1)
 			return ((pid_t)exec_error(6, "dup2"));
 		close(fd[0]);
-		if (link->left->type == PIP)
-			pipe_fork_child(shell, link->left);
 		if (link->left->type == CMD)
 			handle_cmd(shell, link->left, 1);
+		if (link->left->type == PIP)
+			pipe_fork_child(shell, link->left);
 	}
 	else if (pid > 0)
 	{
