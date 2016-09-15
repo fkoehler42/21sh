@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 17:07:09 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/09/15 01:15:55 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/09/15 15:38:44 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -187,12 +187,12 @@ char					*remove_cmd_redir(char *cmd, t_redir *redir);
 int						handle_btree(t_shell *shell, t_btree *tree);
 int						handle_cmd(t_shell *shell, t_btree *link,
 						int already_forked);
-pid_t					redir_fork(t_shell *shell);
+pid_t					redir_fork(char **cmd, t_shell *shell);
 pid_t					exec_fork(char **cmd, char **env_array, t_env *env_lst);
 pid_t					pipe_fork_father(t_shell *shell,
 						t_btree *link);
 pid_t					pipe_fork_child(t_shell *shell, t_btree *link);
-int						handle_redirs(t_shell *shell, t_btree *link);
+int						handle_redirs(t_shell *shell, t_btree *link, char **cmd);
 int						exec_redir_cmd(t_shell *shell, char **cmd);
 int						fill_heredoc(char *delimiter, int *fd);
 
@@ -209,5 +209,8 @@ int						binary_cmd(char **cmd, char **env_array,
 char					*get_bin_path(char *cmd, t_env *env_lst);
 int						check_bin_path(char *bin_path, char *cmd);
 int						exec_bin(char *bin_path, char **argv, char **env);
+
+int						dup_std_fd(int *fd);
+void					close_and_reset_fd(int *fd);
 
 #endif

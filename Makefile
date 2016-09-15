@@ -6,7 +6,7 @@
 #    By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/04/26 11:46:03 by fkoehler          #+#    #+#              #
-#    Updated: 2016/09/12 22:13:44 by fkoehler         ###   ########.fr        #
+#    Updated: 2016/09/15 15:15:50 by fkoehler         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,6 +31,7 @@ SRC = buffer.c \
 	  error.c \
 	  exec_bin.c \
 	  exit.c \
+	  fd_handling.c \
 	  forking.c \
 	  free.c \
 	  heredoc.c \

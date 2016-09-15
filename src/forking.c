@@ -6,52 +6,37 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/09/04 18:47:45 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/09/15 01:27:13 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/09/15 19:04:17 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh.h"
 
-static void	close_and_reset_fd(int *fd)
-{
-	int	i;
-
-	i = 0;
-	while (i < 3)
-	{
-		if ((fd[i]) != -1 && (fd)[i] != i)
-			close((fd)[i]);
-		(fd)[i] = i;
-		i++;
-	}
-}
-
-pid_t	redir_fork(t_shell *shell)
+pid_t	redir_fork(char **cmd, t_shell *shell)
 {
 	int		i;
 	pid_t	pid;
+	char	**env_array;
 
 	i = 0;
+	env_array = env_lst_to_array(shell->env_lst);
 	if ((pid = fork()) < 0)
 		return ((pid_t)exec_error(0, "fork"));
 	if (pid == 0)
 	{
-		while (i < 3)
-		{
-			if (shell->fd[i] == -1)
-				close(i);
-			else if (shell->fd[i] != i)
-			{
-				if (dup2(shell->fd[i], i) == -1)
-					return ((pid_t)exec_error(6, "dup2"));
-			}
-			i++;
-		}
+		if (dup_std_fd(shell->fd) != 0)
+			exit(EXIT_FAILURE);
+		if (is_builtin(cmd[0]))
+			builtins_cmd(cmd, shell->env_lst);
+		else
+			binary_cmd(cmd, env_array, shell->env_lst);
+		free(env_array);
+		exit(1);
 	}
 	else if (pid > 0)
 	{
-		waitpid(pid, NULL, 0);
 		close_and_reset_fd(shell->fd);
+		waitpid(pid, NULL, 0);
 	}
 	return (pid);
 }
@@ -81,7 +66,10 @@ pid_t	pipe_fork_father(t_shell *shell, t_btree *link)
 	if ((pid = fork()) < 0)
 		return ((pid_t)exec_error(0, "fork"));
 	if (pid == 0)
+	{
 		pipe_fork_child(shell, link);
+		exit(1);
+	}
 	else if (pid > 0)
 		waitpid(pid, NULL, 0);
 	return (pid);
@@ -100,10 +88,11 @@ pid_t	pipe_fork_child(t_shell *shell, t_btree *link)
 		if (dup2(fd[1], STDOUT_FILENO) == -1)
 			return ((pid_t)exec_error(6, "dup2"));
 		close(fd[0]);
-		if (link->left->type == CMD)
-			handle_cmd(shell, link->left, 1);
 		if (link->left->type == PIP)
 			pipe_fork_child(shell, link->left);
+		if (link->left->type == CMD)
+			handle_cmd(shell, link->left, 1);
+		exit(EXIT_SUCCESS);
 	}
 	else if (pid > 0)
 	{
