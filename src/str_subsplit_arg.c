@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/08/21 15:21:55 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/09/12 19:10:02 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/09/18 13:13:22 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,8 +83,7 @@ char		**str_subsplit_arg(char const *s)
 		i = arg_part_len(s, start);
 		if (start != i)
 			ret[j++] = ft_strsub(s, start, (i - start));
-		/* ft_printf("\nsubarg %d : %s", j, ret[j - 1]); */
-		/* ft_putchar('\n'); */
+		/* ft_printf("\nsubarg %d : %s\n", j, ret[j - 1]); */
 	}
 	ret[j] = NULL;
 	return (ret);

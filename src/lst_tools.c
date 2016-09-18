@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/11 12:46:08 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/08/22 10:58:54 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/09/18 15:03:38 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,19 +26,6 @@ size_t	lst_len(t_input *lst)
 		tmp = tmp->next;
 	}
 	return (len);
-}
-
-void	lst_cpy(t_input *src, t_input **dst)
-{
-	t_input	*tmp;
-
-	if (!(tmp = src))
-		return ;
-	while (tmp)
-	{
-		store_buffer(dst, tmp->c);
-		tmp = tmp->next;
-	}
 }
 
 char	*lst_to_str(t_input *lst)
@@ -81,6 +68,19 @@ t_input	*lst_rchr(t_input *lst, char c)
 	while (tmp->next)
 		tmp = tmp->next;
 	while (tmp && tmp->c != c)
+		tmp = tmp->prev;
+	return (tmp);
+}
+
+t_input	*lst_rchr_eol(t_input *lst)
+{
+	t_input	*tmp;
+
+	if (!(tmp = lst))
+		return (NULL);
+	while (tmp->next)
+		tmp = tmp->next;
+	while (tmp && !(tmp->EOL))
 		tmp = tmp->prev;
 	return (tmp);
 }

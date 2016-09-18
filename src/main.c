@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 18:43:55 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/09/13 16:44:58 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/09/17 17:17:38 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ int		main(int ac, char **av, char **environ)
 
 	(void)ac;
 	(void)av;
+	set_sig_handler();
 	init_shell(&shell);
 	init_term(&shell);
 	store_environ(&shell, environ);

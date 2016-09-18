@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/09/08 14:46:45 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/09/13 22:10:58 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/09/18 16:33:07 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int			fill_heredoc(char *delimiter, int *fd)
 	ft_putstr_fd("heredoc> ", fd[3]);
 	while ((gnl = get_next_line(0, &line)) == 1)
 	{
-		if (ft_strcmp(line, delimiter) == 0)
+		if (line[0] == 4 || ft_strcmp(line, delimiter) == 0)
 			break;
 		ft_putendl_fd(line, file_fd);
 		free(line);

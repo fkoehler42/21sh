@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 17:07:09 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/09/15 15:38:44 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/09/18 17:18:59 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ typedef struct			s_env
 typedef struct			s_input
 {
 	char				c;
+	int					EOL;
 	struct s_input		*prev;
 	struct s_input		*next;
 }						t_input;
@@ -106,6 +107,8 @@ void					init_shell(t_shell *shell);
 void					init_term(t_shell *shell);
 void					restore_term(t_shell *shell);
 void					reload_term(t_shell *shell);
+void					sig_handler(int signum);
+void					set_sig_handler(void);
 t_shell					*get_struct(t_shell *struc);
 
 int						putchar(int c);
@@ -117,9 +120,9 @@ char					*str_replace_var(char *s, int start);
 char					**strsplit_args(char const *s);
 char					**str_subsplit_arg(char const *s);
 size_t					lst_len(t_input *lst);
-void					lst_cpy(t_input *src, t_input **dst);
 char					*lst_to_str(t_input *lst);
 t_input					*lst_rchr(t_input *input, char c);
+t_input					*lst_rchr_eol(t_input *input);
 t_input					*get_last_elem(t_input *lst);
 int						is_builtin(char *cmd);
 
@@ -172,6 +175,7 @@ int						paste_buffer(t_shell *shell);
 int						history_prev(t_shell *shell);
 int						history_next(t_shell *shell);
 t_hist					*store_hist(t_shell *shell);
+void					move_to_history_end(t_shell * shell);
 
 void					replace_cursor(t_shell *shell, int print, int back);
 size_t					get_cursor_x_pos(t_input *input,

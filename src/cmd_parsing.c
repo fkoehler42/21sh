@@ -6,39 +6,11 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/11 14:13:19 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/09/14 18:53:50 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/09/18 14:35:51 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh.h"
-
-static void	multi_lines_cmd(t_shell *shell)
-{
-	static t_input	*save = NULL;
-	char			c;
-
-	c = 0;
-	if ((c = valid_input(shell->input, c)) > 0)
-	{
-		lst_cpy(shell->input, &save);
-		while ((c = valid_input(save, c)) > 0)
-		{
-			free_tmp_inputs(shell);
-			c == '\\' ? delete_input(&save, lst_rchr(save, '\\'), NULL, 0)
-			: store_buffer(&save, '\n');
-			read_multi_lines_input(shell, get_special_prompt(c));
-			tputs(tgetstr("do", NULL), shell->fd[3], &putchar);
-			lst_cpy(shell->input, &save);
-		}
-	}
-	if (save)
-	{
-		free_tmp_inputs(shell);
-		shell->input = save;
-		shell->input_len = lst_len(save);
-		save = NULL;
-	}
-}
 
 char		**parse_cmd(t_btree *link)
 {
@@ -57,7 +29,6 @@ char		**parse_cmd(t_btree *link)
 	}
 	while (cmd_tab[i])
 	{
-		/* ft_printf("\narg %d : %s\n", i + 1, cmd_tab[i]); */
 		cmd_tab[i] = interpret_cmd_arg(cmd_tab[i]);
 		i++;
 	}
@@ -66,15 +37,23 @@ char		**parse_cmd(t_btree *link)
 
 int			handle_input(t_shell *shell)
 {
+	char	c;
 	char	*cmd_str;
 
+	c = 0;
 	move_line_end(shell);
 	tputs(tgetstr("do", NULL), shell->fd[3], &putchar);
 	if (!shell->input)
 		return (0);
+	if ((c = valid_input(shell->input, c)) > 0)
+	{
+		c == '\\' ? delete_input(&(shell->input), shell->curs_pos, shell, 1)
+		: store_input(shell, '\n');
+		shell->curs_pos->EOL = 1;
+		return ((int)c);
+	}
 	if (check_pipes(shell->input, 1) == -1)
 		return (cmd_error(0, '|', NULL));
-	multi_lines_cmd(shell);
 	shell->hist = store_hist(shell);
 	cmd_str = lst_to_str(shell->input);
 	shell->tree = store_cmd(cmd_str);

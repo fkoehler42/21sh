@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/24 15:05:22 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/08/29 15:48:20 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/09/18 14:26:30 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ void	store_input(t_shell *shell, char c)
 
 	if (!(new = (t_input *)malloc(sizeof(*new))))
 		quit_error(9);
+	new->EOL = 0;
 	new->c = c;
 	new->prev = shell->curs_pos != NULL ? shell->curs_pos : NULL;
 	if (!(shell->input))
@@ -66,9 +67,12 @@ void	delete_input(t_input **lst, t_input *input, t_shell *shell, int back)
 
 void	read_input(t_shell *shell)
 {
+	int		parse_ret;
 	char	buf[7];
+	char	*prompt;
 	size_t	buf_len;
 
+	prompt = NULL;
 	shell->p_len = put_prompt(get_prompt(shell->env_lst), shell->fd[3]);
 	while (42)
 	{
@@ -77,28 +81,19 @@ void	read_input(t_shell *shell)
 			quit_error(7);
 		if ((buf_len = ft_strlen(buf)) > 0)
 		{
-			if (parse_input(shell, buf, buf_len, shell->p_len))
-				shell->p_len =
-				put_prompt(get_prompt(shell->env_lst), shell->fd[3]);
+			if ((parse_ret = parse_input(shell, buf, buf_len, shell->p_len)))
+			{
+				if (parse_ret == 1)
+					shell->p_len =
+					put_prompt(get_prompt(shell->env_lst), shell->fd[3]);
+				else
+				{
+					prompt = get_special_prompt((char)parse_ret);
+					shell->p_len = ft_strlen(prompt);
+					ft_putstr_fd(prompt, shell->fd[3]);
+				}
+			}
 		}
-	}
-}
-
-void	read_multi_lines_input(t_shell *shell, char *prompt)
-{
-	char	buf[7];
-	size_t	buf_len;
-
-	shell->p_len = ft_strlen(prompt);
-	ft_putstr_fd(prompt, shell->fd[3]);
-	buf[0] = 0;
-	while (buf[0] != 10)
-	{
-		ft_bzero((void *)buf, 7);
-		if (read(0, buf, 7) == -1)
-			quit_error(7);
-		if (((buf_len = ft_strlen(buf)) > 0) && (buf[0] != 10))
-			parse_input(shell, buf, buf_len, shell->p_len);
 	}
 }
 

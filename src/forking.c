@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/09/04 18:47:45 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/09/15 19:04:17 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/09/17 17:29:13 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,7 @@ pid_t	redir_fork(char **cmd, t_shell *shell)
 			builtins_cmd(cmd, shell->env_lst);
 		else
 			binary_cmd(cmd, env_array, shell->env_lst);
-		free(env_array);
-		exit(1);
+		exit(EXIT_FAILURE);
 	}
 	else if (pid > 0)
 	{
@@ -48,11 +47,12 @@ pid_t	exec_fork(char **cmd, char **env_array, t_env *env_lst)
 	if ((pid = fork()) < 0)
 		return ((pid_t)exec_error(0, "fork"));
 	if (pid == 0)
-	{
+	{/*
 		if (is_builtin(cmd[0]))
 			builtins_cmd(cmd, env_lst);
-		else
-			binary_cmd(cmd, env_array, env_lst);
+		else*/
+		binary_cmd(cmd, env_array, env_lst);
+		exit(EXIT_FAILURE);
 	}
 	else if (pid > 0)
 		waitpid(pid, NULL, 0);
@@ -68,7 +68,7 @@ pid_t	pipe_fork_father(t_shell *shell, t_btree *link)
 	if (pid == 0)
 	{
 		pipe_fork_child(shell, link);
-		exit(1);
+		exit(EXIT_SUCCESS);
 	}
 	else if (pid > 0)
 		waitpid(pid, NULL, 0);

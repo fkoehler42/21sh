@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/25 16:59:14 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/08/21 17:42:43 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/09/18 14:32:17 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,11 +51,13 @@ int		parse_keys2(t_shell *shell, char *buf)
 
 int		parse_keys3(t_shell *shell, char *buf, size_t buf_len)
 {
+	int	ret;
+
+	ret = 0;
 	if (buf_len == 1 && buf[0] == 10)
-	{
-		handle_input(shell);
-		return (1);
-	}
+		return ((ret = handle_input(shell)) > 0) ? ret : 1;
+	else if (buf_len == 1 && buf[0] == 4)
+		ft_exit(NULL);
 	else if (buf_len == 1 && buf[0] == 127)
 		backspace(shell);
 	else if (buf_len == 4 && buf[0] == 27 && buf[1] == 91

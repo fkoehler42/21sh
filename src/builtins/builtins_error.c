@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.4fd.fr>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 16/08/17 10:45:40 by fkoehler            #+#    #+#             */
-/*   Updated: 2016/09/12 16:34:40 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/09/17 15:43:45 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@ int		cd_error(int errnum, char *arg)
 	fd = shell->fd[3];
 	ft_putstr_fd("cd: ", fd);
 	if (errnum == 0)
-		ft_putstr_fd("environment variable HOME is not set\n", fd);
+		ft_putstr_fd("environment variable HOME is not set or is empty\n", fd);
 	else if (errnum == 1)
-		ft_putstr_fd("environment variable OLDPWD is not set\n", fd);
+		ft_putstr_fd("environment variable OLDPWD is not set or is empty\n", fd);
 	else if (errnum == 2)
 		ft_putstr_fd("too many arguments\n", fd);
 	else if (errnum == 3 || errnum == 4 || errnum == 5 || errnum == 7)

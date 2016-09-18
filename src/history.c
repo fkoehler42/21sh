@@ -6,22 +6,25 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/10 18:54:12 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/08/19 10:15:28 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/09/18 17:18:03 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh.h"
 
-static void	store_input_buf(t_input *input, size_t len, char **buffer)
+static void	store_input_buf(t_input *input, char **buffer)
 {
 	int		i;
 	t_input	*tmp;
 
 	i = 0;
-	tmp = input;
+	if ((tmp = lst_rchr_eol(input)) && !(tmp = tmp->next))
+		return ;
+	if (!tmp)
+		tmp = input;
 	if (*buffer)
 		free(*buffer);
-	if (!(*buffer = ft_strnew(len)))
+	if (!(*buffer = ft_strnew(lst_len(tmp))))
 		quit_error(9);
 	while (tmp)
 	{
@@ -55,7 +58,7 @@ int			history_prev(t_shell *shell)
 	if ((!shell->hist) || (!shell->hist->prev && !shell->hist_end))
 		return (-1);
 	if (shell->hist_end && shell->input)
-		store_input_buf(shell->input, shell->input_len, &(shell->input_buf));
+		store_input_buf(shell->input, &(shell->input_buf));
 	if (shell->hist_end)
 		shell->hist_end = 0;
 	else
@@ -92,4 +95,11 @@ int			history_next(t_shell *shell)
 		}
 	}
 	return (0);
+}
+
+void		move_to_history_end(t_shell *shell)
+{
+	while (shell->hist && shell->hist->next)
+		shell->hist = shell->hist->next;
+	shell->hist_end = 1;
 }
