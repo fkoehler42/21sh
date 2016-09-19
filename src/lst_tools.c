@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/11 12:46:08 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/09/18 15:03:38 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/09/19 17:11:19 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,19 +68,6 @@ t_input	*lst_rchr(t_input *lst, char c)
 	while (tmp->next)
 		tmp = tmp->next;
 	while (tmp && tmp->c != c)
-		tmp = tmp->prev;
-	return (tmp);
-}
-
-t_input	*lst_rchr_eol(t_input *lst)
-{
-	t_input	*tmp;
-
-	if (!(tmp = lst))
-		return (NULL);
-	while (tmp->next)
-		tmp = tmp->next;
-	while (tmp && !(tmp->EOL))
 		tmp = tmp->prev;
 	return (tmp);
 }

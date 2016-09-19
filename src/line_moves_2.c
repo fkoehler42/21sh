@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/30 17:07:36 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/09/18 14:23:37 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/09/19 17:19:32 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,14 +25,12 @@ int			move_left_word(t_shell *shell)
 {
 	if (!shell->input || !shell->curs_pos)
 		return (-1);
-	while (shell->curs_pos && shell->curs_pos->c == ' '
-		&& !(shell->curs_pos->EOL))
+	while (shell->curs_pos && shell->curs_pos->c == ' ')
 	{
 		replace_cursor(shell, 0, 1);
 		shell->curs_pos = shell->curs_pos->prev;
 	}
-	while (shell->curs_pos && shell->curs_pos->c != ' '
-		&& !(shell->curs_pos->EOL))
+	while (shell->curs_pos && shell->curs_pos->c != ' ')
 	{
 		replace_cursor(shell, 0, 1);
 		shell->curs_pos = shell->curs_pos->prev;
@@ -73,7 +71,7 @@ int			move_line_up(t_shell *shell)
 	size_t	i;
 
 	i = shell->col;
-	while (shell->curs_pos && !(shell->curs_pos->EOL) && i--)
+	while (shell->curs_pos && i--)
 		move_left(shell);
 	return (0);
 }

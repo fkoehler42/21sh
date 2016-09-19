@@ -6,25 +6,22 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/10 18:54:12 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/09/18 17:18:03 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/09/19 18:20:08 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh.h"
 
-static void	store_input_buf(t_input *input, char **buffer)
+static void	store_input_buf(t_input *input, size_t len, char **buffer)
 {
 	int		i;
 	t_input	*tmp;
 
 	i = 0;
-	if ((tmp = lst_rchr_eol(input)) && !(tmp = tmp->next))
-		return ;
-	if (!tmp)
-		tmp = input;
+	tmp = input;
 	if (*buffer)
 		free(*buffer);
-	if (!(*buffer = ft_strnew(lst_len(tmp))))
+	if (!(*buffer = ft_strnew(len)))
 		quit_error(9);
 	while (tmp)
 	{
@@ -58,12 +55,13 @@ int			history_prev(t_shell *shell)
 	if ((!shell->hist) || (!shell->hist->prev && !shell->hist_end))
 		return (-1);
 	if (shell->hist_end && shell->input)
-		store_input_buf(shell->input, &(shell->input_buf));
+		store_input_buf(shell->input, shell->input_len, &(shell->input_buf));
 	if (shell->hist_end)
 		shell->hist_end = 0;
 	else
 		shell->hist = shell->hist->prev;
-	clear_input(shell);
+	if (shell->input)
+		clear_input(shell);
 	tmp = shell->hist->input;
 	while (tmp)
 	{
@@ -80,7 +78,8 @@ int			history_next(t_shell *shell)
 
 	if ((!shell->hist) || (!shell->hist->next && shell->hist_end))
 		return (-1);
-	clear_input(shell);
+	if (shell->input)
+		clear_input(shell);
 	if (!(shell->hist->next))
 		print_input_buf(shell);
 	else if (shell->hist->next)
@@ -95,11 +94,4 @@ int			history_next(t_shell *shell)
 		}
 	}
 	return (0);
-}
-
-void		move_to_history_end(t_shell *shell)
-{
-	while (shell->hist && shell->hist->next)
-		shell->hist = shell->hist->next;
-	shell->hist_end = 1;
 }

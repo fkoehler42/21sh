@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 17:07:09 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/09/18 17:18:59 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/09/19 19:35:39 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ typedef struct			s_env
 typedef struct			s_input
 {
 	char				c;
-	int					EOL;
 	struct s_input		*prev;
 	struct s_input		*next;
 }						t_input;
@@ -81,6 +80,7 @@ typedef struct			s_shell
 	t_hist				*hist;
 	int					hist_end;
 	t_input				*input;
+	t_input				*input_save;
 	t_input				*buffer;
 	t_input				*curs_pos;
 	char				*input_buf;

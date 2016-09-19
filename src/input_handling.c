@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/24 15:05:22 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/09/18 14:26:30 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/09/19 18:20:08 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,6 @@ void	store_input(t_shell *shell, char c)
 
 	if (!(new = (t_input *)malloc(sizeof(*new))))
 		quit_error(9);
-	new->EOL = 0;
 	new->c = c;
 	new->prev = shell->curs_pos != NULL ? shell->curs_pos : NULL;
 	if (!(shell->input))
@@ -77,6 +76,7 @@ void	read_input(t_shell *shell)
 	while (42)
 	{
 		ft_bzero((void *)buf, 7);
+		/* ft_printf("input_len : %lu\n", shell->input_len); */
 		if (read(0, buf, 7) == -1)
 			quit_error(7);
 		if ((buf_len = ft_strlen(buf)) > 0)

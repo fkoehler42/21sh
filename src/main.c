@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 18:43:55 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/09/17 17:17:38 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/09/19 19:57:52 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ void		init_shell(t_shell *shell)
 	shell->hist = NULL;
 	shell->hist_end = 1;
 	shell->input = NULL;
+	shell->input_save = NULL;
 	shell->buffer = NULL;
 	shell->input_buf = NULL;
 	shell->curs_pos = NULL;

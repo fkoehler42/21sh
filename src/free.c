@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/09 15:58:38 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/09/14 18:54:29 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/09/19 19:56:33 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ void	free_tmp_inputs(t_shell *shell)
 		shell->input_buf = NULL;
 	}
 	shell->curs_pos = NULL;
+	shell->input_save = NULL;
 }
 
 void	free_env_var(t_env *env_var)

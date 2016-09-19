@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/08/24 16:11:42 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/09/07 02:28:00 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/09/19 17:27:46 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ static char	check_quotes(t_input **input, char c)
 			tmp = tmp->next;
 	}
 	else if ((tmp->c == '[' || tmp->c == '{' || tmp->c == '(')
-			&& (!tmp->prev || tmp->prev->c == '\\'))
+			&& (!tmp->prev || tmp->prev->c != '\\'))
 	{
 		if ((c = is_bracket_closed(tmp, tmp->c)) != 0)
 			return (c);
