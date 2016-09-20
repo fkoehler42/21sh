@@ -6,7 +6,7 @@
 #    By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/04/26 11:46:03 by fkoehler          #+#    #+#              #
-#    Updated: 2016/09/17 15:51:53 by fkoehler         ###   ########.fr        #
+#    Updated: 2016/09/20 18:26:34 by fkoehler         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,6 +34,7 @@ SRC = buffer.c \
 	  fd_handling.c \
 	  forking.c \
 	  free.c \
+	  free_btree.c \
 	  heredoc.c \
 	  hist_storage.c \
 	  history.c \
@@ -53,12 +54,12 @@ SRC = buffer.c \
 	  str_tools.c \
 	  strsplit_args.c \
 	  str_subsplit_arg.c \
-	  term_parameters.c \
+	  term_settings.c \
 	  unsetenv.c
 
 NAME = 21sh
 
-FLAGS = -Wall -Werror -Wextra -g -fsanitize=address
+FLAGS = -Wall -Werror -Wextra -g
 
 LIBDIR = ./libft/
 

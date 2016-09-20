@@ -6,28 +6,11 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/09 15:58:38 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/09/19 19:56:33 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/09/20 16:11:12 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh.h"
-
-void	free_redirs(t_redir **redirs)
-{
-	t_redir	*tmp1;
-	t_redir	*tmp2;
-
-	if (!(tmp1 = *redirs))
-		return ;
-	while (tmp1)
-	{
-		tmp2 = tmp1->next;
-		free(tmp1->s);
-		free(tmp1);
-		tmp1 = tmp2;
-	}
-	*redirs = NULL;
-}
 
 void	free_input_list(t_input **input, size_t *nb_elem)
 {
@@ -50,7 +33,7 @@ void	free_input_list(t_input **input, size_t *nb_elem)
 	}
 }
 
-void	free_tmp_inputs(t_shell *shell)
+void	free_tmp_inputs(t_shell *shell, int reset_save)
 {
 	if (shell->input)
 		free_input_list(&(shell->input), &(shell->input_len));
@@ -62,7 +45,8 @@ void	free_tmp_inputs(t_shell *shell)
 		shell->input_buf = NULL;
 	}
 	shell->curs_pos = NULL;
-	shell->input_save = NULL;
+	if (reset_save)
+		shell->input_save = NULL;
 }
 
 void	free_env_var(t_env *env_var)

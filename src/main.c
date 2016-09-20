@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 18:43:55 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/09/19 19:57:52 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/09/20 18:25:35 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,14 +47,17 @@ void		init_shell(t_shell *shell)
 
 int		main(int ac, char **av, char **environ)
 {
-	t_shell		shell;
+	t_shell		*shell;
 
 	(void)ac;
 	(void)av;
+	(void)environ;
+	if (!(shell = (t_shell *)malloc(sizeof(*shell))))
+		quit_error(9);
 	set_sig_handler();
-	init_shell(&shell);
-	init_term(&shell);
-	store_environ(&shell, environ);
-	read_input(&shell);
+	init_shell(shell);
+	init_term(shell);
+	store_environ(shell, environ);
+	read_input(shell);
 	return (0);
 }

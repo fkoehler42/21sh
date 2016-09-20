@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/24 15:05:22 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/09/19 18:20:08 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/09/20 15:55:05 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,9 +76,9 @@ void	read_input(t_shell *shell)
 	while (42)
 	{
 		ft_bzero((void *)buf, 7);
-		/* ft_printf("input_len : %lu\n", shell->input_len); */
 		if (read(0, buf, 7) == -1)
 			quit_error(7);
+		signal(SIGINT, &sig_handler1);
 		if ((buf_len = ft_strlen(buf)) > 0)
 		{
 			if ((parse_ret = parse_input(shell, buf, buf_len, shell->p_len)))
@@ -94,6 +94,7 @@ void	read_input(t_shell *shell)
 				}
 			}
 		}
+		signal(SIGINT, &sig_handler);
 	}
 }
 

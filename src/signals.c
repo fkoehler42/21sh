@@ -6,13 +6,33 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/09/17 15:51:02 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/09/17 19:24:40 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/09/20 18:19:03 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh.h"
 
-void	sig_handler(int signum)
+static void	sig_int_handler(t_shell *shell)
+{
+	if (shell->input)
+	{
+		move_line_end(shell);
+		free_tmp_inputs(shell, 1);
+	}
+	tputs(tgetstr("do", NULL), shell->fd[3], &putchar);
+	shell->p_len = put_prompt(get_prompt(shell->env_lst), shell->fd[3]);
+}
+
+static void	sig_winch_handler(t_shell *shell)
+{
+	struct winsize	w;
+
+	if ((ioctl(STDIN_FILENO, TIOCGWINSZ, &w)) < 0)
+		quit_error(10);
+	shell->col = w.ws_col;
+}
+
+void		sig_handler(int signum)
 {
 	char	suspend;
 	t_shell *shell;
@@ -20,15 +40,7 @@ void	sig_handler(int signum)
 	suspend = 26;
 	shell = get_struct(0);
 	if (signum == SIGINT)
-	{
-		if (shell->input)
-		{
-			move_line_end(shell);
-			free_tmp_inputs(shell);
-		}
-		tputs(tgetstr("do", NULL), shell->fd[3], &putchar);
-		shell->p_len = put_prompt(get_prompt(shell->env_lst), shell->fd[3]);
-	}
+		sig_int_handler(shell);
 	else if (signum == SIGTSTP)
 	{
 		signal(SIGTSTP, SIG_DFL);
@@ -43,9 +55,20 @@ void	sig_handler(int signum)
 		if (shell->input)
 			print_input(shell, shell->input, shell->p_len);
 	}
+	else if (signum == SIGWINCH)
+		sig_winch_handler(shell);
 }
 
-void	set_sig_handler(void)
+void		sig_handler1(int signum)
+{
+	t_shell *shell;
+
+	(void)signum;
+	shell = get_struct(0);
+	tputs(tgetstr("do", NULL), shell->fd[3], &putchar);
+}
+
+void		set_sig_handler(void)
 {
 	signal(SIGINT, &sig_handler);
 	signal(SIGTSTP, &sig_handler);

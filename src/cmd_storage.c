@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/18 11:04:50 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/09/02 14:47:18 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/09/20 19:15:56 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ t_btree	*store_cmd(char *str)
 		new->left = store_cmd(ft_strsub(str, 0, i));
 		i++;
 		new->right = store_cmd(ft_strsub(str, i, (ft_strlen(str) - i)));
+		free(str);
 	}
 	else
 	{

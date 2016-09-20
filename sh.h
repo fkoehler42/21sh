@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 17:07:09 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/09/19 19:35:39 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/09/20 16:19:02 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,16 +98,18 @@ void					env_var_error(int errnum, char *cmd, char *arg);
 int						exit_error(int errnum, char *arg);
 
 void					free_input_list(t_input **input, size_t *nb_elem);
-void					free_tmp_inputs(t_shell *shell);
+void					free_tmp_inputs(t_shell *shell, int reset_save);
 void					free_env_var(t_env *env_var);
 void					free_env_lst(t_env **env_lst);
 void					free_redirs(t_redir **redirs);
+void					free_btree(t_btree *tree);
 
 void					init_shell(t_shell *shell);
 void					init_term(t_shell *shell);
 void					restore_term(t_shell *shell);
 void					reload_term(t_shell *shell);
 void					sig_handler(int signum);
+void					sig_handler1(int signum);
 void					set_sig_handler(void);
 t_shell					*get_struct(t_shell *struc);
 

@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/11 14:13:19 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/09/19 20:30:33 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/09/20 19:17:51 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,29 +66,40 @@ char		**parse_cmd(t_btree *link)
 	return (cmd_tab);
 }
 
+static int	free_and_return(t_shell *shell, int ret, char *s)
+{
+	if (ret == 0)
+		free_tmp_inputs(shell, 1);
+	else
+		free_tmp_inputs(shell, 0);
+	if (s)
+		free(s);
+	return (ret);
+}
+
 int			handle_input(t_shell *shell)
 {
 	int		ret;
 	char	*cmd_str;
 
 	ret = 0;
+	cmd_str = NULL;
 	move_line_end(shell);
 	tputs(tgetstr("do", NULL), shell->fd[3], &putchar);
 	if (!shell->input)
 		return (0);
 	if ((check_pipes(shell->input, 1) == -1) &&	cmd_error(0, '|', NULL))
-	{
-		free_tmp_inputs(shell);
-		return (0);
-	}
-	if ((ret = check_input_form(shell)) > 0)
-		return (ret);
+		return (free_and_return(shell, ret, cmd_str));
+	if (((ret = check_input_form(shell)) > 0) ||
+		(ft_str_isempty(cmd_str = lst_to_str(shell->input))))
+		return (free_and_return(shell, ret, cmd_str));
 	shell->hist = store_hist(shell);
-	cmd_str = lst_to_str(shell->input);
 	shell->tree = store_cmd(cmd_str);
-	free_tmp_inputs(shell);
+	free_tmp_inputs(shell, 1);
 	restore_term(shell);
 	handle_btree(shell, shell->tree);
+	free_btree(shell->tree);
+	shell->tree = NULL;
 	reload_term(shell);
 	return (ret);
 }

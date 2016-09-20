@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/08/15 14:41:46 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/09/17 15:00:39 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/09/20 18:35:57 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ int		handle_cmd(t_shell *shell, t_btree *link, int already_forked)
 			exec_fork(cmd, env_array, shell->env_lst);
 		free_tab(env_array);
 	}
+	free_tab(cmd);
 	return (0);
 }
 

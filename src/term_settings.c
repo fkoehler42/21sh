@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   term_parameters.c                                  :+:      :+:    :+:   */
+/*   term_settings.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/09/05 18:52:16 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/09/05 19:06:50 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/09/20 18:14:17 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void		init_term(t_shell *shell)
 	shell->termios.c_lflag &= ~(ICANON | ECHO);
 	shell->termios.c_cc[VMIN] = 1;
 	shell->termios.c_cc[VTIME] = 0;
-	if ((tcsetattr(STDIN_FILENO, TCSADRAIN, &(shell->termios))) == -1)
+	if ((tcsetattr(STDIN_FILENO, TCSANOW, &(shell->termios))) == -1)
 		quit_error(5);
 	if ((ioctl(STDIN_FILENO, TIOCGWINSZ, &w)) < 0)
 		quit_error(10);

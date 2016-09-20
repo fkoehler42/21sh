@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/09/04 18:47:45 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/09/17 17:29:13 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/09/20 18:39:13 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ pid_t	redir_fork(char **cmd, t_shell *shell)
 	{
 		close_and_reset_fd(shell->fd);
 		waitpid(pid, NULL, 0);
+		free_tab(env_array);
 	}
 	return (pid);
 }
@@ -47,10 +48,7 @@ pid_t	exec_fork(char **cmd, char **env_array, t_env *env_lst)
 	if ((pid = fork()) < 0)
 		return ((pid_t)exec_error(0, "fork"));
 	if (pid == 0)
-	{/*
-		if (is_builtin(cmd[0]))
-			builtins_cmd(cmd, env_lst);
-		else*/
+	{
 		binary_cmd(cmd, env_array, env_lst);
 		exit(EXIT_FAILURE);
 	}

@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/26 20:56:41 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/09/17 15:03:06 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/09/20 18:43:10 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,9 @@ int			ft_env(char **cmd, t_env *env_lst, int i)
 {
 	int		j;
 	t_env	*env_lst_cpy;
+	char	**env_array;
 
+	env_array = NULL;
 	env_lst_cpy = NULL;
 	dup_env_lst(env_lst, &(env_lst_cpy));
 	while (cmd[i])
@@ -100,7 +102,11 @@ int			ft_env(char **cmd, t_env *env_lst, int i)
 			if (is_builtin(cmd[i]))
 				builtins_cmd(cmd + i, env_lst_cpy);
 			else
-				exec_fork(cmd + i, env_lst_to_array(env_lst_cpy), env_lst_cpy);
+			{
+				env_array = env_lst_to_array(env_lst_cpy);
+				exec_fork(cmd + i, env_array, env_lst_cpy);
+				free_tab(env_array);
+			}
 			return (del_env_cpy(&env_lst_cpy));
 		}
 		i += j;
