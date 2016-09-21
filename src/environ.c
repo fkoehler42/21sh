@@ -6,11 +6,25 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/24 12:20:59 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/09/20 17:31:44 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/09/21 15:44:58 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh.h"
+
+int		dup_env_lst(t_env *env_lst, t_env **env_lst_cpy)
+{
+	t_env	*tmp;
+
+	tmp = env_lst;
+	while (tmp)
+	{
+		store_env_var(env_lst_cpy, ft_strdup(tmp->var),
+				ft_strdup(tmp->val));
+		tmp = tmp->next;
+	}
+	return (0);
+}
 
 void	store_environ(t_shell *shell, char **environ)
 {
@@ -31,7 +45,7 @@ void	store_environ(t_shell *shell, char **environ)
 				val = ft_itoa(ft_atoi(environ[i] + j + 1) + 1);
 			else
 				val = ft_strsub(environ[i], j + 1,
-				(ft_strlen(environ[i]) - j - 1));
+						(ft_strlen(environ[i]) - j - 1));
 			store_env_var(&(shell->env_lst), var, val);
 			i++;
 		}

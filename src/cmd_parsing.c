@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/11 14:13:19 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/09/20 19:17:51 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/09/21 17:23:00 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,8 @@ static int	check_input_form(t_shell *shell)
 		shell->input_len += lst_len(shell->input_save);
 		tmp = get_last_elem(shell->input_save);
 		tmp->next = shell->input;
-		shell->input->prev = tmp;
+		if (shell->input)
+			shell->input->prev = tmp;
 		shell->input = shell->input_save;
 	}
 	if ((c = valid_input(shell->input, c)) > 0)
@@ -86,9 +87,9 @@ int			handle_input(t_shell *shell)
 	cmd_str = NULL;
 	move_line_end(shell);
 	tputs(tgetstr("do", NULL), shell->fd[3], &putchar);
-	if (!shell->input)
+	if (!shell->input && !shell->input_save)
 		return (0);
-	if ((check_pipes(shell->input, 1) == -1) &&	cmd_error(0, '|', NULL))
+	if ((check_pipes(shell->input, 1) == -1) && cmd_error(0, '|', NULL))
 		return (free_and_return(shell, ret, cmd_str));
 	if (((ret = check_input_form(shell)) > 0) ||
 		(ft_str_isempty(cmd_str = lst_to_str(shell->input))))
@@ -97,9 +98,11 @@ int			handle_input(t_shell *shell)
 	shell->tree = store_cmd(cmd_str);
 	free_tmp_inputs(shell, 1);
 	restore_term(shell);
+	signal(SIGTSTP, SIG_DFL);
 	handle_btree(shell, shell->tree);
 	free_btree(shell->tree);
 	shell->tree = NULL;
 	reload_term(shell);
+	signal(SIGTSTP, &sig_handler);
 	return (ret);
 }

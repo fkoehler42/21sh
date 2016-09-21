@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/09/04 18:47:45 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/09/20 18:39:13 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/09/21 16:21:55 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,8 @@ pid_t	pipe_fork_child(t_shell *shell, t_btree *link)
 	pid_t	pid;
 	int		fd[2];
 
-	pipe(fd);
+	if (pipe(fd) == -1)
+		return ((pid_t)exec_error(5, ""));
 	if ((pid = fork()) < 0)
 		return ((pid_t)exec_error(0, "fork"));
 	if (pid == 0)
@@ -86,10 +87,8 @@ pid_t	pipe_fork_child(t_shell *shell, t_btree *link)
 		if (dup2(fd[1], STDOUT_FILENO) == -1)
 			return ((pid_t)exec_error(6, "dup2"));
 		close(fd[0]);
-		if (link->left->type == PIP)
-			pipe_fork_child(shell, link->left);
-		if (link->left->type == CMD)
-			handle_cmd(shell, link->left, 1);
+		link->left->type == PIP ? pipe_fork_child(shell, link->left) : (0);
+		link->left->type == CMD ? handle_cmd(shell, link->left, 1) : (0);
 		exit(EXIT_SUCCESS);
 	}
 	else if (pid > 0)

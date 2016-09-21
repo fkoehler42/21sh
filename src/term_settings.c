@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/09/05 18:52:16 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/09/20 18:14:17 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/09/21 18:51:21 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,10 @@ void		init_term(t_shell *shell)
 	struct winsize	w;
 
 	if (!(term_name = getenv("TERM")))
-		quit_error(1);
+	{
+		ft_putstr_fd("21sh: unable to get the terminal name\n", STDERR_FILENO);
+		exit(EXIT_FAILURE);
+	}
 	if ((ret = tgetent(NULL, term_name)) <= 0)
 		ret == 0 ? quit_error(2) : quit_error(3);
 	if ((tcgetattr(STDIN_FILENO, &(shell->term_save))) == -1)
@@ -48,7 +51,7 @@ void		init_term(t_shell *shell)
 	shell->termios.c_lflag &= ~(ICANON | ECHO);
 	shell->termios.c_cc[VMIN] = 1;
 	shell->termios.c_cc[VTIME] = 0;
-	if ((tcsetattr(STDIN_FILENO, TCSANOW, &(shell->termios))) == -1)
+	if ((tcsetattr(STDIN_FILENO, TCSADRAIN, &(shell->termios))) == -1)
 		quit_error(5);
 	if ((ioctl(STDIN_FILENO, TIOCGWINSZ, &w)) < 0)
 		quit_error(10);
@@ -66,8 +69,6 @@ void		reload_term(t_shell *shell)
 	if ((ioctl(STDIN_FILENO, TIOCGWINSZ, &w)) < 0)
 		quit_error(10);
 	shell->col = w.ws_col;
-	if (check_termcaps() == -1)
-		quit_error(8);
 }
 
 void		restore_term(t_shell *shell)

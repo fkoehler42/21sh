@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/05/14 20:01:15 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/08/22 15:36:43 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/09/21 17:48:31 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,12 +74,27 @@ char		*get_special_prompt(char c)
 	return (prompt);
 }
 
-int			put_prompt(char *prompt, int fd)
+void		print_prompt(t_shell *shell, int special_prompt)
 {
-	ft_putstr_fd(CYAN, fd);
-	ft_putchar_fd('[', fd);
-	ft_putstr_fd(prompt, fd);
-	ft_putstr_fd("]-> ", fd);
-	ft_putstr_fd(OFF, fd);
-	return (5 + ft_strlen(prompt));
+	int		fd;
+	char	*prompt;
+
+	fd = shell->fd[3];
+	prompt = NULL;
+	if (special_prompt > 1)
+	{
+		prompt = get_special_prompt((char)special_prompt);
+		ft_putstr_fd(prompt, fd);
+		shell->p_len = ft_strlen(prompt);
+	}
+	else
+	{
+		prompt = get_prompt(shell->env_lst);
+		ft_putstr_fd(CYAN, fd);
+		ft_putchar_fd('[', fd);
+		ft_putstr_fd(prompt, fd);
+		ft_putstr_fd("]-> ", fd);
+		ft_putstr_fd(OFF, fd);
+		shell->p_len = ft_strlen(prompt) + 5;
+	}
 }

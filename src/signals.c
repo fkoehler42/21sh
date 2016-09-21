@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/09/17 15:51:02 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/09/20 18:19:03 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/09/21 18:08:43 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static void	sig_int_handler(t_shell *shell)
 		free_tmp_inputs(shell, 1);
 	}
 	tputs(tgetstr("do", NULL), shell->fd[3], &putchar);
-	shell->p_len = put_prompt(get_prompt(shell->env_lst), shell->fd[3]);
+	print_prompt(shell, 0);
 }
 
 static void	sig_winch_handler(t_shell *shell)
@@ -43,6 +43,7 @@ void		sig_handler(int signum)
 		sig_int_handler(shell);
 	else if (signum == SIGTSTP)
 	{
+		move_line_end(shell);
 		signal(SIGTSTP, SIG_DFL);
 		restore_term(shell);
 		ioctl(0, TIOCSTI, &suspend);
@@ -51,9 +52,9 @@ void		sig_handler(int signum)
 	{
 		reload_term(shell);
 		signal(SIGTSTP, &sig_handler);
-		shell->p_len = put_prompt(get_prompt(shell->env_lst), shell->fd[3]);
-		if (shell->input)
-			print_input(shell, shell->input, shell->p_len);
+		if (!shell->tree)
+			print_prompt(shell, 0);
+		free_tmp_inputs(shell, 1);
 	}
 	else if (signum == SIGWINCH)
 		sig_winch_handler(shell);
@@ -63,9 +64,9 @@ void		sig_handler1(int signum)
 {
 	t_shell *shell;
 
-	(void)signum;
 	shell = get_struct(0);
-	tputs(tgetstr("do", NULL), shell->fd[3], &putchar);
+	if (signum == SIGINT)
+		tputs(tgetstr("do", NULL), shell->fd[3], &putchar);
 }
 
 void		set_sig_handler(void)

@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/04/26 20:56:41 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/09/20 18:43:10 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/09/21 15:30:13 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,27 +26,6 @@ static int	put_env(t_env *env_lst)
 			ft_putendl(tmp->val);
 			tmp = tmp->next;
 		}
-	}
-	return (0);
-}
-
-static int	del_env_cpy(t_env **env_lst)
-{
-	if ((*env_lst) != NULL)
-		free_env_lst(env_lst);
-	return (0);
-}
-
-static int	dup_env_lst(t_env *env_lst, t_env **env_lst_cpy)
-{
-	t_env	*tmp;
-
-	tmp = env_lst;
-	while (tmp)
-	{
-		store_env_var(env_lst_cpy, ft_strdup(tmp->var),
-		ft_strdup(tmp->val));
-		tmp = tmp->next;
 	}
 	return (0);
 }
@@ -78,13 +57,30 @@ static int	parse_env_flags(char **cmd, t_env **env_lst)
 	return (1);
 }
 
+static int	exec_cmd(char **cmd, t_env *env_lst_cpy)
+{
+	char	**env_array;
+
+	env_array = NULL;
+	if (!(ft_strcmp(cmd[0], "setenv")) || !(ft_strcmp(cmd[0], "unsetenv")))
+		env_var_error(2, "env", cmd[0]);
+	else if (is_builtin(cmd[0]))
+		builtins_cmd(cmd, env_lst_cpy);
+	else
+	{
+		env_array = env_lst_to_array(env_lst_cpy);
+		exec_fork(cmd, env_array, env_lst_cpy);
+		free_tab(env_array);
+	}
+	free_env_lst(&env_lst_cpy);
+	return (0);
+}
+
 int			ft_env(char **cmd, t_env *env_lst, int i)
 {
 	int		j;
 	t_env	*env_lst_cpy;
-	char	**env_array;
 
-	env_array = NULL;
 	env_lst_cpy = NULL;
 	dup_env_lst(env_lst, &(env_lst_cpy));
 	while (cmd[i])
@@ -93,22 +89,15 @@ int			ft_env(char **cmd, t_env *env_lst, int i)
 		if (cmd[i][0] == '-')
 		{
 			if ((j = parse_env_flags(cmd + i, &env_lst_cpy)) == -1)
-				return (del_env_cpy(&env_lst_cpy));
+			{
+				free_env_lst(&env_lst_cpy);
+				return (0);
+			}
 		}
 		else if (ft_strchr(cmd[i], '=') != NULL && ++j)
 			ft_setenv(&cmd[i], &env_lst_cpy, 1);
 		else
-		{
-			if (is_builtin(cmd[i]))
-				builtins_cmd(cmd + i, env_lst_cpy);
-			else
-			{
-				env_array = env_lst_to_array(env_lst_cpy);
-				exec_fork(cmd + i, env_array, env_lst_cpy);
-				free_tab(env_array);
-			}
-			return (del_env_cpy(&env_lst_cpy));
-		}
+			return (exec_cmd(cmd + i, env_lst_cpy));
 		i += j;
 	}
 	env_lst_cpy != NULL ? put_env(env_lst_cpy) : (0);

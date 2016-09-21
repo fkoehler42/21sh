@@ -6,13 +6,13 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 18:43:55 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/09/20 18:25:35 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/09/21 18:09:11 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "sh.h"
 
-t_shell		*get_struct(t_shell *struc)
+t_shell	*get_struct(t_shell *struc)
 {
 	static t_shell	*shell = NULL;
 
@@ -23,13 +23,13 @@ t_shell		*get_struct(t_shell *struc)
 	return (0);
 }
 
-void		init_shell(t_shell *shell)
+void	init_shell(t_shell *shell)
 {
 	shell->fd[0] = STDIN_FILENO;
 	shell->fd[1] = STDOUT_FILENO;
 	shell->fd[2] = STDERR_FILENO;
 	if ((shell->fd[3] = open("/dev/tty", O_RDWR)) == -1)
-		quit_error(0);
+		quit_error(1);
 	shell->col = 0;
 	shell->input_len = 0;
 	shell->p_len = 0;

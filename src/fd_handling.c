@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/09/15 15:10:50 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/09/15 18:44:29 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/09/21 15:29:35 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,14 +24,13 @@ int		dup_std_fd(int *fd)
 		else if (fd[i] != i)
 		{
 			if (dup2(fd[i], i) == -1)
-			{
 				return (exec_error(6, "dup2"));
-			}
 		}
 		i++;
 	}
 	return (0);
 }
+
 void	close_and_reset_fd(int *fd)
 {
 	int	i;

@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/21 13:19:51 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/09/19 20:42:37 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/09/21 15:30:43 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ static int	parse_near_pipe(t_input *cmd, int reverse)
 			return (-1);
 		while (cmd && cmd->c != ';' && cmd->c != '|' && cmd->c != '`')
 		{
-			if (!ft_isspace(cmd->c)	&& cmd->c != '>' && cmd->c != '<')
+			if (!ft_isspace(cmd->c) && cmd->c != '>' && cmd->c != '<')
 				return (0);
 			cmd = cmd->prev;
 		}
@@ -31,7 +31,7 @@ static int	parse_near_pipe(t_input *cmd, int reverse)
 			return (-1);
 		while (cmd && cmd->c != ';' && cmd->c != '|' && cmd->c != '`')
 		{
-			if (!ft_isspace(cmd->c)	&& cmd->c != '>' && cmd->c != '<')
+			if (!ft_isspace(cmd->c) && cmd->c != '>' && cmd->c != '<')
 				return (0);
 			cmd = cmd->next;
 		}
@@ -41,11 +41,10 @@ static int	parse_near_pipe(t_input *cmd, int reverse)
 	return (-1);
 }
 
-int				check_pipes(t_input *cmd, int reverse)
+int			check_pipes(t_input *cmd, int reverse)
 {
 	int		ret;
 	t_input	*tmp;
-
 
 	tmp = cmd;
 	while (tmp)

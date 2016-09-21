@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/09/04 21:42:37 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/09/17 11:53:02 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/09/21 16:07:05 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,19 +49,19 @@ char		*get_bin_path(char *cmd, t_env *env_lst)
 	{
 		bin_path = ft_strjoin(paths[i], cmd);
 		if ((j = check_bin_path(bin_path, cmd)) == 0)
-			break;
+			break ;
 		free(bin_path);
 		bin_path = NULL;
 		if (j == -1)
-			break;
+			break ;
 		i++;
 	}
-	j == 1 ? exec_error(1, cmd) : (0) ;
+	j == 1 ? exec_error(1, cmd) : (0);
 	free_tab(paths);
 	return (bin_path);
 }
 
-int		check_bin_path(char *bin_path, char *cmd)
+int			check_bin_path(char *bin_path, char *cmd)
 {
 	if (access(bin_path, F_OK) == -1)
 		return (1);
@@ -70,11 +70,11 @@ int		check_bin_path(char *bin_path, char *cmd)
 	return (0);
 }
 
-int		exec_bin(char *bin_path, char **argv, char **env)
+int			exec_bin(char *bin_path, char **argv, char **env)
 {
 	int	ret;
 
 	ret = execve(bin_path, argv, env);
 	free(bin_path);
-	return (ret == -1) ? exec_error(4, "") : ret ;
+	return (ret == -1) ? exec_error(4, "") : ret;
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   builtins_error.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: fkoehler <fkoehler@student.4fd.fr>         +#+  +:+       +#+        */
+/*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 16/08/17 10:45:40 by fkoehler            #+#    #+#             */
-/*   Updated: 2016/09/17 15:43:45 by fkoehler         ###   ########.fr       */
+/*   Created: 2016/09/21 13:32:34 by fkoehler          #+#    #+#             */
+/*   Updated: 2016/09/21 14:48:00 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,14 @@
 
 int		cd_error(int errnum, char *arg)
 {
-	t_shell	*shell;
-	int		fd;
+	int	fd;
 
-	shell = get_struct(0);
-	fd = shell->fd[3];
+	fd = STDERR_FILENO;
 	ft_putstr_fd("cd: ", fd);
 	if (errnum == 0)
-		ft_putstr_fd("environment variable HOME is not set or is empty\n", fd);
+		ft_putstr_fd("environment variable HOME not set or empty\n", fd);
 	else if (errnum == 1)
-		ft_putstr_fd("environment variable OLDPWD is not set or is empty\n", fd);
+		ft_putstr_fd("environment variable OLDPWD not set or empty\n", fd);
 	else if (errnum == 2)
 		ft_putstr_fd("too many arguments\n", fd);
 	else if (errnum == 3 || errnum == 4 || errnum == 5 || errnum == 7)
@@ -45,11 +43,9 @@ int		cd_error(int errnum, char *arg)
 
 int		env_error(int errnum, int flag)
 {
-	t_shell	*shell;
 	int		fd;
 
-	shell = get_struct(0);
-	fd = shell->fd[3];
+	fd = STDERR_FILENO;
 	if (errnum == 0)
 	{
 		ft_putstr_fd("env: illegal option -- ", fd);
@@ -69,31 +65,29 @@ int		env_error(int errnum, int flag)
 
 void	env_var_error(int errnum, char *cmd, char *arg)
 {
-	t_shell	*shell;
 	int		fd;
 
-	shell = get_struct(0);
-	fd = shell->fd[3];
+	fd = STDERR_FILENO;
+	ft_putstr_fd(cmd, fd);
 	if (errnum == 0)
-	{
-		ft_putstr_fd(cmd, fd);
 		ft_putstr_fd(": command requires argument\n", fd);
-	}
 	else if (errnum == 1)
 	{
-		ft_putstr_fd(cmd, fd);
 		ft_putstr_fd(": argument is not valid: ", fd);
+		ft_putendl_fd(arg, fd);
+	}
+	else if (errnum == 2)
+	{
+		ft_putstr_fd(": no such file or directoty: ", fd);
 		ft_putendl_fd(arg, fd);
 	}
 }
 
 int		exit_error(int errnum, char *arg)
 {
-	t_shell	*shell;
 	int		fd;
 
-	shell = get_struct(0);
-	fd = shell->fd[3];
+	fd = STDERR_FILENO;
 	if (errnum == 0)
 		ft_putstr_fd("exit: too many arguments\n", fd);
 	else if (errnum == 1)

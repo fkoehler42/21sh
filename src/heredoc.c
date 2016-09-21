@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/09/08 14:46:45 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/09/20 18:50:42 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/09/21 16:26:48 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,18 @@ static char	*form_file_name(void)
 	return (file);
 }
 
+static int	handle_heredoc_input(char *line, char *delimiter, int fd)
+{
+	if (line[0] == 4 || ft_strcmp(line, delimiter) == 0)
+	{
+		free(line);
+		return (1);
+	}
+	ft_putendl_fd(line, fd);
+	free(line);
+	return (0);
+}
+
 int			fill_heredoc(char *delimiter, int *fd)
 {
 	int		file_fd;
@@ -44,17 +56,15 @@ int			fill_heredoc(char *delimiter, int *fd)
 	if ((file_fd = open(file_name, O_WRONLY | O_CREAT, 0600)) == -1)
 		return (-1);
 	ft_putstr_fd("heredoc> ", fd[3]);
+	signal(SIGINT, &sig_handler);
 	while ((gnl = get_next_line(0, &line)) == 1)
 	{
-		if (line[0] == 4 || ft_strcmp(line, delimiter) == 0)
-		{
-			free(line);
-			break;
-		}
-		ft_putendl_fd(line, file_fd);
-		free(line);
-		ft_putstr_fd("heredoc> ", fd[3]);
+		if ((handle_heredoc_input(line, delimiter, file_fd)) != 0)
+			break ;
+		else
+			ft_putstr_fd("heredoc> ", fd[3]);
 	}
+	signal(SIGINT, &sig_handler1);
 	if (gnl == -1)
 		quit_error(7);
 	close(file_fd);

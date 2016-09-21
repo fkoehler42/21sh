@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/24 15:05:22 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/09/20 15:55:05 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/09/21 18:45:34 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,13 +66,13 @@ void	delete_input(t_input **lst, t_input *input, t_shell *shell, int back)
 
 void	read_input(t_shell *shell)
 {
-	int		parse_ret;
+	int		parse;
 	char	buf[7];
 	char	*prompt;
 	size_t	buf_len;
 
 	prompt = NULL;
-	shell->p_len = put_prompt(get_prompt(shell->env_lst), shell->fd[3]);
+	print_prompt(shell, 0);
 	while (42)
 	{
 		ft_bzero((void *)buf, 7);
@@ -81,18 +81,8 @@ void	read_input(t_shell *shell)
 		signal(SIGINT, &sig_handler1);
 		if ((buf_len = ft_strlen(buf)) > 0)
 		{
-			if ((parse_ret = parse_input(shell, buf, buf_len, shell->p_len)))
-			{
-				if (parse_ret == 1)
-					shell->p_len =
-					put_prompt(get_prompt(shell->env_lst), shell->fd[3]);
-				else
-				{
-					prompt = get_special_prompt((char)parse_ret);
-					shell->p_len = ft_strlen(prompt);
-					ft_putstr_fd(prompt, shell->fd[3]);
-				}
-			}
+			if ((parse = parse_input(shell, buf, buf_len, shell->p_len)) > 0)
+				print_prompt(shell, parse);
 		}
 		signal(SIGINT, &sig_handler);
 	}

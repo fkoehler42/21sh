@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/08/24 16:11:42 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/09/19 17:27:46 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/09/21 15:23:34 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,7 @@ static char	is_bracket_closed(t_input *tmp, char c)
 
 	count = 1;
 	d = (c == '(') ? c + 1 : c + 2;
-	tmp = tmp->next;
-	while (tmp)
+	while ((tmp = tmp->next))
 	{
 		if (ft_isquote(tmp->c) && tmp->prev->c != '\\')
 		{
@@ -40,24 +39,21 @@ static char	is_bracket_closed(t_input *tmp, char c)
 				return (d);
 			d = tmp->c;
 			tmp = tmp->next;
-			while (tmp && (tmp->c != d || (tmp->c == d && tmp->prev->c == '\\')))
+			while (tmp && (tmp->c != d ||
+				(tmp->c == d && tmp->prev->c == '\\')))
 				tmp = tmp->next;
 			d = (c == '(') ? c + 1 : c + 2;
 		}
 		else if (tmp->c == c && tmp->prev->c != '\\')
 			count++;
-		else if (tmp->c == d && tmp->prev->c != '\\' &&  (--count == 0))
+		else if (tmp->c == d && tmp->prev->c != '\\' && (--count == 0))
 			return (0);
-		tmp = tmp->next;
 	}
 	return (d);
 }
 
-static char	check_quotes(t_input **input, char c)
+static char	check_quotes(t_input **input, char c, t_input *tmp)
 {
-	t_input	*tmp;
-
-	tmp = *input;
 	if (ft_isquote(tmp->c) && (!tmp->prev || tmp->prev->c != '\\'))
 	{
 		if ((c = is_quote_closed(tmp, tmp->c)) != 0)
@@ -83,10 +79,12 @@ static char	check_quotes(t_input **input, char c)
 	*input = tmp;
 	return (0);
 }
+
 char		valid_input(t_input *input, char c)
 {
 	int		pipe_ret;
 	t_input	*tmp;
+	t_input	*sub_tmp;
 
 	tmp = input;
 	if ((pipe_ret = check_pipes(input, 0)) == -1)
@@ -95,7 +93,8 @@ char		valid_input(t_input *input, char c)
 		return (cmd_error(0, '|', NULL));
 	while (tmp)
 	{
-		if ((c = check_quotes(&tmp, tmp->c)) != 0)
+		sub_tmp = tmp;
+		if ((c = check_quotes(&tmp, tmp->c, sub_tmp)) != 0)
 			return (c);
 		if (tmp)
 			tmp = tmp->next;

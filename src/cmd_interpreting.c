@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/08/21 15:21:55 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/09/19 20:42:31 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/09/21 14:49:50 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@ char		*interpret_cmd_arg(char *cmd_arg)
 	while (arg_tab[i])
 	{
 		arg_tab[i] = interpret_special_char(arg_tab[i]);
-		/* ft_printf("\narg_modified : %s\n", arg_tab[i]); */
 		i++;
 	}
 	ret = ft_multi_strjoin(arg_tab, "");

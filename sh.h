@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 17:07:09 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/09/20 16:19:02 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/09/21 19:10:09 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,6 @@
 # define DREDIR 2
 # define BREDIR 3
 # define HEREDOC 4
-
-#define debug ft_printf("file : %s, line : %d\n", __FILE__, __LINE__);
 
 typedef struct			s_redir
 {
@@ -131,6 +129,7 @@ int						is_builtin(char *cmd);
 void					store_environ(t_shell *shell, char **environ);
 int						store_env_var(t_env **env_lst, char *var, char *val);
 int						del_env_var(t_env **env_lst, char *var);
+int						dup_env_lst(t_env *env_lst, t_env **env_lst_cpy);
 t_env					*get_env_ptr(t_env *env_lst, char *var);
 char					**env_lst_to_array(t_env *env_lst);
 
@@ -140,10 +139,10 @@ int						set_new_pwd(t_env *env_lst);
 
 char					*get_prompt(t_env *env_lst);
 char					*get_special_prompt(char c);
-int						put_prompt(char *prompt, int fd);
+void					print_prompt(t_shell *shell, int special_prompt);
 
 void					read_input(t_shell *shell);
-void					read_multi_lines_input(t_shell *shell,char *prompt);
+void					read_multi_lines_input(t_shell *shell, char *prompt);
 void					print_input(t_shell *shell, t_input *curs_pos,
 						size_t p_len);
 int						parse_input(t_shell *shell, char *buf,
@@ -177,7 +176,6 @@ int						paste_buffer(t_shell *shell);
 int						history_prev(t_shell *shell);
 int						history_next(t_shell *shell);
 t_hist					*store_hist(t_shell *shell);
-void					move_to_history_end(t_shell * shell);
 
 void					replace_cursor(t_shell *shell, int print, int back);
 size_t					get_cursor_x_pos(t_input *input,
@@ -198,7 +196,8 @@ pid_t					exec_fork(char **cmd, char **env_array, t_env *env_lst);
 pid_t					pipe_fork_father(t_shell *shell,
 						t_btree *link);
 pid_t					pipe_fork_child(t_shell *shell, t_btree *link);
-int						handle_redirs(t_shell *shell, t_btree *link, char **cmd);
+int						handle_redirs(t_shell *shell, t_btree *link,
+						char **cmd);
 int						exec_redir_cmd(t_shell *shell, char **cmd);
 int						fill_heredoc(char *delimiter, int *fd);
 
