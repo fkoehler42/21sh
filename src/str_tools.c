@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/07/19 16:42:14 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/09/17 19:40:57 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/09/22 19:21:42 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,13 +51,11 @@ char	*str_replace_var(char *s, int start)
 	return (ret);
 }
 
-int		strrchr_outside_quotes(char *s, char c)
+int		strrchr_outside_quotes(char *s, char c, char quote)
 {
 	int		i;
 	int		j;
-	char	quote;
 
-	quote = 0;
 	if (((i = ft_strrchr_index(s, c)) == -1))
 	{
 		free(s);
@@ -75,7 +73,7 @@ int		strrchr_outside_quotes(char *s, char c)
 	{
 		while (j >= 0 && s[j] != quote)
 			j--;
-		i = (j > 1) ? strrchr_outside_quotes(ft_strsub(s, 0, j), c) : -1;
+		i = (j > 1) ? strrchr_outside_quotes(ft_strsub(s, 0, j), c, 0) : -1;
 	}
 	free(s);
 	return (i);
@@ -95,7 +93,7 @@ int		is_str_quoted(char *s)
 	return (0);
 }
 
-char		*strdup_remove_quotes(char *s)
+char	*strdup_remove_quotes(char *s)
 {
 	char	*tmp;
 	size_t	len;

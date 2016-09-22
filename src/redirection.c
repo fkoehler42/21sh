@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/09/08 14:46:45 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/09/21 16:11:39 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/09/22 18:52:15 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,13 @@ static int	open_file(char *file, int redir_type, int *fd)
 	else if (redir_type == BREDIR)
 		file_fd = open(file, O_RDONLY);
 	else if (redir_type == HEREDOC)
+	{
+		signal(SIGINT, &sig_handler_heredoc);
+		signal(SIGTSTP, &sig_handler_heredoc);
 		file_fd = fill_heredoc(file, fd);
+		signal(SIGINT, &sig_handler1);
+		signal(SIGTSTP, &sig_handler);
+	}
 	return (file_fd);
 }
 

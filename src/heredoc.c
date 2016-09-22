@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/09/08 14:46:45 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/09/21 16:26:48 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/09/22 19:06:23 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,6 @@ int			fill_heredoc(char *delimiter, int *fd)
 	if ((file_fd = open(file_name, O_WRONLY | O_CREAT, 0600)) == -1)
 		return (-1);
 	ft_putstr_fd("heredoc> ", fd[3]);
-	signal(SIGINT, &sig_handler);
 	while ((gnl = get_next_line(0, &line)) == 1)
 	{
 		if ((handle_heredoc_input(line, delimiter, file_fd)) != 0)
@@ -64,11 +63,22 @@ int			fill_heredoc(char *delimiter, int *fd)
 		else
 			ft_putstr_fd("heredoc> ", fd[3]);
 	}
-	signal(SIGINT, &sig_handler1);
 	if (gnl == -1)
 		quit_error(7);
 	close(file_fd);
 	file_fd = open(file_name, O_RDONLY);
 	free(file_name);
 	return (file_fd);
+}
+
+void		sig_handler_heredoc(int signum)
+{
+	t_shell	*shell;
+
+	shell = get_struct(0);
+	if (signum == SIGINT)
+	{
+		tputs(tgetstr("do", NULL), shell->fd[3], &putchar);
+		ft_putstr_fd("heredoc> ", shell->fd[3]);
+	}
 }

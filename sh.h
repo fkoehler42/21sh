@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/06/23 17:07:09 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/09/21 19:10:09 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/09/22 19:22:30 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,11 +108,12 @@ void					restore_term(t_shell *shell);
 void					reload_term(t_shell *shell);
 void					sig_handler(int signum);
 void					sig_handler1(int signum);
+void					sig_handler_heredoc(int signum);
 void					set_sig_handler(void);
 t_shell					*get_struct(t_shell *struc);
 
 int						putchar(int c);
-int						strrchr_outside_quotes(char *s, char c);
+int						strrchr_outside_quotes(char *s, char c, char quote);
 int						strchr_redir(t_btree *link);
 int						is_str_quoted(char *s);
 char					*strdup_remove_quotes(char *s);

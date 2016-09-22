@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/09/05 18:52:16 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/09/21 18:51:21 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/09/22 19:24:07 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,5 +74,5 @@ void		reload_term(t_shell *shell)
 void		restore_term(t_shell *shell)
 {
 	if ((tcsetattr(STDIN_FILENO, TCSADRAIN, &(shell->term_save))) == -1)
-			quit_error(5);
+		quit_error(5);
 }

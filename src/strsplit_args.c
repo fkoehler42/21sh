@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/02 11:44:16 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/08/25 17:39:53 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/09/22 19:24:25 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,7 +79,6 @@ char		**strsplit_args(char const *s)
 	j = 0;
 	if (!(array = (char **)malloc(sizeof(char *) * (countwords(s, 0, 0) + 1))))
 		quit_error(9);
-	/* ft_putnbr(countwords(s, 0, 0)); */
 	while (s[i])
 	{
 		while (s[i] == ' ' || s[i] == '\t')
@@ -88,10 +87,7 @@ char		**strsplit_args(char const *s)
 		i = word_len(s, start);
 		if (start != i)
 			array[j++] = ft_strsub(s, start, (i - start));
-		/* ft_putnbr(j); */
-		/* ft_printf("e arg : %s\n", array[j - 1]); */
 	}
-	/* ft_putnbr(j); */
 	array[j] = NULL;
 	return (array);
 }
