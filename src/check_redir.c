@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/08/21 15:21:55 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/09/21 15:25:57 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/09/25 20:51:29 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,8 @@ static int	check_redir_start(t_btree *link, int i)
 	j = i;
 	while (j > 0 && ft_isdigit(link->str[j - 1]))
 		j--;
+	if (link->str[j] && !ft_isspace(link->str[j]))
+		j = i;
 	if (ft_atoi(link->str + j) > 2)
 		return (cmd_error(1, 0, NULL));
 	return (check_valid_redir(link->str, j, i, link));

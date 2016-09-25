@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/09/15 15:10:50 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/09/21 15:29:35 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/09/25 18:09:32 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ void	close_and_reset_fd(int *fd)
 	i = 0;
 	while (i < 3)
 	{
-		if ((fd[i] != -1) && (fd[i] != i))
+		if ((fd[i] != -1) && (fd[i] != i) && (fd[i] > 2))
 			close(fd[i]);
 		fd[i] = i;
 		i++;

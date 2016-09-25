@@ -6,7 +6,7 @@
 /*   By: fkoehler <fkoehler@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/09/17 15:51:02 by fkoehler          #+#    #+#             */
-/*   Updated: 2016/09/22 17:46:46 by fkoehler         ###   ########.fr       */
+/*   Updated: 2016/09/25 20:53:56 by fkoehler         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static void	sig_int_handler(t_shell *shell)
 {
-	if (shell->input)
+	if (shell->input || shell->input_save)
 	{
 		move_line_end(shell);
 		free_tmp_inputs(shell, 1);
@@ -66,7 +66,10 @@ void		sig_handler1(int signum)
 
 	shell = get_struct(0);
 	if (signum == SIGINT)
+	{
+		free_tmp_inputs(shell, 1);
 		tputs(tgetstr("do", NULL), shell->fd[3], &putchar);
+	}
 }
 
 void		set_sig_handler(void)
